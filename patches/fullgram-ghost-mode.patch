@@ -80088,7 +80088,6 @@ index 00000000..73b546fa
 +        FullGramAppIconPreset(name: "FullGramMascot", assetName: "FullGram/OriginalChibi", title: "Mascot", russianTitle: "Маскот"),
 +    ]
 +}
-+
 diff --git a/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.swift b/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.swift
 new file mode 100644
 index 00000000..59a4322a
