@@ -1,0 +1,183 @@
+diff --git a/submodules/SettingsUI/Sources/FullGramChatColorsController.swift b/submodules/SettingsUI/Sources/FullGramChatColorsController.swift
+index 82b56cf..e208e3f 100644
+--- a/submodules/SettingsUI/Sources/FullGramChatColorsController.swift
++++ b/submodules/SettingsUI/Sources/FullGramChatColorsController.swift
+@@ -6,7 +6,7 @@ import AccountContext
+ import TelegramPresentationData
+ import LocalizedPeerData
+ 
+-final class FullGramChatColorsController: UITableViewController {
++final class FullGramChatColorsController: FullGramPluginTableController {
+     private let context: AccountContext
+     private let pluginID: String
+     private var settings = FullGramChatColorSettings()
+diff --git a/submodules/SettingsUI/Sources/FullGramGroupMentionsController.swift b/submodules/SettingsUI/Sources/FullGramGroupMentionsController.swift
+index 0c65868..ad3026d 100644
+--- a/submodules/SettingsUI/Sources/FullGramGroupMentionsController.swift
++++ b/submodules/SettingsUI/Sources/FullGramGroupMentionsController.swift
+@@ -1,7 +1,7 @@
+ import UIKit
+ import TelegramCore
+ 
+-final class FullGramGroupMentionsController: UITableViewController {
++final class FullGramGroupMentionsController: FullGramPluginTableController {
+     private let store: FullGramGhostModeStore
+     private let pluginID: String
+     private let russian: Bool
+@@ -94,7 +94,7 @@ final class FullGramGroupMentionsController: UITableViewController {
+     }
+ }
+ 
+-final class FullGramReactionTotalController: UITableViewController {
++final class FullGramReactionTotalController: FullGramPluginTableController {
+     private let store: FullGramGhostModeStore
+     private let pluginID: String
+     private let russian: Bool
+diff --git a/submodules/SettingsUI/Sources/FullGramHostedNavigationScreen.swift b/submodules/SettingsUI/Sources/FullGramHostedNavigationScreen.swift
+index cc813bf..9743501 100644
+--- a/submodules/SettingsUI/Sources/FullGramHostedNavigationScreen.swift
++++ b/submodules/SettingsUI/Sources/FullGramHostedNavigationScreen.swift
+@@ -9,11 +9,19 @@ import PresentationDataUtils
+ /// Shows a UIKit screen stack (the plugin list, its details and plugin settings) as a page of
+ /// Telegram's navigation stack instead of a sheet: pushed and popped like any settings page,
+ /// with the UIKit navigation bar painted in the list's colours.
+-final class FullGramHostedNavigationScreen: ViewController {
++final class FullGramHostedNavigationScreen: ViewController, FullGramPluginPresentationHost {
++    private let presentNative: (UIViewController) -> Void
++
++    func presentPluginController(_ controller: UIViewController) {
++        self.presentNative(controller)
++    }
+     private let hosted: UINavigationController
+     private let backgroundColor: UIColor
+ 
+     init(context: AccountContext, root: UIViewController) {
++        self.presentNative = { controller in
++            context.sharedContext.applicationBindings.presentNativeController(controller)
++        }
+         let presentationData = context.sharedContext.currentPresentationData.with { $0 }
+         let theme = presentationData.theme
+         self.backgroundColor = theme.list.blocksBackgroundColor
+diff --git a/submodules/SettingsUI/Sources/FullGramNativePluginSettingsController.swift b/submodules/SettingsUI/Sources/FullGramNativePluginSettingsController.swift
+index afc9618..5955d7c 100644
+--- a/submodules/SettingsUI/Sources/FullGramNativePluginSettingsController.swift
++++ b/submodules/SettingsUI/Sources/FullGramNativePluginSettingsController.swift
+@@ -51,7 +51,7 @@ public func fullgramRunAutoArchiveIfDue(context: AccountContext) {
+ }
+ 
+ /// Settings of a built-in plugin, a page of the plugin list's UIKit stack.
+-final class FullGramNativePluginSettingsController: UITableViewController {
++final class FullGramNativePluginSettingsController: FullGramPluginTableController {
+     private enum Row {
+         case enabled
+         case attachButton(FullGramAttachButtonKey)
+diff --git a/submodules/SettingsUI/Sources/FullGramPluginDetailsController.swift b/submodules/SettingsUI/Sources/FullGramPluginDetailsController.swift
+index c4eb6ae..396637b 100644
+--- a/submodules/SettingsUI/Sources/FullGramPluginDetailsController.swift
++++ b/submodules/SettingsUI/Sources/FullGramPluginDetailsController.swift
+@@ -13,7 +13,7 @@ extension FullGramPluginManifest {
+     }
+ }
+ 
+-final class FullGramPluginDetailsController: UITableViewController {
++final class FullGramPluginDetailsController: FullGramPluginTableController {
+     private enum Row: Equatable {
+         case enable, cameraGesture, cameraHaptic, chatColors, mentionGroups, reactionTotals, formattedTimestamp
+         case game(FullGramArcadeGame)
+diff --git a/submodules/SettingsUI/Sources/FullGramPluginManagerController.swift b/submodules/SettingsUI/Sources/FullGramPluginManagerController.swift
+index e7370f5..515572a 100644
+--- a/submodules/SettingsUI/Sources/FullGramPluginManagerController.swift
++++ b/submodules/SettingsUI/Sources/FullGramPluginManagerController.swift
+@@ -55,7 +55,7 @@ struct FullGramPluginAlertAction {
+ /// The plugin list, laid out like Full Gram's PluginsActivity: a searchable list where each
+ /// plugin shows its name, version, author and description with an on/off switch, and "+"
+ /// installs a .plugin file.
+-final class FullGramPluginManagerController: UITableViewController, UIDocumentPickerDelegate, UISearchBarDelegate {
++final class FullGramPluginManagerController: FullGramPluginTableController, UIDocumentPickerDelegate, UISearchBarDelegate {
+     private let store: FullGramGhostModeStore
+     private let russian: Bool
+     private let palette: FullGramPreferencesPalette?
+diff --git a/submodules/SettingsUI/Sources/FullGramPluginPresentation.swift b/submodules/SettingsUI/Sources/FullGramPluginPresentation.swift
+new file mode 100644
+index 0000000..0373787
+--- /dev/null
++++ b/submodules/SettingsUI/Sources/FullGramPluginPresentation.swift
+@@ -0,0 +1,26 @@
++import UIKit
++
++/// Telegram windows must register a native presentation to route touches to it.
++protocol FullGramPluginPresentationHost: AnyObject {
++    func presentPluginController(_ controller: UIViewController)
++}
++
++class FullGramPluginTableController: UITableViewController {
++    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
++        var ancestor = self.parent
++        while let current = ancestor {
++            if let host = current as? FullGramPluginPresentationHost {
++                self.view.endEditing(true)
++                host.presentPluginController(viewControllerToPresent)
++                if let completion {
++                    if let coordinator = viewControllerToPresent.transitionCoordinator {
++                        coordinator.animate(alongsideTransition: nil, completion: { _ in completion() })
++                    } else { DispatchQueue.main.async(execute: completion) }
++                }
++                return
++            }
++            ancestor = current.parent
++        }
++        super.present(viewControllerToPresent, animated: flag, completion: completion)
++    }
++}
+diff --git a/submodules/TelegramUI/Sources/FullGramAttachmentMenuController.swift b/submodules/TelegramUI/Sources/FullGramAttachmentMenuController.swift
+index 9682892..2709e0c 100644
+--- a/submodules/TelegramUI/Sources/FullGramAttachmentMenuController.swift
++++ b/submodules/TelegramUI/Sources/FullGramAttachmentMenuController.swift
+@@ -25,6 +25,24 @@ final class FullGramAttachmentMenuController: ViewController {
+     private var restingPanelFrame = CGRect.zero
+     private var openingAnimator: UIViewPropertyAnimator?
+     private var closing = false
++    private var keyboardObserver: NSObjectProtocol?
++    private var keyboardHeight: CGFloat?
++
++    deinit {
++        if let observer = self.keyboardObserver { NotificationCenter.default.removeObserver(observer) }
++    }
++
++    private func trackKeyboard() {
++        self.keyboardObserver = NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillChangeFrameNotification, object: nil, queue: .main) { [weak self] notification in
++            guard let self, let layout = self.layout,
++                  let end = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
++            let frame = self.view.convert(end, from: nil)
++            // A floating keyboard should not lift the entire attachment menu.
++            self.keyboardHeight = frame.width >= self.view.bounds.width * 0.75 ? max(0.0, self.view.bounds.maxY - frame.minY) : 0.0
++            let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.25
++            self.containerLayoutUpdated(layout, transition: .animated(duration: duration, curve: .easeInOut))
++        }
++    }
+ 
+     init(buttons: [AttachmentButtonType], theme: PresentationTheme, russian: Bool, sourceRect: CGRect?, sourceRectProvider: (() -> CGRect?)? = nil, choose: @escaping (AttachmentButtonType) -> Void) {
+         self.buttons = buttons
+@@ -43,6 +61,7 @@ final class FullGramAttachmentMenuController: ViewController {
+         self.displayNode = ASDisplayNode()
+         self.displayNode.backgroundColor = .clear
+         self.displayNodeDidLoad()
++        self.trackKeyboard()
+         self.outside.addTarget(self, action: #selector(self.cancel), for: .touchUpInside)
+         self.view.addSubview(self.outside)
+         self.panel.effect = UIBlurEffect(style: self.theme.overallDarkAppearance ? .systemChromeMaterialDark : .systemChromeMaterialLight)
+@@ -117,9 +136,12 @@ final class FullGramAttachmentMenuController: ViewController {
+         }
+         self.outside.frame = CGRect(origin: .zero, size: layout.size)
+         let width = min(280.0, layout.size.width - layout.safeInsets.left - layout.safeInsets.right - 32.0)
+-        let keyboardTop = layout.size.height - max(layout.inputHeight ?? 0.0, layout.intrinsicInsets.bottom)
++        let keyboardTop = layout.size.height - max(self.keyboardHeight ?? layout.inputHeight ?? 0.0, layout.intrinsicInsets.bottom)
+         let sourceRect = self.sourceRectProvider?() ?? self.sourceRect
+-        let bottom = min(sourceRect?.minY ?? (keyboardTop - 56.0), keyboardTop) - 8.0
++        // The paperclip frame can still belong to the keyboard's previous layout.
++        // Use the current keyboard edge for resting geometry; retain the live button
++        // only as the origin of the opening/closing animation.
++        let bottom = keyboardTop - 56.0 - 8.0
+         let top = max(layout.safeInsets.top, layout.statusBarHeight ?? 0.0) + 12.0
+         let desired = 20.0 + CGFloat(self.expanded ? self.rows.count : min(4, self.rows.count)) * 56.0
+         let height = min(desired, max(0.0, bottom - top))

@@ -1,0 +1,13 @@
+Manual Codemagic builds
+
+GitHub Actions (`.github/workflows/build.yml`) mirrors these steps: a push to `main` that changes `patches/`, `ci/`, `upstream.json` or the workflow builds the optimized `release_arm64` IPA; manual runs can choose `debug_arm64` for a faster compile check (its IPA is about 500 MB). Documentation-only pushes do not build. The IPA, manifest and build log are uploaded as a 7-day artifact. Two Codemagic workflows run on Mac M2 with Xcode 27.1: `fullgram-ios-unsigned` (release_arm64) and `fullgram-ios-fast` (debug_arm64: no Swift optimization, no whole-module optimization, no Rust LTO and no release export-list scans, so it compiles much faster; the binary is larger and slower and is meant for compile checks and test installs).
+
+Speed measures: the source checks run on the main Telegram checkout before the native submodules are fetched, so source errors fail before the multi-gigabyte download; submodules are fetched shallowly (with a full-history fallback); `FULLGRAM_SKIP_DSYM=1` passes the patched `Make.py --skipDsym`, skipping dSYM generation, which unsigned test IPAs do not need. None of these change the compiled app code. Actual time savings have not been measured yet.
+
+Before the full Telegram target, the workflow installs/probes Metal, checks ccache/sysctl in Bazel's restricted PATH, validates Telegram API variables, applies the patch to the exact pinned source revision, checks patch whitespace, executes CI helper tests, parses all changed Swift sources and checks known UI-import/API contracts. It then compiles and runs the actual Foundation settings/history/regex/archive model sources with warnings treated as errors. The same fast host test also builds the pinned Postbox serialization implementation and round-trips the actual history schema, covering the raw-enum crash that JSONEncoder did not detect.
+
+Preflight does not type-check UIKit/Postbox integration against all Telegram dependencies. That happens during the full native build. This limitation must be stated when reporting uncompiled changes; source checks are not proof that an IPA will build or work.
+
+The native wrapper uses --continueOnError to collect independent compilation failures in one pass. Artifacts include a redacted build.log, the IPA/manifest when packaging succeeds, and model-test output. No API values are intentionally printed into the build log. The existing personal-tier cache is bounded at 2.5 GB and is populated by successful Codemagic builds; speed gains are not guaranteed.
+
+The Release 4 artifact passed the full native Actions build. Current local CI checks pass 48 Python tests.

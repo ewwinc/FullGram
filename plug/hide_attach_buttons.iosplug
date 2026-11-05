@@ -1,0 +1,8 @@
+{
+  "format": "fullgram-iosplug-1",
+  "id": "hide_attach_buttons",
+  "name": "HideAttachButtons",
+  "version": "1.0",
+  "author": "Full Gram",
+  "description": "Скрывает выбранные разделы меню вложений."
+}

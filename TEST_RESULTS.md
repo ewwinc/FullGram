@@ -1,0 +1,42 @@
+# Verification log — 2026-10-23
+
+## Ghost Mode implementation update
+
+- Target device supplied: iPhone 11 Pro, iOS 27 Developer Beta 1. No device install/run yet.
+- Inspected the user-provided signing pair locally. Password unlocks a private key and its certificate matches the profile's developer certificate. Profile metadata is specific to a different app's WidgetKit identifier/groups and lacks APNs entitlement; it is not a compatible main-app provisioning configuration for this port. CMS trust/revocation and device installation were not verified. Private key/profile were not committed or uploaded as artifacts. Certificate password is stored as a GitHub Secret.
+- Run 40016100634: settings/syntax checks passed; native baseline build was still in progress at 2026-10-23 23:13 Europe/Kiev. It includes recursive pinned dependencies and explicit unsigned packaging support. No successful native artifact claimed yet.
+
+- Run 40015266585: recursive dependency checkout succeeded; checks passed again. Baseline Bazel analysis reached 74,722 targets, then stopped because rules_apple requires device provisioning even when Telegram's profile attribute is disabled. Added an explicit, build-only unsigned-packaging feature against the pinned rules_apple commit; no fake profile or install claim. Rerun pending.
+
+- GitHub run 40014935999: checks job PASSED on Xcode 27.1. Actual output: `PASS: 16 FullGramGhostMode persistence/observation checks`. Changed Swift sources parsed successfully.
+- The same run's unmodified-app baseline failed before application compilation because the workflow omitted Git submodule initialization (`rules_swift+`: missing MODULE.bazel/WORKSPACE). Fixed native checkout to fetch recursive submodules; rerun pending. No IPA from this run.
+
+- GitHub CLI installed from the official release archive and verified against its published SHA-256 list; authenticated to the user's existing repository.
+- The user's own API credentials stored in GitHub Actions Secrets; no credentials added to tracked files.
+- Added native persistence/UI/presence/input-activity/cloud-read hooks; secret read/expiry and media-consumption paths unchanged.
+- `git diff --check` passes. Exported patch passes `git apply --reverse --check` against the modified local source tree.
+- Bundled Python `py_compile` passes for ci/prepare.py, ci/build.py and patched build-system/Make/Make.py.
+- Added 16 meaningful storage/observation checks (restart persistence, account isolation, write-failure rollback, corruption handling, observer removal and concurrent-transform serialization). Execution on macOS is pending.
+- GitHub Actions native baseline/port pipeline prepared; cloud run results will be recorded below.
+
+The following section records the earlier source-investigation baseline, before this implementation.
+
+## Executed
+
+- Read the complete user-attached porting specification.
+- Environment check: Windows 10.0.26100; Git found; xcodebuild and bazel absent from PATH; Python executable resolves to WindowsApps alias.
+- Retrieved shallow snapshots of Telegram-iOS, FullGram4A and FullGramDesktop; pinned commit IDs recorded in PORTING_PLAN.md.
+- Android remote branch inventory: only `rewrite`, at 7013145676d36d82ee13c02a89f72097b7490dcd.
+- Inspected Android configuration, regex filter and message-history controller; Desktop settings declarations and message storage; iOS README, toolchain pins and candidate module paths.
+- Reviewed official Telegram API Terms and Full Gram documentation online.
+- Initial iOS checkout hit long-filename errors. Enabled repository-local core.longpaths and restored files from the pinned HEAD. Final checkout status recorded separately after completion.
+- Final `git -C Telegram-iOS status --porcelain` is empty: checkout recovery completed, with no application source edits.
+- Filename search found no tracked Android `FullGramMessageUtils`/`proprietary` implementation, although the history controller imports it. Treat Android history as an incomplete reference until resolved.
+
+## Not executed
+
+- Baseline native build, Swift compilation, simulator/device runs, unit/integration tests.
+- Feature integration, authentication, messaging/media/calls regression checks.
+- Signing/export or install verification. IPA artifact: none.
+
+Next test gate: build unchanged Telegram-iOS on a matching macOS toolchain with the project's own configuration, then validate real-device installation before claiming a working port.

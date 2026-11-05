@@ -1,0 +1,8 @@
+{
+  "format": "fullgram-iosplug-1",
+  "id": "del_my_msgs",
+  "name": "Delete My Messages",
+  "version": "1.0",
+  "author": "Full Gram",
+  "description": "Поиск и удаление своих сообщений в чате после подтверждения."
+}

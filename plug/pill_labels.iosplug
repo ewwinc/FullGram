@@ -1,0 +1,8 @@
+{
+  "format": "fullgram-iosplug-1",
+  "id": "pill_labels",
+  "name": "Pill Labels",
+  "version": "1.0",
+  "author": "Full Gram",
+  "description": "Обводка и фон подписей полей профиля, шесть цветов."
+}

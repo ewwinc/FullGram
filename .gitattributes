@@ -1,0 +1,10 @@
+# Patch context preserves upstream whitespace; validate applied source with git diff --check.
+*.patch -whitespace
+
+# Fixture hashes must match on Windows and macOS.
+plugins/android_*.plugin text eol=lf
+
+plugins/ota_*.plugin text eol=lf
+
+# The patches are the app's Swift source (applied onto Telegram-iOS): count them as Swift.
+patches/*.patch linguist-language=Swift linguist-detectable=true

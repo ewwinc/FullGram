@@ -1,0 +1,14 @@
+{
+  "name": "@fullgram/plugin-sdk-assemblyscript",
+  "version": "27.5.0",
+  "description": "Full Gram for iOS plugin SDK for AssemblyScript (WebAssembly).",
+  "license": "MIT",
+  "main": "assembly/fullgram.ts",
+  "files": ["assembly"],
+  "scripts": {
+    "build:example": "asc example/shout.ts -o example/shout.wasm --runtime stub -O3z --noAssert --use abort="
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.27.31"
+  }
+}

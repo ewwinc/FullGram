@@ -1,0 +1,42 @@
+{
+  "name": "Full Gram",
+  "identifier": "one.fullgram.unofficial.ios.source",
+  "subtitle": "Full Gram — Telegram client with ghost mode, message history and plugins.",
+  "website": "https://github.com/FullGram/FullGram",
+  "tintColor": "8E5CF7",
+  "apps": [
+    {
+      "name": "Full Gram",
+      "bundleIdentifier": "one.fullgram.unofficial.ios",
+      "developerName": "Full Gram & Full Gram",
+      "subtitle": "Telegram with ghost mode, history and plugins.",
+      "localizedDescription": "Full Gram: ghost mode, saved deleted and edited messages, JavaScript, Python and Rust plugins, glass and themes, decoy mode and more. Unofficial client; sideload with AltStore or SideStore.",
+      "iconURL": "https://raw.githubusercontent.com/FullGram/FullGram/main/altstore/icon.png",
+      "tintColor": "8E5CF7",
+      "category": "social",
+      "screenshots": [],
+      "versions": [
+        {
+          "version": "27.0.2",
+          "buildVersion": "88",
+          "date": "2026-10-31T21:51:39Z",
+          "localizedDescription": "Glass and bubbles, messages section, tools (VirusTotal, AI, voice changer, icon packs), gifts catalog and accountChange for plugins.",
+          "downloadURL": "https://github.com/FullGram/FullGram/releases/download/build-88-branch/FullGram-IOS-27.0.2.ipa",
+          "size": 156144315,
+          "minOSVersion": "15.0"
+        }
+      ],
+      "appPermissions": {
+        "entitlements": [],
+        "privacy": {
+          "NSCameraUsageDescription": "Photos, videos and video messages.",
+          "NSMicrophoneUsageDescription": "Voice messages and calls.",
+          "NSPhotoLibraryUsageDescription": "Sending and saving media.",
+          "NSSpeechRecognitionUsageDescription": "Local transcription of voice messages.",
+          "NSFaceIDUsageDescription": "Locking chats with Face ID."
+        }
+      }
+    }
+  ],
+  "news": []
+}

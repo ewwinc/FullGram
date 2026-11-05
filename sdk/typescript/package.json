@@ -1,0 +1,8 @@
+{
+  "name": "@fullgram/plugin-types",
+  "version": "27.5.0",
+  "description": "TypeScript declarations for Full Gram for iOS plugins.",
+  "license": "MIT",
+  "types": "fullgram.d.ts",
+  "files": ["fullgram.d.ts"]
+}

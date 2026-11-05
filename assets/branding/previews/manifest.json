@@ -1,0 +1,44 @@
+﻿[
+    {
+        "name":  "Brand",
+        "original_dimensions":  [
+                                    1024,
+                                    1024
+                                ],
+        "preview_dimensions":  [
+                                   300,
+                                   300
+                               ],
+        "original_bytes":  1042513,
+        "preview_bytes":  127043,
+        "source_sha256":  "af0e79ee439b4329c5408142000ff7f8a7bc409a4366dd85b9be6e2bec82f50b"
+    },
+    {
+        "name":  "Blue",
+        "original_dimensions":  [
+                                    1024,
+                                    1024
+                                ],
+        "preview_dimensions":  [
+                                   300,
+                                   300
+                               ],
+        "original_bytes":  1025124,
+        "preview_bytes":  121787,
+        "source_sha256":  "74e8080d8d2aa2141b2a0f2fbd2f5bef5d3bb8f9d2a1f8039669081f408badad"
+    },
+    {
+        "name":  "Graphite",
+        "original_dimensions":  [
+                                    1024,
+                                    1024
+                                ],
+        "preview_dimensions":  [
+                                   300,
+                                   300
+                               ],
+        "original_bytes":  1046689,
+        "preview_bytes":  127970,
+        "source_sha256":  "b68cde98f3344825fa7e7f6a661770073dbee003e24b04574795a24917528440"
+    }
+]

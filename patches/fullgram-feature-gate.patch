@@ -1,0 +1,258 @@
+diff --git a/submodules/Display/Source/FullGramFeatureGateUI.swift b/submodules/Display/Source/FullGramFeatureGateUI.swift
+new file mode 100644
+index 00000000..cc1d5121
+--- /dev/null
++++ b/submodules/Display/Source/FullGramFeatureGateUI.swift
+@@ -0,0 +1,11 @@
++import Foundation
++
++/// FullGramFeatureGate as seen by the interface layer (the gate itself lives in TelegramCore under
++/// the same key). Until `fullgram://unlock` is opened, the restricted extras read as off.
++public enum FullGramFeatureGateUI {
++    public static var isUnlocked: Bool {
++        return UserDefaults.standard.bool(forKey: "fullgram.gate.unlocked")
++    }
++
++    static let restrictedExtras: Set<FullGramExtras.Key> = [.saveViewOnce, .stayAfterBan, .notifyDeleted, .readAfterReaction, .alwaysOnline]
++}
+diff --git a/submodules/SettingsUI/Sources/FullGramAppearanceController.swift b/submodules/SettingsUI/Sources/FullGramAppearanceController.swift
+index 734f3f8d..67be968c 100644
+--- a/submodules/SettingsUI/Sources/FullGramAppearanceController.swift
++++ b/submodules/SettingsUI/Sources/FullGramAppearanceController.swift
+@@ -155,6 +155,9 @@ public func fullgramAppearanceController(context: AccountContext) -> ViewController {
+             .style(12, .trash, FullGramStrings.trash.text(ru), appearance.deletedMarkStyle == .trash),
+             .style(13, .eye, FullGramStrings.eye.text(ru), appearance.deletedMarkStyle == .eye)
+         ]
++        if !FullGramFeatureGate.isUnlocked {
++            entries.remove(at: 3)
++        }
+         if appearance.deletedMarkStyle == .text {
+             entries.append(.input(14, text.deleted, FullGramStrings.deleted.text(ru)))
+         }
+diff --git a/submodules/SettingsUI/Sources/FullGramCategoriesController.swift b/submodules/SettingsUI/Sources/FullGramCategoriesController.swift
+index b1426ea6..4c7c3532 100644
+--- a/submodules/SettingsUI/Sources/FullGramCategoriesController.swift
++++ b/submodules/SettingsUI/Sources/FullGramCategoriesController.swift
+@@ -62,8 +62,13 @@ struct FullGramCategoryItem {
+     let subtitleEn: String
+     let open: (AccountContext, @escaping (ViewController) -> Void) -> Void
+     var imageName: String? = nil
++    /// Draws Full Gram's ghost instead of `symbol`; `true` adds the Ghost Mode+ badge.
++    var ghostPlus: Bool? = nil
+ 
+     var icon: UIImage? {
++        if let ghostPlus {
++            return FullGramSettingsIcons.ghost(color: UIColor(rgb: color), plus: ghostPlus)
++        }
+         if let imageName {
+             return FullGramSettingsIcons.glyph(imageName, color: UIColor(rgb: color), side: imageName.hasPrefix("FullGram/") ? 20.0 : nil)
+         }
+@@ -84,8 +89,8 @@ func fullgramCategoryItems(_ category: FullGramCategory) -> [FullGramCategoryItem] {
+     switch category {
+     case .privacy:
+         return [
+-            FullGramCategoryItem(id: 1, symbol: "eye.slash.fill", color: 0x8E5CF7, titleRu: "Режим призрака", titleEn: "Ghost Mode", subtitleRu: "Прочтения, онлайн, набор, загрузка", subtitleEn: "Read receipts, online, typing, uploads", open: page { fullgramGhostModeController(context: $0) }),
+-            FullGramCategoryItem(id: 2, symbol: "eye.trianglebadge.exclamationmark.fill", color: 0x5856D6, titleRu: "Режим призрака+", titleEn: "Ghost Mode+", subtitleRu: "Тонкая настройка", subtitleEn: "Fine-tuning", open: page { fullgramGhostModePlusController(context: $0) }),
++            FullGramCategoryItem(id: 1, symbol: "eye.slash.fill", color: 0x8E5CF7, titleRu: "Режим призрака", titleEn: "Ghost Mode", subtitleRu: "Прочтения, онлайн, набор, загрузка", subtitleEn: "Read receipts, online, typing, uploads", open: page { fullgramGhostModeController(context: $0) }, ghostPlus: false),
++            FullGramCategoryItem(id: 2, symbol: "eye.trianglebadge.exclamationmark.fill", color: 0x5856D6, titleRu: "Режим призрака+", titleEn: "Ghost Mode+", subtitleRu: "Тонкая настройка", subtitleEn: "Fine-tuning", open: page { fullgramGhostModePlusController(context: $0) }, ghostPlus: true),
+             FullGramCategoryItem(id: 3, symbol: "person.crop.circle.badge.checkmark", color: 0x8E5CF7, titleRu: "Призрак по чатам", titleEn: "Ghost Mode by chat", subtitleRu: "Включить или выключить в отдельных чатах", subtitleEn: "On or off in single chats", open: page { fullgramGhostExceptionsController(context: $0) }),
+             FullGramCategoryItem(id: 4, symbol: "figure.walk.motion", color: 0x34C759, titleRu: "Активность и следы", titleEn: "Activity & traces", subtitleRu: "Статусы, всегда онлайн, прочитать локально, истории, номер", subtitleEn: "Statuses, always online, read locally, stories, number", open: page { fullgramPrivacyPlusController(context: $0) }),
+             FullGramCategoryItem(id: 5, symbol: "hand.raised.fill", color: 0x34C759, titleRu: "Приватность и мелочи", titleEn: "Privacy & extras", subtitleRu: "Метаданные фото, чистые ссылки, анти-скам, звонки", subtitleEn: "Photo metadata, clean links, anti-scam, calls", open: page { fullgramExtrasController(context: $0) })
+@@ -147,7 +152,9 @@ func fullgramCategoryItems(_ category: FullGramCategory) -> [FullGramCategoryItem] {
+ 
+ func fullgramCategoryController(context: AccountContext, category: FullGramCategory) -> ViewController {
+     var push: ((ViewController) -> Void)?
+-    let items = fullgramCategoryItems(category)
++    // Ghost Mode, activity, history, view-once, plugins and Local Premium wait for FullGramFeatureGate.
++    let restricted: Set<Int32> = [1, 2, 3, 4, 11, 12, 13, 61, 63]
++    let items = fullgramCategoryItems(category).filter { FullGramFeatureGate.isUnlocked || !restricted.contains($0.id) }
+     let arguments = FullGramSectionedArguments(open: { id in
+         guard let item = items.first(where: { $0.id == id }) else { return }
+         item.open(context, { push?($0) })
+diff --git a/submodules/SettingsUI/Sources/FullGramExtrasController.swift b/submodules/SettingsUI/Sources/FullGramExtrasController.swift
+index 2d5a6d20..79040583 100644
+--- a/submodules/SettingsUI/Sources/FullGramExtrasController.swift
++++ b/submodules/SettingsUI/Sources/FullGramExtrasController.swift
+@@ -140,7 +140,9 @@ func fullgramExtrasController(context: AccountContext) -> ViewController {
+             4: ru ? "СООБЩЕНИЯ" : "MESSAGES"
+         ]
+         var lastSection: Int32 = 0
+-        for row in fullgramExtraRows {
++        // View-once, history, ban and plugin rows wait for FullGramFeatureGate.
++        let restricted: Set<Int32> = FullGramFeatureGate.isUnlocked ? [] : [6, 14, 15, 18, 31, 32, 33]
++        for row in fullgramExtraRows where !restricted.contains(row.id) {
+             if row.section != lastSection {
+                 lastSection = row.section
+                 entries.append(.header(row.section, (row.section - 1) * 10, headers[row.section] ?? ""))
+@@ -155,10 +157,12 @@ func fullgramExtrasController(context: AccountContext) -> ViewController {
+         entries.insert(.info(3, 29, ru ? "В меню плеера (⋯ у текста) также есть таймер сна и эквалайзер." : "The player menu (⋯ next to the lyrics) also has a sleep timer and the equalizer."), at: entries.firstIndex(where: { $0.stableId > 29 }) ?? entries.count)
+         let undoSeconds = UserDefaults.standard.integer(forKey: "fullgram.extra.undoSendSeconds")
+         entries.append(.link(4, 35, FullGramSettingsIcons.symbol("arrow.uturn.backward.circle.fill", color: UIColor(rgb: 0x34C759)), ru ? "Отмена отправки" : "Undo send", undoSeconds == 0 ? (ru ? "выкл." : "off") : (ru ? "\(undoSeconds) с" : "\(undoSeconds) s")))
+-        entries.append(.link(4, 36, FullGramSettingsIcons.symbol("trash.fill", color: UIColor(rgb: 0xFF3B30)), ru ? "Очистить сохранённые удалённые" : "Clear saved deleted", ""))
+-        entries.append(.link(4, 37, FullGramSettingsIcons.symbol("eraser.fill", color: UIColor(rgb: 0xFF9500)), ru ? "Очистить сохранённые изменённые" : "Clear saved edits", ""))
+-        entries.append(.link(4, 38, FullGramSettingsIcons.symbol("square.and.arrow.up.fill", color: UIColor(rgb: 0x007AFF)), ru ? "Экспорт удалённых и изменённых" : "Export deleted and edited", "JSON"))
+-        entries.append(.link(4, 39, FullGramSettingsIcons.symbol("list.bullet.rectangle.portrait.fill", color: UIColor(rgb: 0xAF52DE)), ru ? "Лента удалённых и изменённых" : "Deleted and edited feed", ru ? "поиск" : "search"))
++        if FullGramFeatureGate.isUnlocked {
++            entries.append(.link(4, 36, FullGramSettingsIcons.symbol("trash.fill", color: UIColor(rgb: 0xFF3B30)), ru ? "Очистить сохранённые удалённые" : "Clear saved deleted", ""))
++            entries.append(.link(4, 37, FullGramSettingsIcons.symbol("eraser.fill", color: UIColor(rgb: 0xFF9500)), ru ? "Очистить сохранённые изменённые" : "Clear saved edits", ""))
++            entries.append(.link(4, 38, FullGramSettingsIcons.symbol("square.and.arrow.up.fill", color: UIColor(rgb: 0x007AFF)), ru ? "Экспорт удалённых и изменённых" : "Export deleted and edited", "JSON"))
++            entries.append(.link(4, 39, FullGramSettingsIcons.symbol("list.bullet.rectangle.portrait.fill", color: UIColor(rgb: 0xAF52DE)), ru ? "Лента удалённых и изменённых" : "Deleted and edited feed", ru ? "поиск" : "search"))
++        }
+         let data = ItemListPresentationData(presentationData)
+         let state = ItemListControllerState(presentationData: data, title: .text(ru ? "Приватность и мелочи" : "Privacy & extras"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
+         return (state, (ItemListNodeState(presentationData: data, entries: entries, style: .blocks, animateChanges: true), arguments))
+diff --git a/submodules/SettingsUI/Sources/FullGramHostedNavigationScreen.swift b/submodules/SettingsUI/Sources/FullGramHostedNavigationScreen.swift
+index 496d3a52..6afb04a0 100644
+--- a/submodules/SettingsUI/Sources/FullGramHostedNavigationScreen.swift
++++ b/submodules/SettingsUI/Sources/FullGramHostedNavigationScreen.swift
+@@ -4,6 +4,7 @@ import Display
+ import AsyncDisplayKit
+ import TelegramPresentationData
+ import AccountContext
++import TelegramCore
+ import PresentationDataUtils
+ 
+ /// Shows a UIKit screen stack (the plugin list, its details and plugin settings) as a page of
+@@ -108,6 +109,7 @@ final class FullGramHostedNavigationScreen: ViewController, FullGramPluginPresentationHost
+ 
+ /// Opens the plugin list as a page; `fileURL` imports a .plugin file opened from elsewhere.
+ public func fullgramImportPlugin(context: AccountContext, fileURL: URL?, filename: String?) {
++    guard FullGramFeatureGate.isUnlocked else { return }
+     let data = context.sharedContext.currentPresentationData.with { $0 }
+     let palette = FullGramPreferencesPalette(background: data.theme.list.blocksBackgroundColor, panel: data.theme.list.itemBlocksBackgroundColor, text: data.theme.list.itemPrimaryTextColor, secondary: data.theme.list.itemSecondaryTextColor, accent: data.theme.list.itemAccentColor)
+     let initialImport: (URL, String)?
+diff --git a/submodules/SettingsUI/Sources/FullGramSettingsController.swift b/submodules/SettingsUI/Sources/FullGramSettingsController.swift
+index 1b9e749a..34aef4ba 100644
+--- a/submodules/SettingsUI/Sources/FullGramSettingsController.swift
++++ b/submodules/SettingsUI/Sources/FullGramSettingsController.swift
+@@ -58,7 +58,7 @@ public func fullgramSettingsController(context: AccountContext) -> ViewController {
+     |> deliverOnMainQueue
+     |> map { presentationData -> (ItemListControllerState, (ItemListNodeState, Any)) in
+         let ru = presentationData.strings.baseLanguageCode.hasPrefix("ru")
+-        let entries: [FullGramSectionedEntry] = [
++        var entries: [FullGramSectionedEntry] = [
+             .logo(0, 0, .FullGram, "Full Gram", FullGramStrings.clientSettingsAppearanceChatsMore.text(ru)),
+             .header(1, 10, FullGramStrings.categories.text(ru)),
+             .link(1, FullGramRow.general.rawValue, icons[.general] ?? nil, FullGramStrings.general.text(ru), ""),
+@@ -68,6 +68,9 @@ public func fullgramSettingsController(context: AccountContext) -> ViewController {
+             .link(1, FullGramRow.materialDesign.rawValue, icons[.materialDesign] ?? nil, FullGramStrings.materialDesignToggle.text(ru), ""),
+             .link(1, FullGramRow.other.rawValue, icons[.other] ?? nil, FullGramStrings.other.text(ru), "")
+         ]
++        if !FullGramFeatureGate.isUnlocked {
++            entries.remove(at: 5)
++        }
+         let data = ItemListPresentationData(presentationData)
+         let state = ItemListControllerState(presentationData: data, title: .text(""), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
+         return (state, (ItemListNodeState(presentationData: data, entries: entries, style: .blocks, animateChanges: false), arguments))
+@@ -191,7 +194,8 @@ func fullgramPresentAppIcons(context: AccountContext) {
+ func fullgramCategoryRows(category: Int, ru: Bool) -> (title: String, rows: [(Int32, String)]) {
+     switch category {
+     case 0:
+-        return ("Full Gram", [(0, "Ghost Mode"), (50, "Ghost Mode+"), (1, FullGramStrings.messageHistory.text(ru)), (53, FullGramStrings.mediaArchive.text(ru))])
++        let rows: [(Int32, String)] = [(0, "Ghost Mode"), (50, "Ghost Mode+"), (1, FullGramStrings.messageHistory.text(ru)), (53, FullGramStrings.mediaArchive.text(ru))]
++        return ("Full Gram", FullGramFeatureGate.isUnlocked ? rows : [])
+     case 2:
+         return (FullGramStrings.general.text(ru), [(51, FullGramStrings.translationProviders.text(ru)), (2, FullGramStrings.sendingOptions.text(ru)), (5, FullGramStrings.interface.text(ru)), (6, FullGramStrings.messageMenu.text(ru))])
+     case 3:
+diff --git a/submodules/SettingsUI/Sources/FullGramSettingsSearch.swift b/submodules/SettingsUI/Sources/FullGramSettingsSearch.swift
+index d252594a..283ff405 100644
+--- a/submodules/SettingsUI/Sources/FullGramSettingsSearch.swift
++++ b/submodules/SettingsUI/Sources/FullGramSettingsSearch.swift
+@@ -89,6 +89,10 @@ private func fullgramSettingsSearchEntries(context: AccountContext, ru: Bool) -> [Full Gram
+     if FullGramDeveloperSettings.unlockedAtLaunch {
+         page("developer", "Для разработчиков", "Developer", "разработчик отладка debug") { fullgramDeveloperSettingsController(context: context) }
+     }
++    if !FullGramFeatureGate.isUnlocked {
++        let restricted: Set<String> = ["ghost.read", "ghost.online", "ghost.typing", "ghost.upload", "page.ghost", "page.chatGhost", "page.ghostPlus", "page.history", "page.archive", "page.media", "page.localPremium", "page.pluginConsole"]
++        result.removeAll { restricted.contains($0.id) }
++    }
+     return result
+ }
+ 
+diff --git a/submodules/SettingsUI/Sources/FullGramToolsController.swift b/submodules/SettingsUI/Sources/FullGramToolsController.swift
+index 3b2fea6e..af0248f4 100644
+--- a/submodules/SettingsUI/Sources/FullGramToolsController.swift
++++ b/submodules/SettingsUI/Sources/FullGramToolsController.swift
+@@ -390,17 +390,21 @@ func fullgramToolsController(context: AccountContext) -> ViewController {
+             .link(5, FullGramToolsRow.traffic.rawValue, symbol("network.badge.shield.half.filled", 0x8E8E93), ru ? "Маскировка трафика" : "Traffic masking", ""),
+             .info(5, FullGramToolsRow.trafficInfo.rawValue, ru ? "Трафик Telegram маскируется через прокси: MTProxy с fake-TLS (ссылка с секретом ee…) выглядит как обычный HTTPS, а WEB-прокси работает через HTTPS/WebSocket. Нужен адрес прокси-сервера." : "Telegram traffic is masked through a proxy: MTProxy with fake-TLS (a secret starting with ee…) looks like plain HTTPS, and a WEB proxy runs over HTTPS/WebSocket. You need a proxy server address.")
+         ]
+-        entries.append(.header(6, FullGramToolsRow.devHeader.rawValue, ru ? "РАЗРАБОТЧИКАМ ПЛАГИНОВ" : "PLUGIN DEVELOPERS"))
+-        entries.append(.link(6, FullGramToolsRow.githubToken.rawValue, symbol("key.horizontal.fill", 0x24292F), ru ? "Токен GitHub" : "GitHub token", FullGramCloudBuild.hasToken ? (ru ? "задан" : "set") : (ru ? "не задан" : "not set")))
+-        entries.append(.link(6, FullGramToolsRow.cloudBuild.rawValue, symbol("icloud.and.arrow.up.fill", 0x007AFF), ru ? "Собрать в облаке" : "Build in the cloud", "JS · TS · Py · Rust · Zig · AS · Go"))
+-        entries.append(.link(6, FullGramToolsRow.hotReloadAddress.rawValue, symbol("desktopcomputer", 0x5856D6), ru ? "Компьютер для hot reload" : "Hot reload computer", FullGramHotReload.address))
+-        entries.append(.toggle(6, FullGramToolsRow.hotReload.rawValue, symbol("bolt.horizontal.fill", 0xFF9500), ru ? "Hot reload" : "Hot reload", FullGramHotReload.shared.status.isEmpty ? (ru ? "Перезагрузка плагина при сохранении на компьютере" : "Reload the plugin when it is saved on the computer") : FullGramHotReload.shared.status, FullGramHotReload.shared.isConnected))
+-        entries.append(.toggle(6, FullGramToolsRow.webInspector.rawValue, symbol("safari.fill", 0x007AFF), "Safari Web Inspector", ru ? "Брейкпоинты и профайлер JS-плагинов (Mac → Safari → Разработка)" : "Breakpoints and profiler for JS plugins (Mac → Safari → Develop)", UserDefaults.standard.bool(forKey: "fullgram.dev.webInspector")))
+-        entries.append(.link(6, FullGramToolsRow.crashLogs.rawValue, symbol("ladybug.fill", 0xFF3B30), ru ? "Крэш-логи (MetricKit)" : "Crash logs (MetricKit)", ru ? "поделиться" : "share"))
+-        entries.append(.info(6, FullGramToolsRow.devInfo.rawValue, ru ? "Облачная сборка доступна Telegram ID из developers/ID репозитория плагинов: исходник уходит в ветку beta от вашего имени, GitHub собирает его, и плагин ставится только на это устройство. Остальным — сборка на компьютере (SDK и `fullgram` CLI в репозитории Full Gram)." : "Cloud builds are open to the Telegram IDs in the plugin repository's developers/ID: the source goes to the beta branch in your name, GitHub builds it, and the plugin is installed on this device only. Everyone else builds on a computer (SDKs and the `fullgram` CLI in the Full Gram repository)."))
++        if FullGramFeatureGate.isUnlocked {
++            entries.append(.header(6, FullGramToolsRow.devHeader.rawValue, ru ? "РАЗРАБОТЧИКАМ ПЛАГИНОВ" : "PLUGIN DEVELOPERS"))
++            entries.append(.link(6, FullGramToolsRow.githubToken.rawValue, symbol("key.horizontal.fill", 0x24292F), ru ? "Токен GitHub" : "GitHub token", FullGramCloudBuild.hasToken ? (ru ? "задан" : "set") : (ru ? "не задан" : "not set")))
++            entries.append(.link(6, FullGramToolsRow.cloudBuild.rawValue, symbol("icloud.and.arrow.up.fill", 0x007AFF), ru ? "Собрать в облаке" : "Build in the cloud", "JS · TS · Py · Rust · Zig · AS · Go"))
++            entries.append(.link(6, FullGramToolsRow.hotReloadAddress.rawValue, symbol("desktopcomputer", 0x5856D6), ru ? "Компьютер для hot reload" : "Hot reload computer", FullGramHotReload.address))
++            entries.append(.toggle(6, FullGramToolsRow.hotReload.rawValue, symbol("bolt.horizontal.fill", 0xFF9500), ru ? "Hot reload" : "Hot reload", FullGramHotReload.shared.status.isEmpty ? (ru ? "Перезагрузка плагина при сохранении на компьютере" : "Reload the plugin when it is saved on the computer") : FullGramHotReload.shared.status, FullGramHotReload.shared.isConnected))
++            entries.append(.toggle(6, FullGramToolsRow.webInspector.rawValue, symbol("safari.fill", 0x007AFF), "Safari Web Inspector", ru ? "Брейкпоинты и профайлер JS-плагинов (Mac → Safari → Разработка)" : "Breakpoints and profiler for JS plugins (Mac → Safari → Develop)", UserDefaults.standard.bool(forKey: "fullgram.dev.webInspector")))
++            entries.append(.link(6, FullGramToolsRow.crashLogs.rawValue, symbol("ladybug.fill", 0xFF3B30), ru ? "Крэш-логи (MetricKit)" : "Crash logs (MetricKit)", ru ? "поделиться" : "share"))
++            entries.append(.info(6, FullGramToolsRow.devInfo.rawValue, ru ? "Облачная сборка доступна Telegram ID из developers/ID репозитория плагинов: исходник уходит в ветку beta от вашего имени, GitHub собирает его, и плагин ставится только на это устройство. Остальным — сборка на компьютере (SDK и `fullgram` CLI в репозитории Full Gram)." : "Cloud builds are open to the Telegram IDs in the plugin repository's developers/ID: the source goes to the beta branch in your name, GitHub builds it, and the plugin is installed on this device only. Everyone else builds on a computer (SDKs and the `fullgram` CLI in the Full Gram repository)."))
++        }
+         entries.append(.header(7, FullGramToolsRow.textHeader.rawValue, ru ? "ТЕКСТ И ПЛАГИНЫ" : "TEXT AND PLUGINS"))
+         entries.append(.link(7, FullGramToolsRow.shortcuts.rawValue, symbol("text.insert", 0x34C759), ru ? "Шаблоны и сокращения" : "Shortcuts and templates", "\(FullGramTextShortcuts.shortcuts.count)"))
+-        entries.append(.link(7, FullGramToolsRow.pluginProfiles.rawValue, symbol("square.stack.3d.up.fill", 0xAF52DE), ru ? "Профили плагинов" : "Plugin profiles", "\(FullGramPluginProfiles.all.count)"))
++        if FullGramFeatureGate.isUnlocked {
++            entries.append(.link(7, FullGramToolsRow.pluginProfiles.rawValue, symbol("square.stack.3d.up.fill", 0xAF52DE), ru ? "Профили плагинов" : "Plugin profiles", "\(FullGramPluginProfiles.all.count)"))
++        }
+         entries.append(.link(7, FullGramToolsRow.bookmarks.rawValue, symbol("bookmark.fill", 0xFF9500), ru ? "Закладки" : "Bookmarks", "\(FullGramBookmarks.all.count)"))
+         entries.append(.toggle(7, FullGramToolsRow.nowPlaying.rawValue, symbol("music.note", 0xFF2D55), ru ? "Сейчас играет в био" : "Now playing in bio", ru ? "Трек из плеера в «О себе»; при выключении био вернётся" : "The playing track in your bio; turning it off restores the bio", FullGramTools.nowPlayingBio))
+         entries.append(.link(7, FullGramToolsRow.shadowBan.rawValue, symbol("person.fill.xmark", 0x8E8E93), ru ? "Теневой бан" : "Shadow ban", "\(FullGramShadowBan.users.count)"))
+diff --git a/submodules/SettingsUI/Sources/Privacy and Security/PrivacyAndSecurityController.swift b/submodules/SettingsUI/Sources/Privacy and Security/PrivacyAndSecurityController.swift
+index dadd53ce..46df3fe1 100644
+--- a/submodules/SettingsUI/Sources/Privacy and Security/PrivacyAndSecurityController.swift	
++++ b/submodules/SettingsUI/Sources/Privacy and Security/PrivacyAndSecurityController.swift	
+@@ -837,7 +837,9 @@ private func privacyAndSecurityControllerEntries(
+     entries.append(.dataSettingsInfo(presentationData.theme, presentationData.strings.PrivacySettings_DataSettingsHelp))
+     
+     entries.append(.openLinksIn(presentationData.theme, presentationData.strings.ChatSettings_OpenLinksIn, defaultWebBrowser))
+-    entries.append(.fullgramGhost)
++    if FullGramFeatureGate.isUnlocked {
++        entries.append(.fullgramGhost)
++    }
+ 
+     return entries
+ }
+diff --git a/submodules/TelegramCore/Sources/FullGram/FullGramFeatureGate.swift b/submodules/TelegramCore/Sources/FullGram/FullGramFeatureGate.swift
+new file mode 100644
+index 00000000..3d0dc90b
+--- /dev/null
++++ b/submodules/TelegramCore/Sources/FullGram/FullGramFeatureGate.swift
+@@ -0,0 +1,31 @@
++import Foundation
++import CryptoKit
++
++/// Ghost Mode, message history, Local Premium and code plugins stay off and out of the settings
++/// until `fullgram://unlock?k=<code>` is opened once. The unlock persists until reinstall.
++public enum FullGramFeatureGate {
++    public static let unlockedKey = "fullgram.gate.unlocked"
++    public static let didChangeNotification = Notification.Name("FullGramFeatureGateDidChange")
++    public static let scheme = "fullgram"
++
++    private static let codeHash = "200e1491aa18933e5c881537784c2de1052965d31b7d5664d51c4e266b88ea1d"
++
++    public static var isUnlocked: Bool {
++        return UserDefaults.standard.bool(forKey: unlockedKey)
++    }
++
++    public static func unlock(code: String) -> Bool {
++        let hash = SHA256.hash(data: Data(("fullgram:" + code).utf8)).map { String(format: "%02x", $0) }.joined()
++        guard hash == codeHash else { return false }
++        UserDefaults.standard.set(true, forKey: unlockedKey)
++        NotificationCenter.default.post(name: didChangeNotification, object: nil)
++        return true
++    }
++
++    /// `fullgram://unlock?k=…`: nil for any other URL, otherwise whether the code was right.
++    public static func handle(url: URL) -> Bool? {
++        guard url.scheme?.lowercased() == scheme, url.host?.lowercased() == "unlock" else { return nil }
++        let code = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems?.first(where: { $0.name == "k" })?.value ?? ""
++        return unlock(code: code)
++    }
++}

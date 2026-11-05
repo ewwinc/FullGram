@@ -1,0 +1,9 @@
+[package]
+name = "fullgram-plugin"
+version = "0.1.0"
+edition = "2021"
+description = "SDK for Full Gram code plugins written in Rust (compiled to WebAssembly)"
+license = "MIT"
+
+[lib]
+path = "src/lib.rs"

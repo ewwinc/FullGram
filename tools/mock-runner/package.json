@@ -1,0 +1,13 @@
+{
+  "name": "@fullgram/plugin-mock",
+  "version": "27.5.0",
+  "description": "Run and test Full Gram for iOS JavaScript plugins in Node on the app's real prelude.",
+  "type": "module",
+  "license": "MIT",
+  "bin": { "fullgram-mock": "cli.ts" },
+  "scripts": {
+    "test": "node --test prelude.test.ts fuzz.test.ts",
+    "test:27.6": "node --test api276.test.ts"
+  },
+  "engines": { "node": ">=23.6" }
+}

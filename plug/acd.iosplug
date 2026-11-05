@@ -1,0 +1,8 @@
+{
+  "format": "fullgram-iosplug-1",
+  "id": "acd",
+  "name": "Album Cover Downloader",
+  "version": "1.0",
+  "author": "Full Gram",
+  "description": "Сохраняет доступное превью обложки аудиофайла в Фото."
+}
