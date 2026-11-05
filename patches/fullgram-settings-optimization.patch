@@ -68,10 +68,10 @@ diff --git a/submodules/SettingsUI/Sources/FullGramAppearancePlusController.swif
          let ru = presentationData.strings.baseLanguageCode.hasPrefix("ru")
 @@ -134,7 +134,7 @@
          }
-         entries.append(.info(5, FullGramAppearancePlusRow.effectsInfo.rawValue, ru ? "Снег — белые точки на фоне чата, под сообщениями. Листья и другие эффекты падают поверх приложения и не мешают нажатиям. При включённом «Уменьшении движения» в iOS эффекты не показываются." : "Snow is white dots in the chat background, under the messages. Leaves and other effects fall over the app and never block taps. With iOS Reduce Motion on, effects are hidden."))
+         entries.append(.info(5, FullGramAppearancePlusRow.effectsInfo.rawValue, ru ? "РЎРЅРµРі вЂ” Р±РµР»С‹Рµ С‚РѕС‡РєРё РЅР° С„РѕРЅРµ С‡Р°С‚Р°, РїРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏРјРё. Р›РёСЃС‚СЊСЏ Рё РґСЂСѓРіРёРµ СЌС„С„РµРєС‚С‹ РїР°РґР°СЋС‚ РїРѕРІРµСЂС… РїСЂРёР»РѕР¶РµРЅРёСЏ Рё РЅРµ РјРµС€Р°СЋС‚ РЅР°Р¶Р°С‚РёСЏРј. РџСЂРё РІРєР»СЋС‡С‘РЅРЅРѕРј В«РЈРјРµРЅСЊС€РµРЅРёРё РґРІРёР¶РµРЅРёСЏВ» РІ iOS СЌС„С„РµРєС‚С‹ РЅРµ РїРѕРєР°Р·С‹РІР°СЋС‚СЃСЏ." : "Snow is white dots in the chat background, under the messages. Leaves and other effects fall over the app and never block taps. With iOS Reduce Motion on, effects are hidden."))
          let data = ItemListPresentationData(presentationData)
--        let state = ItemListControllerState(presentationData: data, title: .text(ru ? "Оформление+" : "Appearance+"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
-+        let state = ItemListControllerState(presentationData: data, title: .text(ru ? "Панели, стекло и эффекты" : "Tabs, glass & effects"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
+-        let state = ItemListControllerState(presentationData: data, title: .text(ru ? "РћС„РѕСЂРјР»РµРЅРёРµ+" : "Appearance+"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
++        let state = ItemListControllerState(presentationData: data, title: .text(ru ? "РџР°РЅРµР»Рё, СЃС‚РµРєР»Рѕ Рё СЌС„С„РµРєС‚С‹" : "Tabs, glass & effects"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
          return (state, (ItemListNodeState(presentationData: data, entries: entries, style: .blocks, animateChanges: true), arguments))
      }
      let controller = ItemListController(context: context, state: signal)
@@ -96,42 +96,42 @@ diff --git a/submodules/SettingsUI/Sources/FullGramCategoriesController.swift b/
 @@ -85,21 +93,21 @@
      case .messages:
          return [
-             FullGramCategoryItem(id: 11, symbol: "trash.fill", color: 0xFF9500, titleRu: "Удалённые и изменённые", titleEn: "Deleted & edited", subtitleRu: "Сохранять удалённые сообщения и историю правок", subtitleEn: "Keep deleted messages and edit history", open: page { fullgramMessageHistoryController(context: $0) }),
--            FullGramCategoryItem(id: 12, symbol: "photo.stack.fill", color: 0x34C759, titleRu: "Архив медиа", titleEn: "Media archive", subtitleRu: "Сохранённые фото и видео из удалённых", subtitleEn: "Saved photos and videos from deleted messages", open: page { FullGramMediaArchiveScreen(context: $0) }),
-+            FullGramCategoryItem(id: 12, symbol: "photo.stack.fill", color: 0x34C759, titleRu: "Архив медиа", titleEn: "Media archive", subtitleRu: "Сохранённые фото и видео из удалённых", subtitleEn: "Saved photos and videos from deleted messages", open: page { FullGramMediaArchiveScreen(context: $0) }, imageName: "FullGram/MediaArchive"),
-             FullGramCategoryItem(id: 13, symbol: "doc.on.doc.fill", color: 0x5856D6, titleRu: "Обход ограничений", titleEn: "Restriction bypass", subtitleRu: "Копирование, скриншоты, исчезающие медиа", subtitleEn: "Copying, screenshots, disappearing media", open: page { fullgramRestrictionBypassController(context: $0) }),
-             FullGramCategoryItem(id: 14, symbol: "textformat", color: 0x007AFF, titleRu: "Отправка", titleEn: "Sending", subtitleRu: "Автозамена, анти-капс, ответ с цитатой, отложенная отправка", subtitleEn: "Auto-replace, anti-caps, reply with a quote, delayed sending", open: page { fullgramSendingController(context: $0) }),
-             FullGramCategoryItem(id: 15, symbol: "character.bubble.fill", color: 0x34C759, titleRu: "Перевод", titleEn: "Translation", subtitleRu: "Сервис, кнопка на сообщениях, перевод перед отправкой", subtitleEn: "Service, button on messages, translation before sending", open: page { fullgramTranslationSettingsController(context: $0) }),
--            FullGramCategoryItem(id: 16, symbol: "line.3.horizontal.decrease.circle.fill", color: 0xFF3B30, titleRu: "Фильтры", titleEn: "Filters", subtitleRu: "Скрывать сообщения по словам и регуляркам", subtitleEn: "Hide messages by words and patterns", open: page { fullgramChatOptionsController(context: $0, regex: true) }),
-+            FullGramCategoryItem(id: 16, symbol: "line.3.horizontal.decrease.circle.fill", color: 0xFF3B30, titleRu: "Фильтры", titleEn: "Filters", subtitleRu: "Скрывать сообщения по словам и регуляркам", subtitleEn: "Hide messages by words and patterns", open: page { fullgramChatOptionsController(context: $0, regex: true) }, imageName: "FullGram/Filter"),
-             FullGramCategoryItem(id: 17, symbol: "hand.tap.fill", color: 0xFF9500, titleRu: "Меню и жесты", titleEn: "Menu & gestures", subtitleRu: "Пункты меню сообщений и двойной тап", subtitleEn: "Message menu items and double tap", open: page { fullgramInterfaceSettingsController(context: $0, contextMenu: true) }),
-             FullGramCategoryItem(id: 18, symbol: "bubble.left.and.bubble.right.fill", color: 0x32ADE6, titleRu: "Чаты", titleEn: "Chats", subtitleRu: "Поведение чатов и реакции", subtitleEn: "Chat behaviour and reactions", open: page { fullgramChatsSettingsController(context: $0) }),
-             FullGramCategoryItem(id: 19, symbol: "magnifyingglass", color: 0x007AFF, titleRu: "Поиск каналов и людей", titleEn: "Find channels and people", subtitleRu: "", subtitleEn: "", open: page { fullgramPeerSearchController(context: $0) }),
--            FullGramCategoryItem(id: 20, symbol: "bell.badge.fill", color: 0xFF3B30, titleRu: "Локальные уведомления", titleEn: "Local notifications", subtitleRu: "Действия, тихие часы, фильтр слов", subtitleEn: "Actions, quiet hours, keyword filter", open: page { fullgramLocalNotificationsController(context: $0) })
-+            FullGramCategoryItem(id: 20, symbol: "bell.badge.fill", color: 0xFF3B30, titleRu: "Локальные уведомления", titleEn: "Local notifications", subtitleRu: "Действия, тихие часы, фильтр слов", subtitleEn: "Actions, quiet hours, keyword filter", open: page { fullgramLocalNotificationsController(context: $0) }, imageName: "Item List/Icons/Notifications")
+             FullGramCategoryItem(id: 11, symbol: "trash.fill", color: 0xFF9500, titleRu: "РЈРґР°Р»С‘РЅРЅС‹Рµ Рё РёР·РјРµРЅС‘РЅРЅС‹Рµ", titleEn: "Deleted & edited", subtitleRu: "РЎРѕС…СЂР°РЅСЏС‚СЊ СѓРґР°Р»С‘РЅРЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ Рё РёСЃС‚РѕСЂРёСЋ РїСЂР°РІРѕРє", subtitleEn: "Keep deleted messages and edit history", open: page { fullgramMessageHistoryController(context: $0) }),
+-            FullGramCategoryItem(id: 12, symbol: "photo.stack.fill", color: 0x34C759, titleRu: "РђСЂС…РёРІ РјРµРґРёР°", titleEn: "Media archive", subtitleRu: "РЎРѕС…СЂР°РЅС‘РЅРЅС‹Рµ С„РѕС‚Рѕ Рё РІРёРґРµРѕ РёР· СѓРґР°Р»С‘РЅРЅС‹С…", subtitleEn: "Saved photos and videos from deleted messages", open: page { FullGramMediaArchiveScreen(context: $0) }),
++            FullGramCategoryItem(id: 12, symbol: "photo.stack.fill", color: 0x34C759, titleRu: "РђСЂС…РёРІ РјРµРґРёР°", titleEn: "Media archive", subtitleRu: "РЎРѕС…СЂР°РЅС‘РЅРЅС‹Рµ С„РѕС‚Рѕ Рё РІРёРґРµРѕ РёР· СѓРґР°Р»С‘РЅРЅС‹С…", subtitleEn: "Saved photos and videos from deleted messages", open: page { FullGramMediaArchiveScreen(context: $0) }, imageName: "FullGram/MediaArchive"),
+             FullGramCategoryItem(id: 13, symbol: "doc.on.doc.fill", color: 0x5856D6, titleRu: "РћР±С…РѕРґ РѕРіСЂР°РЅРёС‡РµРЅРёР№", titleEn: "Restriction bypass", subtitleRu: "РљРѕРїРёСЂРѕРІР°РЅРёРµ, СЃРєСЂРёРЅС€РѕС‚С‹, РёСЃС‡РµР·Р°СЋС‰РёРµ РјРµРґРёР°", subtitleEn: "Copying, screenshots, disappearing media", open: page { fullgramRestrictionBypassController(context: $0) }),
+             FullGramCategoryItem(id: 14, symbol: "textformat", color: 0x007AFF, titleRu: "РћС‚РїСЂР°РІРєР°", titleEn: "Sending", subtitleRu: "РђРІС‚РѕР·Р°РјРµРЅР°, Р°РЅС‚Рё-РєР°РїСЃ, РѕС‚РІРµС‚ СЃ С†РёС‚Р°С‚РѕР№, РѕС‚Р»РѕР¶РµРЅРЅР°СЏ РѕС‚РїСЂР°РІРєР°", subtitleEn: "Auto-replace, anti-caps, reply with a quote, delayed sending", open: page { fullgramSendingController(context: $0) }),
+             FullGramCategoryItem(id: 15, symbol: "character.bubble.fill", color: 0x34C759, titleRu: "РџРµСЂРµРІРѕРґ", titleEn: "Translation", subtitleRu: "РЎРµСЂРІРёСЃ, РєРЅРѕРїРєР° РЅР° СЃРѕРѕР±С‰РµРЅРёСЏС…, РїРµСЂРµРІРѕРґ РїРµСЂРµРґ РѕС‚РїСЂР°РІРєРѕР№", subtitleEn: "Service, button on messages, translation before sending", open: page { fullgramTranslationSettingsController(context: $0) }),
+-            FullGramCategoryItem(id: 16, symbol: "line.3.horizontal.decrease.circle.fill", color: 0xFF3B30, titleRu: "Р¤РёР»СЊС‚СЂС‹", titleEn: "Filters", subtitleRu: "РЎРєСЂС‹РІР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёСЏ РїРѕ СЃР»РѕРІР°Рј Рё СЂРµРіСѓР»СЏСЂРєР°Рј", subtitleEn: "Hide messages by words and patterns", open: page { fullgramChatOptionsController(context: $0, regex: true) }),
++            FullGramCategoryItem(id: 16, symbol: "line.3.horizontal.decrease.circle.fill", color: 0xFF3B30, titleRu: "Р¤РёР»СЊС‚СЂС‹", titleEn: "Filters", subtitleRu: "РЎРєСЂС‹РІР°С‚СЊ СЃРѕРѕР±С‰РµРЅРёСЏ РїРѕ СЃР»РѕРІР°Рј Рё СЂРµРіСѓР»СЏСЂРєР°Рј", subtitleEn: "Hide messages by words and patterns", open: page { fullgramChatOptionsController(context: $0, regex: true) }, imageName: "FullGram/Filter"),
+             FullGramCategoryItem(id: 17, symbol: "hand.tap.fill", color: 0xFF9500, titleRu: "РњРµРЅСЋ Рё Р¶РµСЃС‚С‹", titleEn: "Menu & gestures", subtitleRu: "РџСѓРЅРєС‚С‹ РјРµРЅСЋ СЃРѕРѕР±С‰РµРЅРёР№ Рё РґРІРѕР№РЅРѕР№ С‚Р°Рї", subtitleEn: "Message menu items and double tap", open: page { fullgramInterfaceSettingsController(context: $0, contextMenu: true) }),
+             FullGramCategoryItem(id: 18, symbol: "bubble.left.and.bubble.right.fill", color: 0x32ADE6, titleRu: "Р§Р°С‚С‹", titleEn: "Chats", subtitleRu: "РџРѕРІРµРґРµРЅРёРµ С‡Р°С‚РѕРІ Рё СЂРµР°РєС†РёРё", subtitleEn: "Chat behaviour and reactions", open: page { fullgramChatsSettingsController(context: $0) }),
+             FullGramCategoryItem(id: 19, symbol: "magnifyingglass", color: 0x007AFF, titleRu: "РџРѕРёСЃРє РєР°РЅР°Р»РѕРІ Рё Р»СЋРґРµР№", titleEn: "Find channels and people", subtitleRu: "", subtitleEn: "", open: page { fullgramPeerSearchController(context: $0) }),
+-            FullGramCategoryItem(id: 20, symbol: "bell.badge.fill", color: 0xFF3B30, titleRu: "Р›РѕРєР°Р»СЊРЅС‹Рµ СѓРІРµРґРѕРјР»РµРЅРёСЏ", titleEn: "Local notifications", subtitleRu: "Р”РµР№СЃС‚РІРёСЏ, С‚РёС…РёРµ С‡Р°СЃС‹, С„РёР»СЊС‚СЂ СЃР»РѕРІ", subtitleEn: "Actions, quiet hours, keyword filter", open: page { fullgramLocalNotificationsController(context: $0) })
++            FullGramCategoryItem(id: 20, symbol: "bell.badge.fill", color: 0xFF3B30, titleRu: "Р›РѕРєР°Р»СЊРЅС‹Рµ СѓРІРµРґРѕРјР»РµРЅРёСЏ", titleEn: "Local notifications", subtitleRu: "Р”РµР№СЃС‚РІРёСЏ, С‚РёС…РёРµ С‡Р°СЃС‹, С„РёР»СЊС‚СЂ СЃР»РѕРІ", subtitleEn: "Actions, quiet hours, keyword filter", open: page { fullgramLocalNotificationsController(context: $0) }, imageName: "Item List/Icons/Notifications")
          ]
      case .media:
          return [
-             FullGramCategoryItem(id: 21, symbol: "waveform", color: 0xFF2D55, titleRu: "Голос", titleEn: "Voice", subtitleRu: "Смена голоса, эквалайзер, запикивание мата", subtitleEn: "Voice changer, equalizer, profanity bleep", open: page { fullgramVoiceSettingsController(context: $0) }),
-             FullGramCategoryItem(id: 22, symbol: "camera.fill", color: 0x34C759, titleRu: "Кружки и камера", titleEn: "Video messages & camera", subtitleRu: "Маски, качество, камера, водяной знак", subtitleEn: "Masks, quality, camera, watermark", open: page { fullgramVideoMessagesController(context: $0) }),
--            FullGramCategoryItem(id: 23, symbol: "phone.fill", color: 0x34C759, titleRu: "Звонки", titleEn: "Calls", subtitleRu: "Подтверждение, тихий микрофон, статистика", subtitleEn: "Confirmation, silent mute, statistics", open: page { fullgramCallsSettingsController(context: $0) }),
-+            FullGramCategoryItem(id: 23, symbol: "phone.fill", color: 0x34C759, titleRu: "Звонки", titleEn: "Calls", subtitleRu: "Подтверждение звонков и статистика", subtitleEn: "Call confirmation and statistics", open: page { fullgramCallsSettingsController(context: $0) }),
-             FullGramCategoryItem(id: 24, symbol: "arrow.down.circle.fill", color: 0x007AFF, titleRu: "Загрузки и качество", titleEn: "Downloads & quality", subtitleRu: "Крупные фото, качество, галерея", subtitleEn: "Large photos, quality, gallery", open: page { fullgramWhiteGramController(context: $0, groups: [.photos], title: fullgramIsRussian($0) ? "Загрузки и качество" : "Downloads & quality") }),
-             FullGramCategoryItem(id: 25, symbol: "slider.vertical.3", color: 0xFF2D55, titleRu: "Эквалайзер плеера", titleEn: "Player equalizer", subtitleRu: "", subtitleEn: "", open: page { fullgramEqualizerController(context: $0) }),
-             FullGramCategoryItem(id: 26, symbol: "quote.bubble.fill", color: 0xFF2D55, titleRu: "Тексты песен", titleEn: "Lyrics", subtitleRu: "Источники текстов", subtitleEn: "Lyrics sources", open: page { fullgramLyricsSourcesController(context: $0) }),
+             FullGramCategoryItem(id: 21, symbol: "waveform", color: 0xFF2D55, titleRu: "Р“РѕР»РѕСЃ", titleEn: "Voice", subtitleRu: "РЎРјРµРЅР° РіРѕР»РѕСЃР°, СЌРєРІР°Р»Р°Р№Р·РµСЂ, Р·Р°РїРёРєРёРІР°РЅРёРµ РјР°С‚Р°", subtitleEn: "Voice changer, equalizer, profanity bleep", open: page { fullgramVoiceSettingsController(context: $0) }),
+             FullGramCategoryItem(id: 22, symbol: "camera.fill", color: 0x34C759, titleRu: "РљСЂСѓР¶РєРё Рё РєР°РјРµСЂР°", titleEn: "Video messages & camera", subtitleRu: "РњР°СЃРєРё, РєР°С‡РµСЃС‚РІРѕ, РєР°РјРµСЂР°, РІРѕРґСЏРЅРѕР№ Р·РЅР°Рє", subtitleEn: "Masks, quality, camera, watermark", open: page { fullgramVideoMessagesController(context: $0) }),
+-            FullGramCategoryItem(id: 23, symbol: "phone.fill", color: 0x34C759, titleRu: "Р—РІРѕРЅРєРё", titleEn: "Calls", subtitleRu: "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ, С‚РёС…РёР№ РјРёРєСЂРѕС„РѕРЅ, СЃС‚Р°С‚РёСЃС‚РёРєР°", subtitleEn: "Confirmation, silent mute, statistics", open: page { fullgramCallsSettingsController(context: $0) }),
++            FullGramCategoryItem(id: 23, symbol: "phone.fill", color: 0x34C759, titleRu: "Р—РІРѕРЅРєРё", titleEn: "Calls", subtitleRu: "РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ Р·РІРѕРЅРєРѕРІ Рё СЃС‚Р°С‚РёСЃС‚РёРєР°", subtitleEn: "Call confirmation and statistics", open: page { fullgramCallsSettingsController(context: $0) }),
+             FullGramCategoryItem(id: 24, symbol: "arrow.down.circle.fill", color: 0x007AFF, titleRu: "Р—Р°РіСЂСѓР·РєРё Рё РєР°С‡РµСЃС‚РІРѕ", titleEn: "Downloads & quality", subtitleRu: "РљСЂСѓРїРЅС‹Рµ С„РѕС‚Рѕ, РєР°С‡РµСЃС‚РІРѕ, РіР°Р»РµСЂРµСЏ", subtitleEn: "Large photos, quality, gallery", open: page { fullgramWhiteGramController(context: $0, groups: [.photos], title: fullgramIsRussian($0) ? "Р—Р°РіСЂСѓР·РєРё Рё РєР°С‡РµСЃС‚РІРѕ" : "Downloads & quality") }),
+             FullGramCategoryItem(id: 25, symbol: "slider.vertical.3", color: 0xFF2D55, titleRu: "Р­РєРІР°Р»Р°Р№Р·РµСЂ РїР»РµРµСЂР°", titleEn: "Player equalizer", subtitleRu: "", subtitleEn: "", open: page { fullgramEqualizerController(context: $0) }),
+             FullGramCategoryItem(id: 26, symbol: "quote.bubble.fill", color: 0xFF2D55, titleRu: "РўРµРєСЃС‚С‹ РїРµСЃРµРЅ", titleEn: "Lyrics", subtitleRu: "РСЃС‚РѕС‡РЅРёРєРё С‚РµРєСЃС‚РѕРІ", subtitleEn: "Lyrics sources", open: page { fullgramLyricsSourcesController(context: $0) }),
 @@ -111,11 +119,11 @@
-             FullGramCategoryItem(id: 32, symbol: "list.bullet.rectangle.fill", color: 0x34C759, titleRu: "Список чатов", titleEn: "Chat list", subtitleRu: "Строки, свайпы, аватары и папки", subtitleEn: "Rows, swipes, avatars and folders", open: page { fullgramWhiteGramController(context: $0, groups: [.interface], title: fullgramIsRussian($0) ? "Список чатов" : "Chat list") }),
-             FullGramCategoryItem(id: 33, symbol: "dock.rectangle", color: 0x5856D6, titleRu: "Панели", titleEn: "Panels", subtitleRu: "Таб-бар, поле ввода и навигация", subtitleEn: "Tab bar, input field and navigation", open: page { fullgramWhiteGramController(context: $0, groups: [.tabBar], title: fullgramIsRussian($0) ? "Панели" : "Panels") }),
-             FullGramCategoryItem(id: 34, symbol: "slider.horizontal.3", color: 0x5856D6, titleRu: "Навигация и редактор", titleEn: "Navigation and composer", subtitleRu: "", subtitleEn: "", open: page { fullgramInterfacePageController(context: $0, navigationOnly: true) }),
--            FullGramCategoryItem(id: 35, symbol: "paintbrush.pointed.fill", color: 0xFF2D55, titleRu: "Тема и фон", titleEn: "Theme & background", subtitleRu: "AMOLED, вкладки, старый дизайн, снег, эффекты", subtitleEn: "AMOLED, tabs, classic design, snow, effects", open: page { fullgramAppearancePlusController(context: $0) }),
-+            FullGramCategoryItem(id: 35, symbol: "paintbrush.pointed.fill", color: 0xFF2D55, titleRu: "Панели, стекло и эффекты", titleEn: "Tabs, glass & effects", subtitleRu: "Вкладки, старый дизайн, анимации и снег", subtitleEn: "Tabs, classic design, animations and snow", open: page { fullgramAppearancePlusController(context: $0) }),
-             FullGramCategoryItem(id: 36, symbol: "drop.halffull", color: 0x32ADE6, titleRu: "Стекло и пузыри", titleEn: "Glass and bubbles", subtitleRu: "", subtitleEn: "", open: page { fullgramGlassController(context: $0) }),
--            FullGramCategoryItem(id: 37, symbol: "paintpalette.fill", color: 0xAF52DE, titleRu: "Кастомизация", titleEn: "Customization", subtitleRu: "Цвета, бейджи", subtitleEn: "Colours, badges", open: page { fullgramCustomizationController(context: $0) }),
--            FullGramCategoryItem(id: 38, symbol: "square.grid.2x2.fill", color: 0xFF9500, titleRu: "Иконки и бейдж", titleEn: "Icons & badge", subtitleRu: "Иконка приложения и значок Full Gram", subtitleEn: "App icon and the Full Gram badge", open: page { fullgramIconsController(context: $0) }),
--            FullGramCategoryItem(id: 39, symbol: "person.crop.square.fill", color: 0x8E8E93, titleRu: "Профиль и настройки", titleEn: "Profile & settings", subtitleRu: "ID, дата-центр, даты и пункты Настроек", subtitleEn: "ID, data center, dates and Settings rows", open: page { fullgramSettingsCategoryController(context: $0, category: 3) }),
-+            FullGramCategoryItem(id: 37, symbol: "paintpalette.fill", color: 0xAF52DE, titleRu: "Темы, цвета и бейджи", titleEn: "Themes, colours & badges", subtitleRu: "Готовые палитры, фон чата и свои цвета", subtitleEn: "Palettes, chat background and custom colours", open: page { fullgramCustomizationController(context: $0) }),
-+            FullGramCategoryItem(id: 38, symbol: "square.grid.2x2.fill", color: 0xFF9500, titleRu: "Иконки и бейдж", titleEn: "Icons & badge", subtitleRu: "Иконка приложения, цветные или монохромные значки", subtitleEn: "App icon, coloured or monochrome glyphs", open: page { fullgramIconsController(context: $0) }),
-+            FullGramCategoryItem(id: 39, symbol: "person.crop.square.fill", color: 0x8E8E93, titleRu: "Метки сообщений и MessageShot", titleEn: "Message labels & MessageShot", subtitleRu: "Время, метки правок и снимки сообщений", subtitleEn: "Timestamps, edit labels and message screenshots", open: page { fullgramSettingsCategoryController(context: $0, category: 3) }),
+             FullGramCategoryItem(id: 32, symbol: "list.bullet.rectangle.fill", color: 0x34C759, titleRu: "РЎРїРёСЃРѕРє С‡Р°С‚РѕРІ", titleEn: "Chat list", subtitleRu: "РЎС‚СЂРѕРєРё, СЃРІР°Р№РїС‹, Р°РІР°С‚Р°СЂС‹ Рё РїР°РїРєРё", subtitleEn: "Rows, swipes, avatars and folders", open: page { fullgramWhiteGramController(context: $0, groups: [.interface], title: fullgramIsRussian($0) ? "РЎРїРёСЃРѕРє С‡Р°С‚РѕРІ" : "Chat list") }),
+             FullGramCategoryItem(id: 33, symbol: "dock.rectangle", color: 0x5856D6, titleRu: "РџР°РЅРµР»Рё", titleEn: "Panels", subtitleRu: "РўР°Р±-Р±Р°СЂ, РїРѕР»Рµ РІРІРѕРґР° Рё РЅР°РІРёРіР°С†РёСЏ", subtitleEn: "Tab bar, input field and navigation", open: page { fullgramWhiteGramController(context: $0, groups: [.tabBar], title: fullgramIsRussian($0) ? "РџР°РЅРµР»Рё" : "Panels") }),
+             FullGramCategoryItem(id: 34, symbol: "slider.horizontal.3", color: 0x5856D6, titleRu: "РќР°РІРёРіР°С†РёСЏ Рё СЂРµРґР°РєС‚РѕСЂ", titleEn: "Navigation and composer", subtitleRu: "", subtitleEn: "", open: page { fullgramInterfacePageController(context: $0, navigationOnly: true) }),
+-            FullGramCategoryItem(id: 35, symbol: "paintbrush.pointed.fill", color: 0xFF2D55, titleRu: "РўРµРјР° Рё С„РѕРЅ", titleEn: "Theme & background", subtitleRu: "AMOLED, РІРєР»Р°РґРєРё, СЃС‚Р°СЂС‹Р№ РґРёР·Р°Р№РЅ, СЃРЅРµРі, СЌС„С„РµРєС‚С‹", subtitleEn: "AMOLED, tabs, classic design, snow, effects", open: page { fullgramAppearancePlusController(context: $0) }),
++            FullGramCategoryItem(id: 35, symbol: "paintbrush.pointed.fill", color: 0xFF2D55, titleRu: "РџР°РЅРµР»Рё, СЃС‚РµРєР»Рѕ Рё СЌС„С„РµРєС‚С‹", titleEn: "Tabs, glass & effects", subtitleRu: "Р’РєР»Р°РґРєРё, СЃС‚Р°СЂС‹Р№ РґРёР·Р°Р№РЅ, Р°РЅРёРјР°С†РёРё Рё СЃРЅРµРі", subtitleEn: "Tabs, classic design, animations and snow", open: page { fullgramAppearancePlusController(context: $0) }),
+             FullGramCategoryItem(id: 36, symbol: "drop.halffull", color: 0x32ADE6, titleRu: "РЎС‚РµРєР»Рѕ Рё РїСѓР·С‹СЂРё", titleEn: "Glass and bubbles", subtitleRu: "", subtitleEn: "", open: page { fullgramGlassController(context: $0) }),
+-            FullGramCategoryItem(id: 37, symbol: "paintpalette.fill", color: 0xAF52DE, titleRu: "РљР°СЃС‚РѕРјРёР·Р°С†РёСЏ", titleEn: "Customization", subtitleRu: "Р¦РІРµС‚Р°, Р±РµР№РґР¶Рё", subtitleEn: "Colours, badges", open: page { fullgramCustomizationController(context: $0) }),
+-            FullGramCategoryItem(id: 38, symbol: "square.grid.2x2.fill", color: 0xFF9500, titleRu: "РРєРѕРЅРєРё Рё Р±РµР№РґР¶", titleEn: "Icons & badge", subtitleRu: "РРєРѕРЅРєР° РїСЂРёР»РѕР¶РµРЅРёСЏ Рё Р·РЅР°С‡РѕРє Full Gram", subtitleEn: "App icon and the Full Gram badge", open: page { fullgramIconsController(context: $0) }),
+-            FullGramCategoryItem(id: 39, symbol: "person.crop.square.fill", color: 0x8E8E93, titleRu: "РџСЂРѕС„РёР»СЊ Рё РЅР°СЃС‚СЂРѕР№РєРё", titleEn: "Profile & settings", subtitleRu: "ID, РґР°С‚Р°-С†РµРЅС‚СЂ, РґР°С‚С‹ Рё РїСѓРЅРєС‚С‹ РќР°СЃС‚СЂРѕРµРє", subtitleEn: "ID, data center, dates and Settings rows", open: page { fullgramSettingsCategoryController(context: $0, category: 3) }),
++            FullGramCategoryItem(id: 37, symbol: "paintpalette.fill", color: 0xAF52DE, titleRu: "РўРµРјС‹, С†РІРµС‚Р° Рё Р±РµР№РґР¶Рё", titleEn: "Themes, colours & badges", subtitleRu: "Р“РѕС‚РѕРІС‹Рµ РїР°Р»РёС‚СЂС‹, С„РѕРЅ С‡Р°С‚Р° Рё СЃРІРѕРё С†РІРµС‚Р°", subtitleEn: "Palettes, chat background and custom colours", open: page { fullgramCustomizationController(context: $0) }),
++            FullGramCategoryItem(id: 38, symbol: "square.grid.2x2.fill", color: 0xFF9500, titleRu: "РРєРѕРЅРєРё Рё Р±РµР№РґР¶", titleEn: "Icons & badge", subtitleRu: "РРєРѕРЅРєР° РїСЂРёР»РѕР¶РµРЅРёСЏ, С†РІРµС‚РЅС‹Рµ РёР»Рё РјРѕРЅРѕС…СЂРѕРјРЅС‹Рµ Р·РЅР°С‡РєРё", subtitleEn: "App icon, coloured or monochrome glyphs", open: page { fullgramIconsController(context: $0) }),
++            FullGramCategoryItem(id: 39, symbol: "person.crop.square.fill", color: 0x8E8E93, titleRu: "РњРµС‚РєРё СЃРѕРѕР±С‰РµРЅРёР№ Рё MessageShot", titleEn: "Message labels & MessageShot", subtitleRu: "Р’СЂРµРјСЏ, РјРµС‚РєРё РїСЂР°РІРѕРє Рё СЃРЅРёРјРєРё СЃРѕРѕР±С‰РµРЅРёР№", subtitleEn: "Timestamps, edit labels and message screenshots", open: page { fullgramSettingsCategoryController(context: $0, category: 3) }),
              FullGramCategoryItem(id: 40, symbol: "switch.2", color: 0x6750A4, titleRu: "Material Design", titleEn: "Material Design", subtitleRu: "", subtitleEn: "", open: page { fullgramMaterialDesignController(context: $0) })
          ]
      case .security:
@@ -139,14 +139,14 @@ diff --git a/submodules/SettingsUI/Sources/FullGramCategoriesController.swift b/
          ]
      case .more:
          return [
--            FullGramCategoryItem(id: 61, symbol: "puzzlepiece.extension.fill", color: 0x007AFF, titleRu: "Плагины", titleEn: "Plugins", subtitleRu: "Каталог, консоль, разработка", subtitleEn: "Catalog, console, development", open: { context, _ in fullgramPresentPlugins(context: context) }),
-+            FullGramCategoryItem(id: 61, symbol: "puzzlepiece.extension.fill", color: 0x007AFF, titleRu: "Плагины", titleEn: "Plugins", subtitleRu: "Каталог, консоль, разработка", subtitleEn: "Catalog, console, development", open: { context, _ in fullgramPresentPlugins(context: context) }, imageName: "FullGram/Plugins"),
-             FullGramCategoryItem(id: 62, symbol: "wrench.and.screwdriver.fill", color: 0x8E8E93, titleRu: "Инструменты", titleEn: "Tools", subtitleRu: "VirusTotal, ИИ, прокси, бэкап, Last.fm", subtitleEn: "VirusTotal, AI, proxy, backup, Last.fm", open: page { fullgramToolsController(context: $0) }),
--            FullGramCategoryItem(id: 63, symbol: "star.fill", color: 0xAF52DE, titleRu: "Локальный Premium", titleEn: "Local Premium", subtitleRu: "", subtitleEn: "", open: page { fullgramLocalPremiumController(context: $0) }),
-+            FullGramCategoryItem(id: 63, symbol: "star.fill", color: 0xAF52DE, titleRu: "Локальный Premium", titleEn: "Local Premium", subtitleRu: "", subtitleEn: "", open: page { fullgramLocalPremiumController(context: $0) }, imageName: "Item List/Icons/Premium"),
-             FullGramCategoryItem(id: 64, symbol: "antenna.radiowaves.left.and.right", color: 0x007AFF, titleRu: "Контакты рядом", titleEn: "Nearby contact", subtitleRu: "", subtitleEn: "", open: page { fullgramNearbyContactController(context: $0) }),
-             FullGramCategoryItem(id: 65, symbol: "gearshape.fill", color: 0x8E8E93, titleRu: "Общие", titleEn: "General", subtitleRu: "", subtitleEn: "", open: page { fullgramGeneralSettingsController(context: $0) }),
-             FullGramCategoryItem(id: 66, symbol: "star.circle.fill", color: 0xFF9500, titleRu: "Прочее", titleEn: "Other", subtitleRu: "", subtitleEn: "", open: page { fullgramOtherSettingsController(context: $0, navigation: nil) }),
+-            FullGramCategoryItem(id: 61, symbol: "puzzlepiece.extension.fill", color: 0x007AFF, titleRu: "РџР»Р°РіРёРЅС‹", titleEn: "Plugins", subtitleRu: "РљР°С‚Р°Р»РѕРі, РєРѕРЅСЃРѕР»СЊ, СЂР°Р·СЂР°Р±РѕС‚РєР°", subtitleEn: "Catalog, console, development", open: { context, _ in fullgramPresentPlugins(context: context) }),
++            FullGramCategoryItem(id: 61, symbol: "puzzlepiece.extension.fill", color: 0x007AFF, titleRu: "РџР»Р°РіРёРЅС‹", titleEn: "Plugins", subtitleRu: "РљР°С‚Р°Р»РѕРі, РєРѕРЅСЃРѕР»СЊ, СЂР°Р·СЂР°Р±РѕС‚РєР°", subtitleEn: "Catalog, console, development", open: { context, _ in fullgramPresentPlugins(context: context) }, imageName: "FullGram/Plugins"),
+             FullGramCategoryItem(id: 62, symbol: "wrench.and.screwdriver.fill", color: 0x8E8E93, titleRu: "РРЅСЃС‚СЂСѓРјРµРЅС‚С‹", titleEn: "Tools", subtitleRu: "VirusTotal, РР, РїСЂРѕРєСЃРё, Р±СЌРєР°Рї, Last.fm", subtitleEn: "VirusTotal, AI, proxy, backup, Last.fm", open: page { fullgramToolsController(context: $0) }),
+-            FullGramCategoryItem(id: 63, symbol: "star.fill", color: 0xAF52DE, titleRu: "Р›РѕРєР°Р»СЊРЅС‹Р№ Premium", titleEn: "Local Premium", subtitleRu: "", subtitleEn: "", open: page { fullgramLocalPremiumController(context: $0) }),
++            FullGramCategoryItem(id: 63, symbol: "star.fill", color: 0xAF52DE, titleRu: "Р›РѕРєР°Р»СЊРЅС‹Р№ Premium", titleEn: "Local Premium", subtitleRu: "", subtitleEn: "", open: page { fullgramLocalPremiumController(context: $0) }, imageName: "Item List/Icons/Premium"),
+             FullGramCategoryItem(id: 64, symbol: "antenna.radiowaves.left.and.right", color: 0x007AFF, titleRu: "РљРѕРЅС‚Р°РєС‚С‹ СЂСЏРґРѕРј", titleEn: "Nearby contact", subtitleRu: "", subtitleEn: "", open: page { fullgramNearbyContactController(context: $0) }),
+             FullGramCategoryItem(id: 65, symbol: "gearshape.fill", color: 0x8E8E93, titleRu: "РћР±С‰РёРµ", titleEn: "General", subtitleRu: "", subtitleEn: "", open: page { fullgramGeneralSettingsController(context: $0) }),
+             FullGramCategoryItem(id: 66, symbol: "star.circle.fill", color: 0xFF9500, titleRu: "РџСЂРѕС‡РµРµ", titleEn: "Other", subtitleRu: "", subtitleEn: "", open: page { fullgramOtherSettingsController(context: $0, navigation: nil) }),
 @@ -144,7 +152,7 @@
          guard let item = items.first(where: { $0.id == id }) else { return }
          item.open(context, { push?($0) })
@@ -178,13 +178,13 @@ diff --git a/submodules/SettingsUI/Sources/FullGramCategoryScreens.swift b/submo
      |> map { presentationData, _ -> (ItemListControllerState, (ItemListNodeState, Any)) in
          let ru = presentationData.strings.baseLanguageCode.hasPrefix("ru")
 @@ -294,6 +294,8 @@
-         .header(1, 0, ru ? "ИКОНКИ" : "ICONS"),
-         .link(1, 1, symbol("app.badge.fill", 0xFF9500), ru ? "Иконка приложения" : "App icon", ""),
-         .link(1, 2, symbol("square.grid.2x2.fill", 0x32ADE6), ru ? "Набор иконок вкладок" : "Tab icon pack", FullGramTools.iconPack.title(ru)),
-+        .toggle(1, 3, symbol("circle.lefthalf.filled", 0x8E8E93), ru ? "Монохромные иконки настроек" : "Monochrome settings icons", nil, FullGramSettingsIcons.monochrome),
-+        .info(1, 4, ru ? "Белые значки на тёмно-сером фоне. Выключите, чтобы вернуть цветные иконки. Применяется сразу." : "White glyphs on a dark grey background. Turn off to restore coloured icons. Applies immediately."),
-         .header(2, 10, ru ? "БЕЙДЖ" : "BADGE"),
-         .toggle(2, 11, symbol("checkmark.seal.fill", 0x8E5CF7), ru ? "Скрыть значок Full Gram у людей" : "Hide the Full Gram badge on people", ru ? "В чатах не показывается; в профиле остаётся" : "Hidden in chats; still shown in the profile", FullGramExtras.isOn(.hideFullGramBadges))
+         .header(1, 0, ru ? "РРљРћРќРљР" : "ICONS"),
+         .link(1, 1, symbol("app.badge.fill", 0xFF9500), ru ? "РРєРѕРЅРєР° РїСЂРёР»РѕР¶РµРЅРёСЏ" : "App icon", ""),
+         .link(1, 2, symbol("square.grid.2x2.fill", 0x32ADE6), ru ? "РќР°Р±РѕСЂ РёРєРѕРЅРѕРє РІРєР»Р°РґРѕРє" : "Tab icon pack", FullGramTools.iconPack.title(ru)),
++        .toggle(1, 3, symbol("circle.lefthalf.filled", 0x8E8E93), ru ? "РњРѕРЅРѕС…СЂРѕРјРЅС‹Рµ РёРєРѕРЅРєРё РЅР°СЃС‚СЂРѕРµРє" : "Monochrome settings icons", nil, FullGramSettingsIcons.monochrome),
++        .info(1, 4, ru ? "Р‘РµР»С‹Рµ Р·РЅР°С‡РєРё РЅР° С‚С‘РјРЅРѕ-СЃРµСЂРѕРј С„РѕРЅРµ. Р’С‹РєР»СЋС‡РёС‚Рµ, С‡С‚РѕР±С‹ РІРµСЂРЅСѓС‚СЊ С†РІРµС‚РЅС‹Рµ РёРєРѕРЅРєРё. РџСЂРёРјРµРЅСЏРµС‚СЃСЏ СЃСЂР°Р·Сѓ." : "White glyphs on a dark grey background. Turn off to restore coloured icons. Applies immediately."),
+         .header(2, 10, ru ? "Р‘Р•Р™Р”Р–" : "BADGE"),
+         .toggle(2, 11, symbol("checkmark.seal.fill", 0x8E5CF7), ru ? "РЎРєСЂС‹С‚СЊ Р·РЅР°С‡РѕРє Full Gram Сѓ Р»СЋРґРµР№" : "Hide the Full Gram badge on people", ru ? "Р’ С‡Р°С‚Р°С… РЅРµ РїРѕРєР°Р·С‹РІР°РµС‚СЃСЏ; РІ РїСЂРѕС„РёР»Рµ РѕСЃС‚Р°С‘С‚СЃСЏ" : "Hidden in chats; still shown in the profile", FullGramExtras.isOn(.hideFullGramBadges))
      ] }, open: { id, _, present in
 @@ -304,6 +306,7 @@
          default: break
@@ -206,32 +206,32 @@ diff --git a/submodules/SettingsUI/Sources/FullGramCustomizationController.swift
      |> deliverOnMainQueue
      |> map { presentationData, _ -> (ItemListControllerState, (ItemListNodeState, Any)) in
          let ru = presentationData.strings.baseLanguageCode.hasPrefix("ru")
-         var entries: [FullGramSectionedEntry] = [.header(1, 0, ru ? "ГОТОВЫЕ ПАЛИТРЫ" : "PALETTES")]
+         var entries: [FullGramSectionedEntry] = [.header(1, 0, ru ? "Р“РћРўРћР’Р«Р• РџРђР›РРўР Р«" : "PALETTES")]
          for (index, preset) in FullGramCustomization.presets.enumerated() where index < 15 {
              let tint = preset.colors[.accent].flatMap(FullGramCustomization.parse) ?? 0x8E5CF7
 -            entries.append(.link(1, Int32(1 + index), symbol("circle.hexagongrid.fill", tint), ru ? preset.nameRu : preset.nameEn, ""))
 +            entries.append(.link(1, Int32(1 + index), FullGramSettingsIcons.symbol("circle.hexagongrid.fill", color: UIColor(rgb: tint), preserveColor: true), ru ? preset.nameRu : preset.nameEn, ""))
          }
-         entries.append(.header(2, 16, ru ? "СВОИ ЦВЕТА" : "YOUR COLOURS"))
+         entries.append(.header(2, 16, ru ? "РЎР’РћР Р¦Р’Р•РўРђ" : "YOUR COLOURS"))
          for (index, row) in fullgramColorRows.enumerated() {
              let value = FullGramCustomization.rgb(row.0)
--            entries.append(.link(2, Int32(17 + index), symbol(row.1, value ?? 0x8E8E93), ru ? row.2 : row.3, FullGramCustomization.hex(row.0) ?? (ru ? "как в теме" : "theme")))
-+            entries.append(.link(2, Int32(17 + index), FullGramSettingsIcons.symbol(row.1, color: UIColor(rgb: value ?? 0x8E8E93), preserveColor: true), ru ? row.2 : row.3, FullGramCustomization.hex(row.0) ?? (ru ? "как в теме" : "theme")))
+-            entries.append(.link(2, Int32(17 + index), symbol(row.1, value ?? 0x8E8E93), ru ? row.2 : row.3, FullGramCustomization.hex(row.0) ?? (ru ? "РєР°Рє РІ С‚РµРјРµ" : "theme")))
++            entries.append(.link(2, Int32(17 + index), FullGramSettingsIcons.symbol(row.1, color: UIColor(rgb: value ?? 0x8E8E93), preserveColor: true), ru ? row.2 : row.3, FullGramCustomization.hex(row.0) ?? (ru ? "РєР°Рє РІ С‚РµРјРµ" : "theme")))
          }
-         entries.append(.info(2, 26, ru ? "Цвета ложатся поверх любой темы и применяются после перезапуска приложения." : "Colours go on top of any theme and apply after the app is relaunched."))
-         entries.append(.header(3, 30, ru ? "БЕЙДЖИ" : "BADGES"))
+         entries.append(.info(2, 26, ru ? "Р¦РІРµС‚Р° Р»РѕР¶Р°С‚СЃСЏ РїРѕРІРµСЂС… Р»СЋР±РѕР№ С‚РµРјС‹ Рё РїСЂРёРјРµРЅСЏСЋС‚СЃСЏ РїРѕСЃР»Рµ РїРµСЂРµР·Р°РїСѓСЃРєР° РїСЂРёР»РѕР¶РµРЅРёСЏ." : "Colours go on top of any theme and apply after the app is relaunched."))
+         entries.append(.header(3, 30, ru ? "Р‘Р•Р™Р”Р–Р" : "BADGES"))
 @@ -204,7 +204,7 @@
-         entries.append(.header(4, 97, ru ? "СБРОС" : "RESET"))
-         entries.append(.link(4, 99, symbol("arrow.counterclockwise", 0xFF3B30), ru ? "Сбросить кастомизацию" : "Reset customization", ""))
+         entries.append(.header(4, 97, ru ? "РЎР‘Р РћРЎ" : "RESET"))
+         entries.append(.link(4, 99, symbol("arrow.counterclockwise", 0xFF3B30), ru ? "РЎР±СЂРѕСЃРёС‚СЊ РєР°СЃС‚РѕРјРёР·Р°С†РёСЋ" : "Reset customization", ""))
          let data = ItemListPresentationData(presentationData)
--        let state = ItemListControllerState(presentationData: data, title: .text(ru ? "Кастомизация" : "Customization"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
-+        let state = ItemListControllerState(presentationData: data, title: .text(ru ? "Темы, цвета и бейджи" : "Themes, colours & badges"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
+-        let state = ItemListControllerState(presentationData: data, title: .text(ru ? "РљР°СЃС‚РѕРјРёР·Р°С†РёСЏ" : "Customization"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
++        let state = ItemListControllerState(presentationData: data, title: .text(ru ? "РўРµРјС‹, С†РІРµС‚Р° Рё Р±РµР№РґР¶Рё" : "Themes, colours & badges"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
          return (state, (ItemListNodeState(presentationData: data, entries: entries, style: .blocks, animateChanges: true), arguments))
      }
      let controller = ItemListController(context: context, state: signal)
-diff --git a/submodules/SettingsUI/Sources/FullGramSettingsController.swift b/submodules/SettingsUI/Sources/FullGramSettingsController.swift
---- a/submodules/SettingsUI/Sources/FullGramSettingsController.swift
-+++ b/submodules/SettingsUI/Sources/FullGramSettingsController.swift
+diff --git a/submodules/SettingsUI/Sources/FullGramPreferencesController.swift b/submodules/SettingsUI/Sources/FullGramPreferencesController.swift
+--- a/submodules/SettingsUI/Sources/FullGramPreferencesController.swift
++++ b/submodules/SettingsUI/Sources/FullGramPreferencesController.swift
 @@ -179,51 +179,25 @@
              }
          }
@@ -353,7 +353,7 @@ diff --git a/submodules/SettingsUI/Sources/FullGramSettingsController.swift b/su
      case 3:
          // Local Premium lives on the Full Gram page only; the app icon picker is not listed here.
 -        return (FullGramStrings.appearance.text(ru), [(4, FullGramStrings.chatAppearance.text(ru)), (7, FullGramStrings.messageshotAppearance.text(ru))])
-+        return (ru ? "Метки сообщений и MessageShot" : "Message labels & MessageShot", [(4, FullGramStrings.chatAppearance.text(ru)), (7, FullGramStrings.messageshotAppearance.text(ru))])
++        return (ru ? "РњРµС‚РєРё СЃРѕРѕР±С‰РµРЅРёР№ Рё MessageShot" : "Message labels & MessageShot", [(4, FullGramStrings.chatAppearance.text(ru)), (7, FullGramStrings.messageshotAppearance.text(ru))])
      default:
          return (FullGramStrings.chats.text(ru), [(8, FullGramStrings.hiddenMessages.text(ru)), (9, FullGramStrings.chatReactions.text(ru))])
      }
@@ -398,26 +398,26 @@ diff --git a/submodules/SettingsUI/Sources/FullGramSettingsSearch.swift b/submod
 --- a/submodules/SettingsUI/Sources/FullGramSettingsSearch.swift
 +++ b/submodules/SettingsUI/Sources/FullGramSettingsSearch.swift
 @@ -50,6 +50,7 @@
-     toggle("ui.format", "Панель форматирования", "Formatting toolbar", interface, \FullGramGhostModeSettings.interface.formattingToolbar)
-     toggle("ui.doubleEdit", "Редактировать двойным нажатием", "Double tap to edit", interface, \FullGramGhostModeSettings.interface.doubleTapToEdit)
-     let appearance = ru ? "Оформление" : "Appearance"
-+    local("appearance.icons", "Монохромные иконки настроек", "Monochrome settings icons", appearance, { FullGramSettingsIcons.monochrome }, { FullGramSettingsIcons.monochrome = $0 })
-     local("appearance.contacts", "Скрыть вкладку Контакты", "Hide Contacts tab", appearance, { FullGramAppearancePlus.hideContactsTab }, { FullGramAppearancePlus.hideContactsTab = $0 })
-     local("appearance.calls", "Скрыть вкладку Звонки", "Hide Calls tab", appearance, { FullGramAppearancePlus.hideCallsTab }, { FullGramAppearancePlus.hideCallsTab = $0 })
-     local("appearance.titles", "Скрыть подписи вкладок", "Hide tab titles", appearance, { FullGramAppearancePlus.hideTabTitles }, { FullGramAppearancePlus.hideTabTitles = $0 })
+     toggle("ui.format", "РџР°РЅРµР»СЊ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёСЏ", "Formatting toolbar", interface, \FullGramGhostModeSettings.interface.formattingToolbar)
+     toggle("ui.doubleEdit", "Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РґРІРѕР№РЅС‹Рј РЅР°Р¶Р°С‚РёРµРј", "Double tap to edit", interface, \FullGramGhostModeSettings.interface.doubleTapToEdit)
+     let appearance = ru ? "РћС„РѕСЂРјР»РµРЅРёРµ" : "Appearance"
++    local("appearance.icons", "РњРѕРЅРѕС…СЂРѕРјРЅС‹Рµ РёРєРѕРЅРєРё РЅР°СЃС‚СЂРѕРµРє", "Monochrome settings icons", appearance, { FullGramSettingsIcons.monochrome }, { FullGramSettingsIcons.monochrome = $0 })
+     local("appearance.contacts", "РЎРєСЂС‹С‚СЊ РІРєР»Р°РґРєСѓ РљРѕРЅС‚Р°РєС‚С‹", "Hide Contacts tab", appearance, { FullGramAppearancePlus.hideContactsTab }, { FullGramAppearancePlus.hideContactsTab = $0 })
+     local("appearance.calls", "РЎРєСЂС‹С‚СЊ РІРєР»Р°РґРєСѓ Р—РІРѕРЅРєРё", "Hide Calls tab", appearance, { FullGramAppearancePlus.hideCallsTab }, { FullGramAppearancePlus.hideCallsTab = $0 })
+     local("appearance.titles", "РЎРєСЂС‹С‚СЊ РїРѕРґРїРёСЃРё РІРєР»Р°РґРѕРє", "Hide tab titles", appearance, { FullGramAppearancePlus.hideTabTitles }, { FullGramAppearancePlus.hideTabTitles = $0 })
 @@ -67,9 +68,10 @@
-     page("general", "Общие настройки клиента", "General client settings") { fullgramGeneralSettingsController(context: context) }
-     page("chats", "Чаты", "Chats", "сообщения sending отправка") { fullgramChatsSettingsController(context: context) }
-     page("appearance", "Оформление чатов", "Chat appearance", "секунды seconds метки label размер size") { fullgramSettingsCategoryController(context: context, category: 3) }
--    page("appearancePlus", "Оформление+", "Appearance+", "вкладки tabs стекло glass") { fullgramAppearancePlusController(context: context) }
-+    page("appearancePlus", "Панели, стекло и эффекты", "Tabs, glass & effects", "вкладки tabs стекло glass") { fullgramAppearancePlusController(context: context) }
-     page("whiteGram", "Шрифты и оформление WhiteGram", "WhiteGram fonts and appearance", "font пузырьки bubble экспорт import") { fullgramWhiteGramController(context: context) }
--    page("custom", "Кастомизация", "Customization", "цвета colors палитра темы theme wallpaper обои") { fullgramCustomizationController(context: context) }
-+    page("custom", "Темы, цвета и бейджи", "Themes, colours & badges", "цвета colors палитра темы theme wallpaper обои") { fullgramCustomizationController(context: context) }
-+    page("icons", "Иконки и бейдж", "Icons & badge", "монохромные цветные monochrome coloured svg") { fullgramIconsController(context: context) }
-     page("glass", "Стекло и пузыри", "Glass and bubbles") { fullgramGlassController(context: context) }
-     page("lyricsMotion", "Анимация текста в плеере", "Player lyrics animation", "караоке karaoke волна wave свечение glow каскад cascade") { fullgramPlayerTextSettingsController(context: context) }
-     page("lyrics", "Источники текстов песен", "Lyrics sources", "музыка music слова") { fullgramLyricsSourcesController(context: context) }
+     page("general", "РћР±С‰РёРµ РЅР°СЃС‚СЂРѕР№РєРё РєР»РёРµРЅС‚Р°", "General client settings") { fullgramGeneralSettingsController(context: context) }
+     page("chats", "Р§Р°С‚С‹", "Chats", "СЃРѕРѕР±С‰РµРЅРёСЏ sending РѕС‚РїСЂР°РІРєР°") { fullgramChatsSettingsController(context: context) }
+     page("appearance", "РћС„РѕСЂРјР»РµРЅРёРµ С‡Р°С‚РѕРІ", "Chat appearance", "СЃРµРєСѓРЅРґС‹ seconds РјРµС‚РєРё label СЂР°Р·РјРµСЂ size") { fullgramSettingsCategoryController(context: context, category: 3) }
+-    page("appearancePlus", "РћС„РѕСЂРјР»РµРЅРёРµ+", "Appearance+", "РІРєР»Р°РґРєРё tabs СЃС‚РµРєР»Рѕ glass") { fullgramAppearancePlusController(context: context) }
++    page("appearancePlus", "РџР°РЅРµР»Рё, СЃС‚РµРєР»Рѕ Рё СЌС„С„РµРєС‚С‹", "Tabs, glass & effects", "РІРєР»Р°РґРєРё tabs СЃС‚РµРєР»Рѕ glass") { fullgramAppearancePlusController(context: context) }
+     page("whiteGram", "РЁСЂРёС„С‚С‹ Рё РѕС„РѕСЂРјР»РµРЅРёРµ WhiteGram", "WhiteGram fonts and appearance", "font РїСѓР·С‹СЂСЊРєРё bubble СЌРєСЃРїРѕСЂС‚ import") { fullgramWhiteGramController(context: context) }
+-    page("custom", "РљР°СЃС‚РѕРјРёР·Р°С†РёСЏ", "Customization", "С†РІРµС‚Р° colors РїР°Р»РёС‚СЂР° С‚РµРјС‹ theme wallpaper РѕР±РѕРё") { fullgramCustomizationController(context: context) }
++    page("custom", "РўРµРјС‹, С†РІРµС‚Р° Рё Р±РµР№РґР¶Рё", "Themes, colours & badges", "С†РІРµС‚Р° colors РїР°Р»РёС‚СЂР° С‚РµРјС‹ theme wallpaper РѕР±РѕРё") { fullgramCustomizationController(context: context) }
++    page("icons", "РРєРѕРЅРєРё Рё Р±РµР№РґР¶", "Icons & badge", "РјРѕРЅРѕС…СЂРѕРјРЅС‹Рµ С†РІРµС‚РЅС‹Рµ monochrome coloured svg") { fullgramIconsController(context: context) }
+     page("glass", "РЎС‚РµРєР»Рѕ Рё РїСѓР·С‹СЂРё", "Glass and bubbles") { fullgramGlassController(context: context) }
+     page("lyricsMotion", "РђРЅРёРјР°С†РёСЏ С‚РµРєСЃС‚Р° РІ РїР»РµРµСЂРµ", "Player lyrics animation", "РєР°СЂР°РѕРєРµ karaoke РІРѕР»РЅР° wave СЃРІРµС‡РµРЅРёРµ glow РєР°СЃРєР°Рґ cascade") { fullgramPlayerTextSettingsController(context: context) }
+     page("lyrics", "РСЃС‚РѕС‡РЅРёРєРё С‚РµРєСЃС‚РѕРІ РїРµСЃРµРЅ", "Lyrics sources", "РјСѓР·С‹РєР° music СЃР»РѕРІР°") { fullgramLyricsSourcesController(context: context) }
 diff --git a/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.swift b/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.swift
 --- a/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.swift
 +++ b/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.swift
@@ -464,10 +464,9 @@ diff --git a/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.s
 +        images.setObject(image, forKey: key, cost: cost)
 +        return image
 +    }
- 
      /// The mod's own full-bleed logo.
      public static let logo: UIImage? = FullGramSettingsIcons.bundleLogo("FullGram/Brand", fallbackColor: UIColor(rgb: 0x8E5CF7))
-@@ -16,94 +55,105 @@
+@@ -35,94 +74,105 @@
      /// Telegram's paper plane, drawn from its SVG outline as one solid shape, white on a
      /// colored rounded square.
      public static func telegram(color: UIColor) -> UIImage? {
@@ -477,7 +476,7 @@ diff --git a/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.s
 -            context.addPath(UIBezierPath(roundedRect: bounds, cornerRadius: FullGramSettingsIcons.cornerRadius).cgPath)
 -            context.setFillColor(color.cgColor)
 -            context.fillPath()
--            // 24 pt artwork; the plane's box is (5.4, 7.0)–(18.4, 17.7).
+-            // 24 pt artwork; the plane's box is (5.4, 7.0)вЂ“(18.4, 17.7).
 -            guard let plane = try? convertSvgPath("M5.43,11.86 L17.35,7.26 C17.90,7.05 18.42,7.40 18.27,8.10 L16.40,16.90 C16.26,17.53 15.88,17.68 15.36,17.39 L12.30,15.15 L10.90,16.50 C10.74,16.66 10.61,16.79 10.31,16.79 L10.52,13.69 L15.80,8.92 C16.03,8.72 15.75,8.60 15.45,8.80 L8.92,12.91 L6.10,12.03 C5.49,11.84 5.30,11.92 5.43,11.86 Z") else {
 -                return
 -            }
@@ -496,7 +495,7 @@ diff --git a/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.s
 +                context.addPath(UIBezierPath(roundedRect: bounds, cornerRadius: FullGramSettingsIcons.cornerRadius).cgPath)
 +                context.setFillColor(color.cgColor)
 +                context.fillPath()
-+                // 24 pt artwork; the plane's box is (5.4, 7.0)–(18.4, 17.7).
++                // 24 pt artwork; the plane's box is (5.4, 7.0)вЂ“(18.4, 17.7).
 +                guard let plane = try? convertSvgPath("M5.43,11.86 L17.35,7.26 C17.90,7.05 18.42,7.40 18.27,8.10 L16.40,16.90 C16.26,17.53 15.88,17.68 15.36,17.39 L12.30,15.15 L10.90,16.50 C10.74,16.66 10.61,16.79 10.31,16.79 L10.52,13.69 L15.80,8.92 C16.03,8.72 15.75,8.60 15.45,8.80 L8.92,12.91 L6.10,12.03 C5.49,11.84 5.30,11.92 5.43,11.86 Z") else {
 +                    return
 +                }
@@ -511,7 +510,7 @@ diff --git a/submodules/TelegramPresentationData/Sources/FullGramSettingsIcons.s
      }
  
      /// A white glyph from the app bundle on a colored rounded square. Telegram's own settings
-     /// glyphs ("Item List/Icons/…") are drawn at their full 30 pt canvas; the Full Gram ones, 24 pt
+     /// glyphs ("Item List/Icons/вЂ¦") are drawn at their full 30 pt canvas; the Full Gram ones, 24 pt
      /// Solar-style artwork, are drawn into a centered square of `side` points.
      public static func glyph(_ name: String, color: UIColor, side: CGFloat? = nil) -> UIImage? {
 -        return generateImage(FullGramSettingsIcons.size, rotatedContext: { size, context in
