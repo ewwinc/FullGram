@@ -3,7 +3,7 @@
   "apiVersion": 1,
   "id": "typed_hook_demo",
   "name": "Typed hook demo",
-  "author": "Full Gram",
+  "author": "FullGram-IOS",
   "version": "1.0",
   "summary": "Replace tehh with the in plain outgoing cloud text.",
   "actions": [
@@ -16,7 +16,7 @@
     }
   ],
   "convertedFrom": "FullGram/literal-send-hook-v1",
-  "sourceSHA256": "3e5346f12ab35e01f95643aedfe3b9e5aad6c7abeaeee87c42afaf2fdb846d18",
+  "sourceSHA256": "138ad5c05fcfcb2c8dc086eedaced5721e82514d77ac0690ecff98a4368c1279",
   "limitations": [
     "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
     "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
