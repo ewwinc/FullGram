@@ -2,30 +2,30 @@
   "format": "fullgram-iosplug-2",
   "minimumEngineVersion": 2,
   "adapter": {
+    "format": "fullgram-ios-plugin",
+    "apiVersion": 7,
+    "id": "search_plus",
+    "name": "Search+ for iOS",
+    "author": "Full Gram",
+    "version": "2.6.1-ios.2",
+    "summary": "Multi-term search in the current chat/topic. The API 9 base app also provides author, date-range and media-type filters.",
     "actions": [
       {
         "id": "search",
-        "kind": "searchTerms",
-        "title": "Search+"
+        "title": "Search+",
+        "kind": "searchTerms"
       }
     ],
-    "apiVersion": 7,
-    "author": "Full Gram",
     "convertedFrom": "fullgram/catalog-v1",
-    "format": "fullgram-ios-plugin",
-    "id": "search_plus",
+    "sourceSHA256": "802dd326787e3640f55f20ac5462539c03202184e540578a4531c693c2c3458a",
     "limitations": [
       "Up to six phrases separated by | and 40 results per phrase. Current chat/topic only; no automatic pagination.",
       "Advanced filters require the API 9 base app. Supports author @username or a known user ID, local calendar dates and a media-type picker. Earlier base apps retain basic multi-term search.",
       "An unknown author or missing access hash reports an error instead of dropping the filter. Phone lookup, arbitrary ID lookup and global search injection are not implemented."
     ],
-    "name": "Search+ for iOS",
-    "sourceSHA256": "802dd326787e3640f55f20ac5462539c03202184e540578a4531c693c2c3458a",
-    "summary": "Multi-term search in the current chat/topic. The API 9 base app also provides author, date-range and media-type filters.",
-    "version": "2.6.1-ios.2",
     "catalogProof": {
-      "manifestData": "eyJhY3Rpb25zIjpbeyJpZCI6InNlYXJjaCIsImtpbmQiOiJzZWFyY2hUZXJtcyIsInRpdGxlIjoiU2VhcmNoKyJ9XSwiYXBpVmVyc2lvbiI6NywiYXV0aG9yIjoiQFNlYXJjaFBsdXNzcyAob3JpZ2luYWwpIiwiY29udmVydGVkRnJvbSI6ImF5dWdyYW0vY2F0YWxvZy12MSIsImZvcm1hdCI6ImF5dWdyYW0taW9zLXBsdWdpbiIsImlkIjoic2VhcmNoX3BsdXMiLCJsaW1pdGF0aW9ucyI6WyJVcCB0byBzaXggcGhyYXNlcyBzZXBhcmF0ZWQgYnkgfCBhbmQgNDAgcmVzdWx0cyBwZXIgcGhyYXNlLiBDdXJyZW50IGNoYXQvdG9waWMgb25seTsgbm8gYXV0b21hdGljIHBhZ2luYXRpb24uIiwiQWR2YW5jZWQgZmlsdGVycyByZXF1aXJlIHRoZSBBUEkgOSBiYXNlIGFwcC4gU3VwcG9ydHMgYXV0aG9yIEB1c2VybmFtZSBvciBhIGtub3duIHVzZXIgSUQsIGxvY2FsIGNhbGVuZGFyIGRhdGVzIGFuZCBhIG1lZGlhLXR5cGUgcGlja2VyLiBFYXJsaWVyIGJhc2UgYXBwcyByZXRhaW4gYmFzaWMgbXVsdGktdGVybSBzZWFyY2guIiwiQW4gdW5rbm93biBhdXRob3Igb3IgbWlzc2luZyBhY2Nlc3MgaGFzaCByZXBvcnRzIGFuIGVycm9yIGluc3RlYWQgb2YgZHJvcHBpbmcgdGhlIGZpbHRlci4gUGhvbmUgbG9va3VwLCBhcmJpdHJhcnkgSUQgbG9va3VwIGFuZCBnbG9iYWwgc2VhcmNoIGluamVjdGlvbiBhcmUgbm90IGltcGxlbWVudGVkLiJdLCJuYW1lIjoiU2VhcmNoKyBmb3IgaU9TIiwic291cmNlU0hBMjU2IjoiODAyZGQzMjY3ODdlMzY0MGY1NWYyMGFjNTQ2MjUzOWMwMzIwMjE4NGU1NDA1NzhhNDUzMWM2OTNjMmMzNDU4YSIsInN1bW1hcnkiOiJNdWx0aS10ZXJtIHNlYXJjaCBpbiB0aGUgY3VycmVudCBjaGF0L3RvcGljLiBUaGUgQVBJIDkgYmFzZSBhcHAgYWxzbyBwcm92aWRlcyBhdXRob3IsIGRhdGUtcmFuZ2UgYW5kIG1lZGlhLXR5cGUgZmlsdGVycy4iLCJ2ZXJzaW9uIjoiMi42LjEtaW9zLjIifQ==",
-      "signature": "aXFyZYk2qrlfmy4X3Jfu1hPUQWbRCu6V96A71a9XOU//4sbOYiJ6QLPE2zyN/25Kr/lIZu/CFnYN0JWXYYNEDw=="
+      "manifestData": "eyJhY3Rpb25zIjpbeyJpZCI6InNlYXJjaCIsImtpbmQiOiJzZWFyY2hUZXJtcyIsInRpdGxlIjoiU2VhcmNoKyJ9XSwiYXBpVmVyc2lvbiI6NywiYXV0aG9yIjoiRnVsbCBHcmFtIiwiY29udmVydGVkRnJvbSI6ImZ1bGxncmFtL2NhdGFsb2ctdjEiLCJmb3JtYXQiOiJmdWxsZ3JhbS1pb3MtcGx1Z2luIiwiaWQiOiJzZWFyY2hfcGx1cyIsImxpbWl0YXRpb25zIjpbIlVwIHRvIHNpeCBwaHJhc2VzIHNlcGFyYXRlZCBieSB8IGFuZCA0MCByZXN1bHRzIHBlciBwaHJhc2UuIEN1cnJlbnQgY2hhdC90b3BpYyBvbmx5OyBubyBhdXRvbWF0aWMgcGFnaW5hdGlvbi4iLCJBZHZhbmNlZCBmaWx0ZXJzIHJlcXVpcmUgdGhlIEFQSSA5IGJhc2UgYXBwLiBTdXBwb3J0cyBhdXRob3IgQHVzZXJuYW1lIG9yIGEga25vd24gdXNlciBJRCwgbG9jYWwgY2FsZW5kYXIgZGF0ZXMgYW5kIGEgbWVkaWEtdHlwZSBwaWNrZXIuIEVhcmxpZXIgYmFzZSBhcHBzIHJldGFpbiBiYXNpYyBtdWx0aS10ZXJtIHNlYXJjaC4iLCJBbiB1bmtub3duIGF1dGhvciBvciBtaXNzaW5nIGFjY2VzcyBoYXNoIHJlcG9ydHMgYW4gZXJyb3IgaW5zdGVhZCBvZiBkcm9wcGluZyB0aGUgZmlsdGVyLiBQaG9uZSBsb29rdXAsIGFyYml0cmFyeSBJRCBsb29rdXAgYW5kIGdsb2JhbCBzZWFyY2ggaW5qZWN0aW9uIGFyZSBub3QgaW1wbGVtZW50ZWQuIl0sIm5hbWUiOiJTZWFyY2grIGZvciBpT1MiLCJzb3VyY2VTSEEyNTYiOiI4MDJkZDMyNjc4N2UzNjQwZjU1ZjIwYWM1NDYyNTM5YzAzMjAyMTg0ZTU0MDU3OGE0NTMxYzY5M2MyYzM0NThhIiwic3VtbWFyeSI6Ik11bHRpLXRlcm0gc2VhcmNoIGluIHRoZSBjdXJyZW50IGNoYXQvdG9waWMuIFRoZSBBUEkgOSBiYXNlIGFwcCBhbHNvIHByb3ZpZGVzIGF1dGhvciwgZGF0ZS1yYW5nZSBhbmQgbWVkaWEtdHlwZSBmaWx0ZXJzLiIsInZlcnNpb24iOiIyLjYuMS1pb3MuMiJ9",
+      "signature": "4+mYCHQTrbL74+kr5Tcw7ZFB66BwAfuc24IaghpFUlLrVEzlTlQS3xVb6prAaF6y8UGpeuED4rL5X6NfEphoCA=="
     }
   }
 }

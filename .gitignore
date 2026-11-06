@@ -1,5 +1,6 @@
 telegram/
 artifacts/
+.tools/
 *.p12
 *.pfx
 *.key

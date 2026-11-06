@@ -4,7 +4,7 @@
   "name": "OTA lowercase demo",
   "author": "Full Gram",
   "version": "1.0",
-  "summary": "OTA lowercase demo: café",
+  "summary": "Lowercase outgoing text through a helper method.",
   "actions": [
     {
       "id": "lowercase",
@@ -24,5 +24,5 @@
   ],
   "apiVersion": 7,
   "convertedFrom": "fullgram/catalog-v1",
-  "sourceSHA256": "e0fc183cee441038e85e922805ccb989a3f849307558807184a975b92342b278"
+  "sourceSHA256": "51c3374a0894d93efa1dd9751d0f71aab23918270d721cf4ac5723af20270b7e"
 }

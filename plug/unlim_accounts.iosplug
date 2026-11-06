@@ -2,29 +2,29 @@
   "format": "fullgram-iosplug-2",
   "minimumEngineVersion": 2,
   "adapter": {
+    "format": "fullgram-ios-plugin",
+    "id": "unlim_accounts",
+    "name": "Unlim Accounts",
+    "author": "Full Gram",
+    "version": "1.0",
+    "summary": "Raises the local client add-account limit to 999 through the existing iOS bridge.",
     "actions": [
       {
         "id": "unlim_accounts",
-        "kind": "unlimitedAccounts",
-        "title": "Account limit 999"
+        "title": "Account limit 999",
+        "kind": "unlimitedAccounts"
       }
     ],
-    "apiVersion": 7,
-    "author": "Full Gram",
-    "convertedFrom": "fullgram/catalog-v1",
-    "format": "fullgram-ios-plugin",
-    "id": "unlim_accounts",
     "limitations": [
       "Changes the local add-account limit in the current account while enabled. Telegram server limits and authentication requirements still apply.",
       "The embedded Android DEX/native payload is not loaded; the existing native iOS account-limit bridge is used."
     ],
-    "name": "Unlim Accounts",
+    "apiVersion": 7,
+    "convertedFrom": "fullgram/catalog-v1",
     "sourceSHA256": "6c5e2f697da4d87b0409841d96dd9bf69f224073c44b555c6fd9de782c70d40f",
-    "summary": "Raises the local client add-account limit to 999 through the existing iOS bridge.",
-    "version": "1.0",
     "catalogProof": {
-      "manifestData": "eyJhY3Rpb25zIjpbeyJpZCI6InVubGltX2FjY291bnRzIiwia2luZCI6InVubGltaXRlZEFjY291bnRzIiwidGl0bGUiOiJBY2NvdW50IGxpbWl0IDk5OSJ9XSwiYXBpVmVyc2lvbiI6NywiYXV0aG9yIjoiQHJlem9sdmVQbHVnaW5zIiwiY29udmVydGVkRnJvbSI6ImF5dWdyYW0vY2F0YWxvZy12MSIsImZvcm1hdCI6ImF5dWdyYW0taW9zLXBsdWdpbiIsImlkIjoidW5saW1fYWNjb3VudHMiLCJsaW1pdGF0aW9ucyI6WyJDaGFuZ2VzIHRoZSBsb2NhbCBhZGQtYWNjb3VudCBsaW1pdCBpbiB0aGUgY3VycmVudCBhY2NvdW50IHdoaWxlIGVuYWJsZWQuIFRlbGVncmFtIHNlcnZlciBsaW1pdHMgYW5kIGF1dGhlbnRpY2F0aW9uIHJlcXVpcmVtZW50cyBzdGlsbCBhcHBseS4iLCJUaGUgZW1iZWRkZWQgQW5kcm9pZCBERVgvbmF0aXZlIHBheWxvYWQgaXMgbm90IGxvYWRlZDsgdGhlIGV4aXN0aW5nIG5hdGl2ZSBpT1MgYWNjb3VudC1saW1pdCBicmlkZ2UgaXMgdXNlZC4iXSwibmFtZSI6IlVubGltIEFjY291bnRzIiwic291cmNlU0hBMjU2IjoiNmM1ZTJmNjk3ZGE0ZDg3YjA0MDk4NDFkOTZkZDliZjY5ZjIyNDA3M2M0NGI1NTVjNmZkOWRlNzgyYzcwZDQwZiIsInN1bW1hcnkiOiJSYWlzZXMgdGhlIGxvY2FsIGNsaWVudCBhZGQtYWNjb3VudCBsaW1pdCB0byA5OTkgdGhyb3VnaCB0aGUgZXhpc3RpbmcgaU9TIGJyaWRnZS4iLCJ2ZXJzaW9uIjoiMS4wIn0=",
-      "signature": "fS8GiFYhnIuYMeECYfdadz32+HpON+IuTj1BGUgqoDrSiNLOryvSSbn5pRpGrv1/e6Je4moFrh0J/gDCWWU8AQ=="
+      "manifestData": "eyJhY3Rpb25zIjpbeyJpZCI6InVubGltX2FjY291bnRzIiwia2luZCI6InVubGltaXRlZEFjY291bnRzIiwidGl0bGUiOiJBY2NvdW50IGxpbWl0IDk5OSJ9XSwiYXBpVmVyc2lvbiI6NywiYXV0aG9yIjoiRnVsbCBHcmFtIiwiY29udmVydGVkRnJvbSI6ImZ1bGxncmFtL2NhdGFsb2ctdjEiLCJmb3JtYXQiOiJmdWxsZ3JhbS1pb3MtcGx1Z2luIiwiaWQiOiJ1bmxpbV9hY2NvdW50cyIsImxpbWl0YXRpb25zIjpbIkNoYW5nZXMgdGhlIGxvY2FsIGFkZC1hY2NvdW50IGxpbWl0IGluIHRoZSBjdXJyZW50IGFjY291bnQgd2hpbGUgZW5hYmxlZC4gVGVsZWdyYW0gc2VydmVyIGxpbWl0cyBhbmQgYXV0aGVudGljYXRpb24gcmVxdWlyZW1lbnRzIHN0aWxsIGFwcGx5LiIsIlRoZSBlbWJlZGRlZCBBbmRyb2lkIERFWC9uYXRpdmUgcGF5bG9hZCBpcyBub3QgbG9hZGVkOyB0aGUgZXhpc3RpbmcgbmF0aXZlIGlPUyBhY2NvdW50LWxpbWl0IGJyaWRnZSBpcyB1c2VkLiJdLCJuYW1lIjoiVW5saW0gQWNjb3VudHMiLCJzb3VyY2VTSEEyNTYiOiI2YzVlMmY2OTdkYTRkODdiMDQwOTg0MWQ5NmRkOWJmNjlmMjI0MDczYzQ0YjU1NWM2ZmQ5ZGU3ODJjNzBkNDBmIiwic3VtbWFyeSI6IlJhaXNlcyB0aGUgbG9jYWwgY2xpZW50IGFkZC1hY2NvdW50IGxpbWl0IHRvIDk5OSB0aHJvdWdoIHRoZSBleGlzdGluZyBpT1MgYnJpZGdlLiIsInZlcnNpb24iOiIxLjAifQ==",
+      "signature": "qFjlN2nlGi9rvI3jOBnT471Bw5h/2v/shagQnxFU7Ne9Amd2vR17f5BOwRz3/6JILC2NRthb814E57FV0NfjDw=="
     }
   }
 }

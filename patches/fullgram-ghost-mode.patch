@@ -76508,7 +76508,7 @@ index 00000000..4a2e1ce2
 +    public static let adapterDomain = Data("Full Gram adapter v1\0".utf8)
 +    public static let catalogDomain = Data("Full Gram catalog v1\0".utf8)
 +    public static let maximumResponseBytes = 2 * 1024 * 1024
-+    public static let publicKey = Data(base64Encoded: "qEhrxPcZOm6Aj4YsXJr2OFKp1/lrg/IKUkxZ28Zx8oU=")!
++    public static let publicKey = Data(base64Encoded: "QAojNmj60XkcFJ5KRQtqMQ9SKGdTL/uaAc3PT0sr+yI=")!
 +    public static let url = URL(string: "https://raw.githubusercontent.com/FullGram/FullGram-IOS/main/plugin-catalog/catalog.json")!
 +}
 +

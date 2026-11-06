@@ -23,9 +23,9 @@ def contract_errors(source, path=''):
         errors.append('Full Gram reaction display helpers require AccountContext')
     if path.endswith('ChatListControllerNode.swift') and re.search(r'!\s*self\.isSearchDisplayControllerActive\b', source):
         errors.append('ChatListControllerNode.isSearchDisplayControllerActive is ActiveSearch?; compare it with nil')
-    if path.rsplit('/', 1)[-1].startswith('Full Gram') and re.search(r'\.(?:content|title|image)EdgeInsets\b', source):
+    if path.rsplit('/', 1)[-1].startswith('FullGram') and re.search(r'\.(?:content|title|image)EdgeInsets\b', source):
         errors.append('UIButton edge insets are deprecated in iOS 15; use UIButton.Configuration.contentInsets')
-    if path.rsplit('/', 1)[-1].startswith('Full Gram') and re.search(r'\b(?:add|remove|set)TemporaryAttributes?\b', source):
+    if path.rsplit('/', 1)[-1].startswith('FullGram') and re.search(r'\b(?:add|remove|set)TemporaryAttributes?\b', source):
         errors.append('NSLayoutManager temporary attributes are macOS-only; draw a separate text layout on iOS')
     return errors
 

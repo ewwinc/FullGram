@@ -38,6 +38,10 @@ Keep a secure backup of the signing key outside Git. The public key is pinned in
 the base IPA; replacing that key requires distributing a new trusted base IPA.
 The tool refuses to replace an existing key or sign with a different public key.
 
+Revision 6 was re-signed for the Full Gram signature domains after the upstream
+catalog still carried foreign signatures. Builds pinned to the previous key must
+be rebuilt from this source; the current private key is not committed.
+
 ## Scope
 
 Catalog entries can use existing search, draft/text operations, Camera Flip,

@@ -3,7 +3,7 @@
   "apiVersion": 6,
   "id": "branch_hook_demo",
   "name": "Branch hook demo",
-  "author": "Full Gram",
+  "author": "FullGram-IOS",
   "version": "1.0",
   "summary": "Strip text; !text becomes uppercase, other text becomes a lowercase note.",
   "actions": [
@@ -47,7 +47,7 @@
     }
   ],
   "convertedFrom": "FullGram/ast-send-hook-v2",
-  "sourceSHA256": "bdb2bb52685ccd8478457b665ede410f4f734f9e321eaa76d5af1f282736808a",
+  "sourceSHA256": "a82d395ca65fccc52e6a3ee4b7174d1970f6c28084981ea767d281c9583048f5",
   "limitations": [
     "Converted to a native text program. Original plugin code is not executed.",
     "Plain cloud text only; formatted text, media captions, forwards and secret chats are unchanged.",

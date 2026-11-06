@@ -7,7 +7,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -25,7 +25,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "337b5500fe7beb995b9fb5470aa0171e1be19196494d9676ec5f74f32421c981",
+      "sourceSHA256": "23b0abbe3b7154c3df42e01521e34cea70b4314fe3f05c572f939caf9d348b6d",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -67,7 +67,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -85,7 +85,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "691ba2d71a16b7f37776d6e1b5155b0df1b592f56d45efa403704fe3a35ab8c2",
+      "sourceSHA256": "080141cc060383dfc88b0d7d4dac07ae5a07b78d31b954b656a2a31768a8c209",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -127,7 +127,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -145,7 +145,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "b26bf67214fa6096869ad8cd4c2a8c08a56b0a84d0d02a1ee6d34139022f4540",
+      "sourceSHA256": "bdf97d9fd3ef0d3f2a5708ae3814a73081f7c3c26e5b35fb00617b129f7184e8",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -187,7 +187,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -205,7 +205,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "8a7142ba62a4666b0e9fcd3c9631b0237cd1cfeb0070ce5085b36ea795e76c6d",
+      "sourceSHA256": "dec898d6c264f03655b459d84eb212df4d2416fb70fb3c287b3c8f612ed4595b",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -247,7 +247,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -265,7 +265,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "e50fd815996f6b5dd05db1231d0904bade48b294c46bbd4eb3795563eb127442",
+      "sourceSHA256": "19f9df7e14e9e2deaef6486a41836b4de640386a57581ddc58cf2e56798addec",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -307,7 +307,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -325,7 +325,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "572e1b148361929ef9afbd5ecab68a720ab43b919b28f396096635a664128b00",
+      "sourceSHA256": "c3b7aa0bb7f3483bcb5287382be4cb90403170e6cf516d8cf9b5e5de5dfb6e94",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -367,7 +367,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -385,7 +385,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "b0fbf43b2b27dc31a3db385d96eb6840d905dfd4382497cfaba7a9621fc684b9",
+      "sourceSHA256": "47ed99bff694225d7a28333d4ff45c47fad89bf0b78af6c719c7b395675b52f5",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -427,7 +427,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -445,7 +445,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "903d966f421e4379a883dcf68438faa05262b7135f5dad7cdffb003240359bab",
+      "sourceSHA256": "87160e0826cd05333781bc4b06c03095274ae6e7a6f0e1d215d6518c077caaa7",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -487,7 +487,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -505,7 +505,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "6f9122a65dd46efb60c2e506cb63732fd64f92903f2df6670206cf8020da5e69",
+      "sourceSHA256": "7fcf7bd98490579003b954a1ec8d2dc12ea6b50ac917a6eb6e2d0cd530997f74",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -547,7 +547,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -565,7 +565,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "7c937779a7882ac2d152cc772d248f123d287c989e3be0c9fb6f0e18bc68e3bd",
+      "sourceSHA256": "6aedc3f48b672b9ca4d92d1a74497a807505fcd37ab14784919adabb3aec276b",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -607,7 +607,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -625,7 +625,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "548677bfecca2983cccc795b4435ffff7d803acdba437d34f27613c2c9d33468",
+      "sourceSHA256": "464bb3faaf5d69d19dfa90d3265637a11aed515e6e14ef4a6b5ce742fbb48940",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -667,7 +667,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -685,7 +685,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "67214cae5e74932790337304a87533817e077415661684af7d3753db5d54693e",
+      "sourceSHA256": "6625a5fd1eeab83eabb63b9d4ef4dddddc2bdd517a686acdbc2c2bcf4195368d",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -727,7 +727,7 @@
       "apiVersion": 2,
       "id": "literal_hook_demo",
       "name": "Literal hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Replace tehh with the in plain outgoing cloud text.",
       "actions": [
@@ -741,7 +741,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "4f05a88342bd2a327eca7b1d2d869f3fcf3374a958f6820fe8cc284d141ca7d0",
+      "sourceSHA256": "cb4462ab36855e919cf8168dab447f0a9d698cedfdf2dcaabbc1f81296235f02",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -771,7 +771,7 @@
       "apiVersion": 2,
       "id": "literal_hook_demo",
       "name": "Literal hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Replace tehh with the in plain outgoing cloud text.",
       "actions": [
@@ -785,7 +785,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "b2fc5b1fbc6adc0d4a508a1bea4aa4302814d26477faa9646745db23b1e1000f",
+      "sourceSHA256": "64dfb93712c57cb87fcb516d8a3df4e8fcd741a3e63467a4ff41f1d328118b0a",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -815,7 +815,7 @@
       "apiVersion": 2,
       "id": "literal_hook_demo",
       "name": "Literal hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Replace tehh with the in plain outgoing cloud text.",
       "actions": [
@@ -829,7 +829,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "b967f5fce1da2ddd273b9db5502876583f7ba021ff9b801d977fb1e5e9a5a4c3",
+      "sourceSHA256": "6d6ef4ead1e29724fadde3cb46799786df3f6e03e5a1bc969e85fe0ff2190a26",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -859,7 +859,7 @@
       "apiVersion": 2,
       "id": "literal_hook_demo",
       "name": "Literal hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Replace tehh with the in plain outgoing cloud text.",
       "actions": [
@@ -873,7 +873,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "6ae4e78631fc72a583d1eb3ebaa4fa08804cd20069fb4c48667eae5105ef7b3a",
+      "sourceSHA256": "d6b13a03d3d00bf8601c3175d4714f37a58feaf706bc34fb30e98bc1a73f4a1d",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -903,7 +903,7 @@
       "apiVersion": 2,
       "id": "literal_hook_demo",
       "name": "Literal hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Replace tehh with the in plain outgoing cloud text.",
       "actions": [
@@ -917,7 +917,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "86c6830c80b7ee7b38e94d8807e717a0c9c40a3c50cbf49a809c7d39a798bddd",
+      "sourceSHA256": "6ca44f690271e1b04d422c6555b3b176f9d5a8ee546a4532fe963a0e238426d2",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -951,7 +951,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -969,7 +969,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "f3dae6b0becb777ad961fb9bb45a2d54f79dc4ad9015c63b45e1251844e12e00",
+      "sourceSHA256": "9f9dad371d4051354acf47c3ec84ed50603864c2a34c7ea66de6e5aff23f0aa2",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
@@ -995,7 +995,7 @@
       "apiVersion": 2,
       "id": "prefix_hook_demo",
       "name": "Prefix hook demo",
-      "author": "Full Gram",
+      "author": "FullGram-IOS",
       "version": "1.0",
       "summary": "Convert [note] to NOTE only at the start of plain outgoing cloud text.",
       "actions": [
@@ -1013,7 +1013,7 @@
         }
       ],
       "convertedFrom": "FullGram/literal-send-hook-v1",
-      "sourceSHA256": "46ef2b52174e5e34ec95586de8302b90c4d4ab675f409c2071f57a29de74ea1c",
+      "sourceSHA256": "36a83ba61f1883549105ba1bc46ae909f93f3dd2f561282d931185f51916bde4",
       "limitations": [
         "Automatic literal replacements apply to plain cloud text only. Entity-bearing/formatted text (including links), media captions, secret chats and forwards are unchanged.",
         "Replacement must be nonempty and must not expand UTF-8 or UTF-16 length. Enabled plugins run in installation order.",
