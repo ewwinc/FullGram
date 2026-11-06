@@ -482,7 +482,7 @@ index 00000000..ca3ee78f
 +    }
 +
 +    private func api(_ method: String, _ path: String, body: [String: Any]? = nil, completion: @escaping (Int, [String: Any]?) -> Void) {
-+        guard let token = FullGramKeychain.get(FullGramCloudBuild.tokenKey), let url = URL(string: "https://api.github.com/repos/\(AyuCloudBuild.repository)/" + path) else {
++        guard let token = FullGramKeychain.get(FullGramCloudBuild.tokenKey), let url = URL(string: "https://api.github.com/repos/\(FullGramCloudBuild.repository)/" + path) else {
 +            return completion(0, nil)
 +        }
 +        var request = URLRequest(url: url)
