@@ -4,7 +4,7 @@
   "name": "OTA lowercase demo",
   "author": "Full Gram",
   "version": "1.0",
-  "summary": "Lowercase outgoing text through a helper method.",
+  "summary": "OTA lowercase demo: café",
   "actions": [
     {
       "id": "lowercase",
