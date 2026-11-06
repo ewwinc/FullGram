@@ -7,10 +7,10 @@ index 00000000..cc1d5121
 +import Foundation
 +
 +/// FullGramFeatureGate as seen by the interface layer (the gate itself lives in TelegramCore under
-+/// the same key). Until `fullgram://unlock` is opened, the restricted extras read as off.
++/// the same key). Full Gram 0.0.1 keeps all extras available without an unlock code.
 +public enum FullGramFeatureGateUI {
 +    public static var isUnlocked: Bool {
-+        return UserDefaults.standard.bool(forKey: "fullgram.gate.unlocked")
++        return true
 +    }
 +
 +    static let restrictedExtras: Set<FullGramExtras.Key> = [.saveViewOnce, .stayAfterBan, .notifyDeleted, .readAfterReaction, .alwaysOnline]
@@ -203,17 +203,17 @@ index 00000000..3d0dc90b
 +import Foundation
 +import CryptoKit
 +
-+/// Ghost Mode, message history, Local Premium and code plugins stay off and out of the settings
-+/// until `fullgram://unlock?k=<code>` is opened once. The unlock persists until reinstall.
++/// Ghost Mode, message history, Local Premium and code plugins are available without an unlock
++/// code. `fullgram://unlock?k=<code>` stays supported for builds that still hide them.
 +public enum FullGramFeatureGate {
 +    public static let unlockedKey = "fullgram.gate.unlocked"
 +    public static let didChangeNotification = Notification.Name("FullGramFeatureGateDidChange")
 +    public static let scheme = "fullgram"
 +
-+    private static let codeHash = "200e1491aa18933e5c881537784c2de1052965d31b7d5664d51c4e266b88ea1d"
++    private static let codeHash = "529e0690d9efe7afe7701a52100cdb2b832f5c72789c122331bcbb3d3793595f"
 +
 +    public static var isUnlocked: Bool {
-+        return UserDefaults.standard.bool(forKey: unlockedKey)
++        return true
 +    }
 +
 +    public static func unlock(code: String) -> Bool {
