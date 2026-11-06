@@ -1,5 +1,7 @@
 # Patch context preserves upstream whitespace; validate applied source with git diff --check.
 *.patch -whitespace
+# Keep patch line endings LF on every platform: CRLF breaks binary sections.
+patches/*.patch text eol=lf
 
 # Fixture hashes must match on Windows and macOS.
 plugins/android_*.plugin text eol=lf

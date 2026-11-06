@@ -1,0 +1,216 @@
+diff --git a/submodules/AccountContext/Sources/FullGramPluginHostAPI.swift b/submodules/AccountContext/Sources/FullGramPluginHostAPI.swift
+index fda80d1..018db8a 100644
+--- a/submodules/AccountContext/Sources/FullGramPluginHostAPI.swift
++++ b/submodules/AccountContext/Sources/FullGramPluginHostAPI.swift
+@@ -418,8 +418,8 @@ enum FullGramPluginHostAPI {
+                     actions(op, args, done)
+                 }
+             }
+-        case "messages.send", "messages.edit", "messages.react", "messages.get":
+-            guard allowed(op == "messages.get" ? .messagesRead : .messages) else { return nil }
++        case "messages.send", "messages.edit", "messages.react", "messages.get", "messages.stats":
++            guard allowed(op == "messages.get" || op == "messages.stats" ? .messagesRead : .messages) else { return nil }
+             return answerLater { done in
+                 DispatchQueue.main.async {
+                     guard let actions = FullGramPluginUI.shared.messageActions else { return done(["error": "Unavailable"]) }
+diff --git a/submodules/AccountContext/Sources/FullGramScriptRuntime.swift b/submodules/AccountContext/Sources/FullGramScriptRuntime.swift
+index c3a1edd..0a44506 100644
+--- a/submodules/AccountContext/Sources/FullGramScriptRuntime.swift
++++ b/submodules/AccountContext/Sources/FullGramScriptRuntime.swift
+@@ -1156,6 +1156,7 @@ private final class FullGramScriptInstance: FullGramPluginInstance, FullGramRepl
+                 edit: (options) => requestAsync('messages.edit', options),
+                 react: (options) => requestAsync('messages.react', options),
+                 get: (options) => requestAsync('messages.get', options),
++                stats: (options) => requestAsync('messages.stats', options),
+                 bookmarks: Object.freeze({
+                     list: () => { const answer = host.call('messages.bookmarks.list', {}); return (answer && answer.items) || []; },
+                     add: (options) => host.call('messages.bookmarks.add', Object.assign({}, options || {}, { peerId: text((options || {}).peerId) })),
+diff --git a/submodules/SettingsUI/Sources/FullGramPluginManagerController.swift b/submodules/SettingsUI/Sources/FullGramPluginManagerController.swift
+index 6a5ef5e..ce890f7 100644
+--- a/submodules/SettingsUI/Sources/FullGramPluginManagerController.swift
++++ b/submodules/SettingsUI/Sources/FullGramPluginManagerController.swift
+@@ -41,9 +41,9 @@ private final class FullGramPluginListCell: UITableViewCell {
+     required init?(coder: NSCoder) { return nil }
+ }
+ 
+-/// Code plugins (Lua, Python, Rust/WebAssembly) as the plugin list sees them. The runtime lives
+-/// in AccountContext; the list only talks to this protocol so it stays buildable against the
+-/// model-only harness.
++/// Code plugins (JavaScript, Lua, Python, Rust/WebAssembly) as the plugin list sees them. The
++/// runtime lives in AccountContext; the list only talks to this protocol so it stays buildable
++/// against the model-only harness.
+ struct FullGramCodePluginItem {
+     let id: String
+     let name: String
+@@ -53,7 +53,7 @@ struct FullGramCodePluginItem {
+     let enabled: Bool
+     let timedOut: Bool
+     let activity: [String]
+-    /// "Lua", "Python" or "Rust/WASM".
++    /// "JS", "Lua", "Python" or "Rust/WASM".
+     var languageLabel: String = "Lua"
+     /// Declares that it injects into the app (player, lyrics…).
+     var injects: Bool = false
+@@ -100,8 +100,8 @@ struct FullGramPluginAlertAction {
+ }
+ 
+ /// The plugin list: a searchable list of installed code plugins. Each row shows the name,
+-/// version, author and description with an on/off switch; "+" imports a `.lua`, `.py` or
+-/// `.wasm` file. Only Lua, Python and Rust/WebAssembly plugins are supported.
++/// version, author and description with an on/off switch; "+" imports a `.js`, `.lua`, `.py`
++/// or `.wasm` file. JavaScript, Lua, Python and Rust/WebAssembly plugins are supported.
+ final class FullGramPluginManagerController: FullGramPluginTableController, UIDocumentPickerDelegate, UISearchBarDelegate {
+     private let store: FullGramGhostModeStore
+     private let russian: Bool
+@@ -209,7 +209,7 @@ final class FullGramPluginManagerController: FullGramPluginTableController, UIDo
+         label.textColor = self.palette?.secondary ?? .secondaryLabel
+         label.font = .preferredFont(forTextStyle: .subheadline)
+         if self.query.isEmpty {
+-            label.text = self.russian ? "Плагинов нет.\n\nНажмите «+», чтобы установить файл .lua, .py или .wasm." : "No plugins yet.\n\nTap + to install a .lua, .py or .wasm file."
++            label.text = self.russian ? "Плагинов нет.\n\nНажмите «+», чтобы установить файл .js, .lua, .py или .wasm." : "No plugins yet.\n\nTap + to install a .js, .lua, .py or .wasm file."
+         } else {
+             label.text = self.russian ? "Ничего не найдено." : "Nothing found."
+         }
+@@ -254,7 +254,7 @@ final class FullGramPluginManagerController: FullGramPluginTableController, UIDo
+     }
+     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+         guard !self.scriptItems.isEmpty else { return nil }
+-        return self.russian ? "Плагины работают в изолированной среде (Lua, Python или Rust/WebAssembly) и могут менять обработку текста и отключать функции приложения. Смахните влево, чтобы удалить." : "Plugins run sandboxed (Lua, Python or Rust/WebAssembly) and can change text handling and switch app features off. Swipe left to delete."
++        return self.russian ? "Плагины работают в изолированной среде (JavaScript, Lua, Python или Rust/WebAssembly) и могут менять обработку текста и отключать функции приложения. Смахните влево, чтобы удалить." : "Plugins run sandboxed (JavaScript, Lua, Python or Rust/WebAssembly) and can change text handling and switch app features off. Swipe left to delete."
+     }
+     private func scriptCell(_ plugin: FullGramCodePluginItem) -> UITableViewCell {
+         let cell = FullGramPluginListCell()
+@@ -356,7 +356,7 @@ final class FullGramPluginManagerController: FullGramPluginTableController, UIDo
+             return
+         }
+         guard let plugin = codePlugins.preview(data, filename: filename) else {
+-            self.alert(title: self.russian ? "Ошибка плагина" : "Plugin error", message: self.russian ? "Плагин — это файл .lua или .py до 512 КБ, либо .wasm (Rust) до 2 МБ." : "A plugin is a .lua or .py file up to 512 KB, or a .wasm (Rust) module up to 2 MB.")
++            self.alert(title: self.russian ? "Ошибка плагина" : "Plugin error", message: self.russian ? "Плагин — это файл .js, .lua или .py до 512 КБ, либо .wasm (Rust) до 2 МБ." : "A plugin is a .js, .lua or .py file up to 512 KB, or a .wasm (Rust) module up to 2 MB.")
+             return
+         }
+         let complete: () -> Void = { [weak self] in
+diff --git a/submodules/TelegramCore/Sources/FullGram/FullGramPluginMessages.swift b/submodules/TelegramCore/Sources/FullGram/FullGramPluginMessages.swift
+index 623ca13..18cdd12 100644
+--- a/submodules/TelegramCore/Sources/FullGram/FullGramPluginMessages.swift
++++ b/submodules/TelegramCore/Sources/FullGram/FullGramPluginMessages.swift
+@@ -30,7 +30,93 @@ func fullgramPostHistoryEvent(kind: FullGramMessageHistoryRecord.Kind, message:
+     }
+ }
+ 
++/// Aggregated statistics of a chat's locally stored messages (for `fullgram.messages.stats`).
++public struct FullGramChatStatistics {
++    public struct Word {
++        public let word: String
++        public let count: Int
++    }
++
++    public let messageCount: Int
++    public let voiceCount: Int
++    public let roundVideoCount: Int
++    public let firstTimestamp: Int32?
++    public let lastTimestamp: Int32?
++    public let frequentWords: [Word]
++    public let rareWords: [Word]
++    /// Words were counted over `wordSampleSize` newest messages, not necessarily the whole chat.
++    public let wordSampleSize: Int
++    /// The scan stopped at the message cap before reaching the oldest stored message.
++    public let truncated: Bool
++}
++
+ public extension TelegramEngine.Messages {
++    /// Counts, media kinds, word frequencies and the first/last timestamps of the chat's stored
++    /// messages. Text is tokenised for at most `wordLimit` newest messages so a very large chat
++    /// still answers promptly; the counters cover up to `maxMessages` messages.
++    func fullgramChatStatistics(peerId: EnginePeer.Id, maxMessages: Int = 100000, wordLimit: Int = 20000) -> Signal<FullGramChatStatistics, NoError> {
++        return self.account.postbox.transaction { transaction -> FullGramChatStatistics in
++            let namespace = peerId.namespace == Namespaces.Peer.SecretChat ? Namespaces.Message.Local : Namespaces.Message.Cloud
++            let lowerBound = MessageIndex.lowerBound(peerId: peerId, namespace: namespace)
++            let upperBound = MessageIndex.upperBound(peerId: peerId, namespace: namespace)
++            let messageCap = max(1, maxMessages)
++            let textCap = max(0, wordLimit)
++            var before: MessageIndex?
++            var messageCount = 0
++            var voiceCount = 0
++            var roundVideoCount = 0
++            var firstTimestamp: Int32?
++            var lastTimestamp: Int32?
++            var words: [String: Int] = [:]
++            var wordSampleSize = 0
++            var truncated = false
++            while true {
++                let page = transaction.getMessages(peerId: peerId, namespace: namespace, from: before ?? upperBound, includeFrom: false, to: lowerBound, limit: 1000)
++                if page.isEmpty {
++                    break
++                }
++                for message in page {
++                    if messageCount >= messageCap {
++                        truncated = true
++                        break
++                    }
++                    messageCount += 1
++                    if message.timestamp > 0 {
++                        if firstTimestamp == nil || message.timestamp < firstTimestamp! {
++                            firstTimestamp = message.timestamp
++                        }
++                        if lastTimestamp == nil || message.timestamp > lastTimestamp! {
++                            lastTimestamp = message.timestamp
++                        }
++                    }
++                    for media in message.media {
++                        guard let file = media as? TelegramMediaFile else { continue }
++                        if file.isVoice {
++                            voiceCount += 1
++                        } else if file.isInstantVideo {
++                            roundVideoCount += 1
++                        }
++                    }
++                    if wordSampleSize < textCap {
++                        wordSampleSize += 1
++                        for word in message.text.lowercased().split(whereSeparator: { !$0.isLetter }) where word.count >= 3 && word.count <= 40 {
++                            words[String(word), default: 0] += 1
++                        }
++                    }
++                }
++                if truncated || messageCount >= messageCap {
++                    truncated = true
++                    break
++                }
++                guard let oldest = page.map({ $0.index }).min(), oldest != before else { break }
++                before = oldest
++            }
++            let frequentWords = words.sorted(by: { $0.value == $1.value ? $0.key < $1.key : $0.value > $1.value }).prefix(10).map { FullGramChatStatistics.Word(word: $0.key, count: $0.value) }
++            let rareWords = words.sorted(by: { $0.value == $1.value ? $0.key < $1.key : $0.value < $1.value }).prefix(10).map { FullGramChatStatistics.Word(word: $0.key, count: $0.value) }
++            return FullGramChatStatistics(messageCount: messageCount, voiceCount: voiceCount, roundVideoCount: roundVideoCount, firstTimestamp: firstTimestamp, lastTimestamp: lastTimestamp, frequentWords: frequentWords, rareWords: rareWords, wordSampleSize: wordSampleSize, truncated: truncated)
++        }
++    }
++
+     /// The newest locally stored messages of a chat, newest first (for `fullgram.messages.get`).
+     /// Stored cloud messages of a chat newer than `since`, newest first (at most `limit`).
+     func fullgramMessagesSince(peerId: EnginePeer.Id, since: Int32, limit: Int) -> Signal<[EngineMessage], NoError> {
+diff --git a/submodules/TelegramUI/Sources/FullGramPluginAppServices.swift b/submodules/TelegramUI/Sources/FullGramPluginAppServices.swift
+index a790d41..63d4f54 100644
+--- a/submodules/TelegramUI/Sources/FullGramPluginAppServices.swift
++++ b/submodules/TelegramUI/Sources/FullGramPluginAppServices.swift
+@@ -222,6 +222,22 @@ func fullgramInstallPluginAppServices(sharedContext: SharedAccountContext) {
+                         return item
+                     })
+                 })
++            case "messages.stats":
++                let _ = (context.engine.messages.fullgramChatStatistics(peerId: peerId)
++                |> deliverOnMainQueue).startStandalone(next: { stats in
++                    let result: [String: Any] = [
++                        "count": stats.messageCount,
++                        "voices": stats.voiceCount,
++                        "roundVideos": stats.roundVideoCount,
++                        "firstDate": stats.firstTimestamp.map { Int($0) as Any } ?? (NSNull() as Any),
++                        "lastDate": stats.lastTimestamp.map { Int($0) as Any } ?? (NSNull() as Any),
++                        "frequentWords": stats.frequentWords.map { ["word": $0.word, "count": $0.count] as [String: Any] },
++                        "rareWords": stats.rareWords.map { ["word": $0.word, "count": $0.count] as [String: Any] },
++                        "wordSampleSize": stats.wordSampleSize,
++                        "truncated": stats.truncated
++                    ]
++                    completion(result)
++                })
+             case "media.fromMessage":
+                 guard let messageId else { return completion(["error": "messageId is required"]) }
+                 let _ = (context.engine.data.get(TelegramEngine.EngineData.Item.Messages.Message(id: messageId))

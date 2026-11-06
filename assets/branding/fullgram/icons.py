@@ -1,6 +1,6 @@
-"""The main Full Gram icons, from mark.py. Run from this folder (needs rsvg-convert and Pillow):
-Brand, Blue and Graphite (light) at 1254 px, the two glass icons' backdrop and glass logo at
-1024 px, and the in-app previews (300 px, 256 px for glass)."""
+"""The Full Gram app icons, from mark.py. Run from this folder (needs rsvg-convert and Pillow):
+Brand (white), Blue (orange) and Graphite (red) at 1254 px plus 300 px in-app previews.
+The mascot artwork is the owner-provided PNG in classic/MeiMei.png."""
 import subprocess
 from PIL import Image
 import mark
@@ -21,14 +21,6 @@ for name, (background, blade, core) in FULL.items():
     render(mark.svg(1254, background, blade, core), name + ".png")
     flatten(name + ".png")
     Image.open(name + ".png").resize((300, 300), Image.LANCZOS).save("../previews/%s.png" % name, optimize=True)
-
-GLASS = {"GlassBlue": ("#2B4C9B", "#0A1636"), "GlassGraphite": ("#4A4A4A", "#0B0B0B")}
-for name, background in GLASS.items():
-    render(mark.svg(1024, background, scale=0.0001), name + "-Background.png")
-    flatten(name + "-Background.png")
-    render(mark.svg(1024, None, "#FFFFFF", "#D6D6D6"), name + "-Logo.png")
-    render(mark.svg(256, background), name + "-Preview.png")
-    flatten(name + "-Preview.png")
 
 render(mark.svg(1254, None, scale=0.8), "FullGram-mark.png")
 open("FullGram-mark.svg", "w").write(mark.svg(1024, None, scale=0.8))

@@ -10,7 +10,7 @@ The published v0.1.0 IPA contains the initial Ghost Mode preview; v0.2.0-preview
 | sendOnlinePackets | Explicit online suppression in preview |
 | sendOfflinePacketAfterOnline | Offline reassertion after accepted cloud sends in source; brief implicit online visibility remains possible |
 | sendUploadProgress | Upload-activity suppression in preview |
-| useScheduledMessages | Opt-in Ghost Mode+ scheduling of plain cloud text (10 s–1 h delay) while Ghost Mode is active, in source; media, topics and secret chats unchanged |
+| useScheduledMessages | Opt-in Ghost Mode scheduling of plain cloud text (10 s–1 h delay) while Ghost Mode is active, in source; media, topics and secret chats unchanged |
 | markReadAfterSend | Opt-in explicit read receipt after a server-accepted ordinary cloud send, applied with pts/local read state, in source; mutually exclusive with scheduling |
 | saveDeletedMessages | Transactional text archive in source |
 | saveMessagesHistory | Previous text and formatting-only edit capture in source |
@@ -80,5 +80,5 @@ Additional Desktop-only scope (not implemented by these flags): shadow bans, add
 Release gates: clean pinned-patch application, UI import/API-contract checks, parse all changed Swift sources, compile/run real Foundation models, full Telegram target type check/link/package, then device and recorded simulator checks. The 32-check result applies only to the earlier history revision; newly added regex/migration/metadata/media-archive tests have not yet run on a Mac.
 | Full Gram main screen | Logo header with name, version and description; Categories (General, Appearance, Chats, Other) and Links; separate Full Gram and Full Gram Preferences rows in Settings, as on Android |
 | Full Gram Other page | Reset Settings (interface, appearance, MessageShot, reactions) with confirmation; Delete Account opens Telegram's own deletion flow; Google analytics toggles omitted (no analytics in this build) |
-| Ghost icons | Ghost Mode uses Full Gram's own ghost (Solar ghost_solar.xml as an SVG asset); Ghost Mode+ is the ghost with a plus badge |
+| Ghost icons | Ghost Mode uses Full Gram's own ghost (Solar ghost_solar.xml as an SVG asset) |
 | Full Gram Chats page | Stickers, Chats, Messages sections as on Android: hide time on stickers, disable jump to the next channel, hide keyboard on scroll (user drags only), comma after mention, hide share button, message menu; Hidden Messages and Chat Reactions under More |

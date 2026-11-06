@@ -1,8 +1,8 @@
-# Ghost Mode+, translation, export and archive tools (development source)
+# Ghost Mode, translation, export and archive tools (development source)
 
 These blocks are included in Release 4. Build checks are described in `docs/CODEMAGIC_PREFLIGHT.md`.
 
-## Ghost Mode+ (Settings → Full Gram → Ghost Mode+)
+## Ghost Mode (Settings → Full Gram → Ghost Mode)
 
 - **Send through scheduling.** While Ghost Mode is active, plain cloud text (no media, topics, inline stickers, story replies or self-destruct timers) is sent as a scheduled message 10 s–1 h ahead. Secret chats are unchanged.
 - **Mark read after accepted send.** After the server accepts an ordinary cloud send, an explicit read receipt is sent for that chat and applied through the usual pts/local read state. Topics, forums, secret chats and scheduled sends are excluded. This intentionally reveals a read even when read receipts are hidden.

@@ -148,7 +148,6 @@ def main():
                     else:
                         result = subprocess.run([*flags, '-typecheck', '-I', directory, str(manager),
                                                  str(source / 'submodules/SettingsUI/Sources/FullGramPluginPresentation.swift'),
-                                                 str(source / 'submodules/SettingsUI/Sources/FullGramPluginDetailsController.swift'),
                                                  str(source / 'submodules/SettingsUI/Sources/FullGramGroupMentionsController.swift'),
                                                  str(source / 'submodules/SettingsUI/Sources/FullGramPreferencesHubController.swift'),
                                                  str(source / 'submodules/TelegramUI/Components/VideoMessageCameraScreen/Sources/FullGramCameraFlipGestureRecognizer.swift')], capture_output=True, text=True)
@@ -159,7 +158,7 @@ def main():
         # Compile just the actual artwork before starting the full Telegram target.
         icon_root = source / 'Telegram/Telegram-iOS'
         if (icon_root / 'FullGramOrange.icon').exists():
-            icon_names = ['Telegram'] + sorted(path.stem for path in icon_root.glob('Full Gram*.icon'))
+            icon_names = ['Telegram'] + sorted(path.stem for path in icon_root.glob('FullGram*.icon'))
             alternate_args = [argument for name in icon_names[1:] for argument in ('--alternate-app-icon', name)]
             with tempfile.TemporaryDirectory(prefix='fullgram-icon-sdk-') as directory:
                 result = subprocess.run(['xcrun', 'actool', '--compile', directory,

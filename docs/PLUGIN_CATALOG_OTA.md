@@ -1,22 +1,25 @@
 # Updating supported plugins without another IPA
 
-The base app includes a signed adapter catalog reader and an **Update plugin list**
-button on the Plugins page. Install this base IPA once. Later, a developer can
-publish a mapping for a supplied `.plugin` file in the GitHub catalog. The user
-refreshes the list, imports that same original file, confirms installation, and
-its mapped native functionality becomes available without another IPA.
+The base app includes a signed adapter catalog reader. The plugin screen no
+longer exposes an **Update plugin list** button after `fullgram-plugin-cleanup.patch`;
+the reader and its verification path are kept for `.plugin` files that already
+carry mapped catalog proofs. A developer can publish a mapping for a supplied
+`.plugin` file in the GitHub catalog, and the importer accepts the same original
+file, confirms installation, and enables its mapped native functionality without
+another IPA.
 
 ## Import order
 
 1. Native `.plugin` JSON, including verification of portable API 7 catalog proofs.
-2. Exact original-file hash in the downloaded, verified catalog.
+2. Exact original-file hash in the local, verified catalog cache.
 3. The original built-in reviewed adapters.
 4. Existing literal-template and embedded AST conversion.
 
 Catalog activation uses the existing transactional installation path. It does
 not modify existing plugin choices or force an installed plugin replacement.
 Installed programs and their author/name/version/proofs persist per account.
-The catalog cache is app-wide and works offline after a successful refresh.
+The catalog cache is app-wide and read-only in this build: nothing in the
+plugin screen fetches a new revision.
 
 ## Integrity and compatibility
 

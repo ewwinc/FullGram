@@ -1,19 +1,7 @@
-diff --git a/Telegram/Telegram-iOS/FullGramGlassGraphite.icon/icon.json b/Telegram/Telegram-iOS/FullGramGlassGraphite.icon/icon.json
-index 35984300..11aaf7d1 100644
---- a/Telegram/Telegram-iOS/FullGramGlassGraphite.icon/icon.json
-+++ b/Telegram/Telegram-iOS/FullGramGlassGraphite.icon/icon.json
-@@ -1,6 +1,6 @@
- {
-   "fill": {
--    "automatic-gradient": "extended-srgb:0.04,0.08,0.18,1.00000"
-+    "automatic-gradient": "extended-srgb:0.06,0.06,0.06,1.00000"
-   },
-   "groups": [
-     {
-diff --git a/Telegram/Telegram-iOS/FullGramGraphite.icon/icon.json b/Telegram/Telegram-iOS/FullGramGraphite.icon/icon.json
+diff --git a/Telegram/Telegram-iOS/FullGramRed.icon/icon.json b/Telegram/Telegram-iOS/FullGramRed.icon/icon.json
 index fab8aefc..d0217474 100644
---- a/Telegram/Telegram-iOS/FullGramGraphite.icon/icon.json
-+++ b/Telegram/Telegram-iOS/FullGramGraphite.icon/icon.json
+--- a/Telegram/Telegram-iOS/FullGramRed.icon/icon.json
++++ b/Telegram/Telegram-iOS/FullGramRed.icon/icon.json
 @@ -1,6 +1,6 @@
  {
    "fill": {
@@ -1003,7 +991,7 @@ index a23cb92a..13b4df1e 100644
                    let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 16000.0, channels: 1, interleaved: false),
                    let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(samples.count)), let channel = buffer.floatChannelData?[0] else {
 diff --git a/submodules/SettingsUI/Sources/FullGramAppearancePlusController.swift b/submodules/SettingsUI/Sources/FullGramAppearancePlusController.swift
-index e1860136..a69a82ae 100644
+index 00000000..00000000 100644
 --- a/submodules/SettingsUI/Sources/FullGramAppearancePlusController.swift
 +++ b/submodules/SettingsUI/Sources/FullGramAppearancePlusController.swift
 @@ -27,6 +27,7 @@ private enum FullGramAppearancePlusRow: Int32 {
@@ -1014,7 +1002,7 @@ index e1860136..a69a82ae 100644
  }
  
  private func fullgramAppearancePlusSignal() -> Signal<Void, NoError> {
-@@ -58,6 +59,18 @@ func fullgramAppearancePlusController(context: AccountContext) -> ViewController {
+@@ -58,6 +59,18 @@ func fullgramAppearancePlusController(context: AccountContext) -> ViewController
              context.sharedContext.applicationBindings.presentNativeController(sheet)
              return
          }
@@ -1033,7 +1021,8 @@ index e1860136..a69a82ae 100644
          if id == FullGramAppearancePlusRow.effectAmount.rawValue || id == FullGramAppearancePlusRow.effectSpeed.rawValue {
              let steps: [Double] = [0.25, 0.5, 1.0, 1.5, 2.0, 3.0]
              let amount = id == FullGramAppearancePlusRow.effectAmount.rawValue
-@@ -128,7 +141,10 @@ func fullgramAppearancePlusController(context: AccountContext) -> ViewController {
+@@ -128,11 +141,14 @@ func fullgramAppearancePlusController(context: AccountContext) -> ViewController
+         entries.append(.link(4, FullGramAppearancePlusRow.reset.rawValue, symbol("arrow.counterclockwise", 0xFF3B30), ru ? "Сбросить оформление" : "Reset appearance", ""))
          entries.append(.header(5, FullGramAppearancePlusRow.effectsHeader.rawValue, ru ? "ЭФФЕКТЫ" : "EFFECTS"))
          entries.append(.link(5, FullGramAppearancePlusRow.effect.rawValue, symbol("snowflake", 0x5AC8FA), ru ? "Эффект поверх Telegram" : "Effect over Telegram", FullGramOverlayEffects.effect.title(ru)))
 +        if FullGramOverlayEffects.effect == .snow {
@@ -1045,6 +1034,9 @@ index e1860136..a69a82ae 100644
          }
 -        entries.append(.info(5, FullGramAppearancePlusRow.effectsInfo.rawValue, ru ? "Снег — белые точки на фоне чата, под сообщениями. Листья и другие эффекты падают поверх приложения и не мешают нажатиям. При включённом «Уменьшении движения» в iOS эффекты не показываются." : "Snow is white dots in the chat background, under the messages. Leaves and other effects fall over the app and never block taps. With iOS Reduce Motion on, effects are hidden."))
 +        entries.append(.info(5, FullGramAppearancePlusRow.effectsInfo.rawValue, ru ? "Снег — точки, снежинки или знаки Full Gram на фоне чата, под сообщениями. Листья и другие эффекты падают поверх приложения и не мешают нажатиям. При включённом «Уменьшении движения» в iOS эффекты не показываются." : "Snow is white dots in the chat background, under the messages. Leaves and other effects fall over the app and never block taps. With iOS Reduce Motion on, effects are hidden."))
+         let data = ItemListPresentationData(presentationData)
+         let state = ItemListControllerState(presentationData: data, title: .text(ru ? "Оформление+" : "Appearance+"), leftNavigationButton: nil, rightNavigationButton: nil, backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back))
+         return (state, (ItemListNodeState(presentationData: data, entries: entries, style: .blocks, animateChanges: true), arguments))
 diff --git a/submodules/SettingsUI/Sources/FullGramCategoriesController.swift b/submodules/SettingsUI/Sources/FullGramCategoriesController.swift
 index 150bfdef..b1426ea6 100644
 --- a/submodules/SettingsUI/Sources/FullGramCategoriesController.swift

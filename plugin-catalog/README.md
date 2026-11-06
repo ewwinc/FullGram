@@ -1,13 +1,16 @@
 # OTA plugin adapters
 
-The API 7 base IPA adds **Settings → Full Gram → Plugins → ⟳ next to +**.
-After that one base installation, publishing another supported native adapter in
-this directory does not require rebuilding or reinstalling the IPA.
+These files document the OTA adapter mechanism used before
+`fullgram-plugin-cleanup.patch`. That patch removes the refresh control and the
+catalog is read-only in the current build, so a newly published revision no
+longer reaches the app. The reader is kept only to verify portable proofs that
+already travel inside imported `.plugin` files.
 
-The app downloads `catalog.json`, verifies its Ed25519 signature and atomically
-retains the newest valid revision. Import matches the SHA-256 of the original
-`.plugin` file and prepares its native manifest. Normal import confirmation still
-applies; refreshing the catalog never installs or enables plugins by itself.
+Older builds downloaded `catalog.json`, verified its Ed25519 signature and
+atomically retained the newest valid revision. Import matches the SHA-256 of the
+original `.plugin` file and prepares its native manifest. Normal import
+confirmation still applies; refreshing the catalog never installs or enables
+plugins by itself.
 
 `adapters/*.json` are publisher inputs, not files to import directly. The signed
 catalog wraps each adapter in a portable proof. Installed/exported plugins retain
@@ -26,7 +29,8 @@ python tools/publish_plugin_catalog.py --key "..\.tools\plugin-catalog-signing.p
 
 4. Commit and push **only the changed `plugin-catalog/` files**. Catalog-only
    commits do not match the native build workflow's path filters.
-5. On the iPhone, tap **Update plugin list**, then import the original file.
+5. On a build that still has the refresh control, tap **Update plugin list**, then
+   import the original file. The current build does not fetch new revisions.
 
 The publisher requires the `cryptography` Python package. This is a publisher-only
 dependency; app compilation and client verification use no extra crypto package.

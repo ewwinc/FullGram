@@ -70,7 +70,7 @@ export class Sandbox {
   private nextTimer = 1;
   private readonly context: vm.Context;
   private readonly permissions: Set<string>;
-  private readonly asyncOps = new Set(["net.fetch", "ai.complete", "messages.send", "messages.edit", "messages.react", "messages.get", "permissions.request", "ui.alert", "ui.sheet", "ui.gifts.catalog.list"]);
+  private readonly asyncOps = new Set(["net.fetch", "ai.complete", "messages.send", "messages.edit", "messages.react", "messages.get", "messages.stats", "permissions.request", "ui.alert", "ui.sheet", "ui.gifts.catalog.list"]);
 
   private readonly options: SandboxOptions;
 

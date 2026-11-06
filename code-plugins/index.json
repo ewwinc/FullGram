@@ -13,9 +13,24 @@
       ],
       "kind": "js",
       "category": "messages",
-      "url": "https://raw.githubusercontent.com/FullGram/FullGram/main/code-plugins/bookmarks/plugin.ayu.js",
-      "sha256": "d88d31533672cd9826388ed644c91c2ddb52956a9ef4e9d85d283176c6011a9d",
-      "size": 1181
+      "url": "https://raw.githubusercontent.com/KorsakovX/FullGram/main/code-plugins/bookmarks/plugin.fullgram.js",
+      "sha256": "5a727bcf36b68e970df17921d38af39eb92a6b25396cf44e971694e6eb189355",
+      "size": 1223
+    },
+    {
+      "id": "chat-info",
+      "name": "Инфа о чате",
+      "author": "Full Gram",
+      "version": "1.0.0",
+      "description": "Пункт «Инфа о чате» в меню сообщения: количество сообщений, кружков и голосовых, самые частые и редкие слова, дата первого и последнего сообщения.",
+      "tags": [
+        "menu"
+      ],
+      "kind": "js",
+      "category": "messages",
+      "url": "https://raw.githubusercontent.com/KorsakovX/FullGram/main/code-plugins/chat-info/plugin.fullgram.js",
+      "sha256": "79c9c7cb98cde6190f326defb375628bd1c1ab311082b9c6a03411f5465da4de",
+      "size": 3288
     },
     {
       "id": "chat-statistics",
@@ -28,9 +43,9 @@
       ],
       "kind": "js",
       "category": "messages",
-      "url": "https://raw.githubusercontent.com/FullGram/FullGram/main/code-plugins/chat-statistics/plugin.ayu.js",
-      "sha256": "d770ec1e06b50dd7c5e2cdcb4f19af2c7e3275f59fb3c022e6d7298e4167b9c0",
-      "size": 818
+      "url": "https://raw.githubusercontent.com/KorsakovX/FullGram/main/code-plugins/chat-statistics/plugin.fullgram.js",
+      "sha256": "a93b24b3c389673229d2f152046fa65e6a2fc6f3918a54e2120773e668ffe8a8",
+      "size": 849
     },
     {
       "id": "describe-photo",
@@ -43,9 +58,9 @@
       ],
       "kind": "js",
       "category": "media",
-      "url": "https://raw.githubusercontent.com/FullGram/FullGram/main/code-plugins/describe-photo/plugin.ayu.js",
-      "sha256": "31f3824a6c46e8529c84a941fd07da18781ab727baca71ed5e35af06d62c81b5",
-      "size": 1019
+      "url": "https://raw.githubusercontent.com/KorsakovX/FullGram/main/code-plugins/describe-photo/plugin.fullgram.js",
+      "sha256": "d63cc2383b76f3c1ed40096350ad32aea05a861d19097277e49874cd5ba24860",
+      "size": 1055
     },
     {
       "id": "download-all-media",
@@ -58,9 +73,9 @@
       ],
       "kind": "js",
       "category": "media",
-      "url": "https://raw.githubusercontent.com/FullGram/FullGram/main/code-plugins/download-all-media/plugin.ayu.js",
-      "sha256": "776367183c281fdcc5b96f8595e4f9ed3f4a320bd12149102f45c2723f0bb486",
-      "size": 798
+      "url": "https://raw.githubusercontent.com/KorsakovX/FullGram/main/code-plugins/download-all-media/plugin.fullgram.js",
+      "sha256": "3ac655db62de08936c22759ee82e2a7cdf2b3ab0b026a8e309a3d30477a64396",
+      "size": 829
     },
     {
       "id": "make-sticker",
@@ -73,9 +88,9 @@
       ],
       "kind": "js",
       "category": "media",
-      "url": "https://raw.githubusercontent.com/FullGram/FullGram/main/code-plugins/make-sticker/plugin.ayu.js",
-      "sha256": "5c55d88c9a899cb9a4220a676199fe372a3d6bcdfa6283186812732df6c79127",
-      "size": 806
+      "url": "https://raw.githubusercontent.com/KorsakovX/FullGram/main/code-plugins/make-sticker/plugin.fullgram.js",
+      "sha256": "11daa6bf58e357fde9a6c276789a63b9e1bc3f3c80bd0a94063c41a3ac471453",
+      "size": 837
     },
     {
       "id": "year-in-review",
@@ -88,9 +103,9 @@
       ],
       "kind": "js",
       "category": "fun",
-      "url": "https://raw.githubusercontent.com/FullGram/FullGram/main/code-plugins/year-in-review/plugin.ayu.js",
-      "sha256": "c85c38b5f867e92b9f0d3877874e80a0120958e75e7bc22974087fc7d003124e",
-      "size": 750
+      "url": "https://raw.githubusercontent.com/KorsakovX/FullGram/main/code-plugins/year-in-review/plugin.fullgram.js",
+      "sha256": "568c2772c8fbc4c8654d934dafebafb2cf5c73a17172808aca722528c1f62673",
+      "size": 781
     }
   ]
 }

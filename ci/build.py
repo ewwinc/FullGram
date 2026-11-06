@@ -113,7 +113,7 @@ with zipfile.ZipFile(ipa) as archive:
     info = plistlib.loads(archive.read("Payload/Telegram.app/Info.plist"))
     if args.phase == "port" and (source / "Telegram/Telegram-iOS/FullGramOrange.icon").exists():
         alternate_icons = info.get("CFBundleIcons", {}).get("CFBundleAlternateIcons", {})
-        expected_icons = {path.stem for path in (source / "Telegram/Telegram-iOS").glob("Full Gram*.icon")}
+        expected_icons = {path.stem for path in (source / "Telegram/Telegram-iOS").glob("FullGram*.icon")}
         if not expected_icons.issubset(alternate_icons):
             raise SystemExit("Built IPA is missing the declared Full Gram alternate icons")
     binary = archive.read("Payload/Telegram.app/" + info["CFBundleExecutable"])

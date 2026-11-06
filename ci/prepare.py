@@ -33,22 +33,29 @@ patches = [
     root / "patches" / "fullgram-fixed-player-fades.patch",
     root / "patches" / "fullgram-expanded-lyrics.patch",
     root / "patches" / "fullgram-big-update.patch",
-    root / "patches" / "fullgram-settings-optimization.patch",
     root / "patches" / "fullgram-port-fixes.patch",
     root / "patches" / "fullgram-blur-glass-corners.patch",
     root / "patches" / "fullgram-feature-gate.patch",
+    root / "patches" / "fullgram-plugin-cleanup.patch",
+    root / "patches" / "fullgram-chat-info-plugin.patch",
 ]
 for patch in patches:
     subprocess.run(["git", "apply", "--recount", "--check", str(patch)], cwd=source, check=True)
     subprocess.run(["git", "apply", "--recount", str(patch)], cwd=source, check=True)
 
 # Full Gram ships exactly four launcher icons: white (the primary Telegram icon),
-# orange, red and the mascot. The patches still carry the historical bundle
-# names, so rename them here: iOS caches an alternate icon by name, and fresh names
-# also guarantee that the new artwork is rendered by SpringBoard.
+# orange, red and the mascot. The patch series already contains only these four
+# bundles; the CI verifies that below instead of deleting extra ones.
 fullgram = root / "assets/branding/fullgram"
 icons = source / "Telegram/Telegram-iOS"
 image_assets = source / "submodules/TelegramUI/Images.xcassets/FullGram"
+
+shipped_bundles = {"Telegram", "FullGramOrange", "FullGramRed", "FullGramMascot"}
+present_bundles = {path.stem for path in icons.glob("FullGram*.icon")} | {"Telegram"}
+if present_bundles != shipped_bundles:
+    extra = ", ".join(sorted(present_bundles - shipped_bundles)) or "none"
+    missing = ", ".join(sorted(shipped_bundles - present_bundles)) or "none"
+    raise SystemExit(f"Icon bundles must be exactly the four shipped variants (extra: {extra}; missing: {missing})")
 
 
 def clear_directory(path: Path) -> None:
@@ -58,22 +65,8 @@ def clear_directory(path: Path) -> None:
         else:
             child.unlink()
 
-for old, new in (("FullGramBlue", "FullGramOrange"), ("FullGramGraphite", "FullGramRed"), ("FullGramOriginalChibi", "FullGramMascot")):
-    old_bundle = icons / (old + ".icon")
-    new_bundle = icons / (new + ".icon")
-    if new_bundle.exists():
-        shutil.rmtree(new_bundle)
-    if not old_bundle.is_dir():
-        raise SystemExit(f"Port patch is missing the {old}.icon bundle")
-    old_bundle.rename(new_bundle)
-
-keep_bundles = {"FullGramOrange.icon", "FullGramRed.icon", "FullGramMascot.icon"}
-for bundle in icons.glob("Full Gram*.icon"):
-    if bundle.name not in keep_bundles:
-        shutil.rmtree(bundle)
-
 # One full-bleed layer per icon. The source artwork keeps its historical file
-# names (Brand = white, Blue = orange, Graphite = red, Mascot = mascot).
+# names (Brand = white, Blue = orange, Graphite = red, Mascot = runa).
 launcher_icons = {
     "Telegram": fullgram / "Brand.png",
     "FullGramOrange": fullgram / "Blue.png",
@@ -92,15 +85,13 @@ for folder, artwork in launcher_icons.items():
             layer.pop("position", None)
     (bundle / "icon.json").write_text(json.dumps(icon, indent=2) + "\n")
 
-# Drop the extra icon bundles and their picker previews. OriginalFullGram2 stays for
-# the settings logo; the other imagesets are used by the four picker entries.
-for name in (
-    "GlassBlue", "GlassGraphite", "OriginalDefault", "OriginalAlt", "OriginalBard",
-    "OriginalChibi2", "OriginalDiscord", "OriginalFullGram", "OriginalNothing",
-    "OriginalSpotify", "OriginalWin95", "OriginalYaplus",
-):
-    image_set = image_assets / (name + ".imageset")
-    if image_set.is_dir():
+# The picker previews live in the same asset catalog as the four icons. Keep only
+# the FullGram imagesets the app references: four picker entries, the settings
+# logo and the six settings/ghost glyphs. No other launcher previews are shipped.
+keep_imagesets = {"Brand", "Blue", "Graphite", "OriginalChibi", "OriginalFullGram2",
+                  "Chats", "Filter", "Ghost", "GhostOutline", "MediaArchive", "Plugins"}
+for image_set in image_assets.glob("*.imageset"):
+    if image_set.stem not in keep_imagesets:
         shutil.rmtree(image_set)
 
 # The largest in-app logo is 100 pt (FullGramSettingsHeaderItem); the icon picker is

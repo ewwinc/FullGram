@@ -116,4 +116,4 @@ frames before claiming visual verification.
 
 API 6 adds persisted native text programs on `outgoingReplace` actions through the on-device AST converter. Older action formats remain valid. See [program scope and limits](AST_CONVERTER.md).
 
-API 7 adds portable signed OTA adapter proofs. Refresh the list in Plugins, then import the original `.plugin`; existing formats remain compatible. See [OTA support](PLUGIN_CATALOG_OTA.md).
+API 7 adds portable signed OTA adapter proofs. Import the original `.plugin`; existing formats remain compatible. See [OTA support](PLUGIN_CATALOG_OTA.md).

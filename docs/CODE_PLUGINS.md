@@ -1,7 +1,7 @@
-# Code plugins (JavaScript, Python, Rust)
+# Code plugins (JavaScript, Lua, Python, Rust)
 
-Code plugins are JavaScript, Python or Rust (WebAssembly) files that run as code inside the app
-and change how it behaves.
+Code plugins are JavaScript, Lua, Python or Rust (WebAssembly) files that run as code inside the
+app and change how it behaves.
 They sit beside the existing declarative `.plugin` / `.iosplug` (JSON) plugins, which keep
 working unchanged.
 
@@ -26,15 +26,10 @@ the port (see `patches/fullgram-big-update.patch`).
 ## Install
 
 - Plugins screen → **+** → pick a `.js`, `.fullgramjs`, `.py`, `.fullgrampy` or `.wasm` file, or
-- tap a `.fullgramjs` / `.fullgram.js` file in a chat, or
-- Plugins screen → **bag icon** (Catalog) → pick a plugin from
-  [FullGram/FullGram](https://github.com/FullGram/FullGram) or the port's own
-  [`code-plugins/`](../code-plugins) (former built-in message tools). The download must
-  match the SHA-256 and `@id` in the catalog's `index.json`; a newer catalog version shows
-  **Update**. To publish a plugin, open a pull request there.
+- tap a `.fullgramjs` / `.fullgram.js` file in a chat.
 
-The confirmation shows the plugin's header and what it may do. Toggle, restart (tap) and delete
-(swipe) in the *Code plugins · JavaScript* section.
+The confirmation shows the plugin's header and what it may do. The list shows the name, version
+and language; toggle, restart (tap) and delete (swipe) a row.
 
 ## Header
 
@@ -131,7 +126,7 @@ console error.
 | `fullgram.tools.chatStats(peerId)` → Promise | `messages.read` | the app's chat statistics sheet for every message stored on the device |
 | `fullgram.tools.yearInReview(peerId)` → Promise | `messages.read` | the app's year-in-review sheet for the chat |
 | `fullgram.tools.downloadChatMedia(peerId)` → Promise | `messages.read` | saves the chat's photos, videos and files (up to 500) into one folder |
-| `fullgram.registry.developers.isVerified(peerId)` / `info(peerId)` | — | Full Gram for iOS team label (Telegram user id) |
+| `fullgram.messages.stats({ peerId })` → Promise<ChatStats> | `messages.read` | counts, round-video and voice counts, frequent and rare words, first/last message dates over the chat's stored messages |
 | `fullgram.ui.gifts.catalog.list(fn)` → Promise | — | Telegram's gift catalog, read-only: `[{ giftId, title, stars, fileId, limited, remains, total, soldOut }]` (Python: `fullgram.ui.gifts.catalog.list(fn)`) |
 | `fullgram.clipboard.write(text)` | `clipboard` | copy text |
 | `fullgram.device.info()` | `device` | `{ battery, charging, orientation, lowPowerMode, reduceMotion, locale }` |
@@ -140,6 +135,13 @@ console error.
 `peerId` is the value plugins receive in events and hook contexts. Python has the same names
 (`fullgram.ui.menu.add({...})`, `fullgram.call('device.info')`); Rust has `fullgram_plugin::call(op, json)`
 and helpers in `fullgram_plugin::ui`.
+
+`ChatStats` is `{ count, voices, roundVideos, firstDate, lastDate, frequentWords, rareWords,
+wordSampleSize, truncated }`. Dates are Unix seconds (`null` for an empty chat), word lists are
+`[{ word, count }]`, and `wordSampleSize` shows how many newest messages the word counts cover.
+
+The bundled example is `code-plugins/chat-info/plugin.fullgram.js`: long-press any message →
+«Инфа о чате».
 
 ### Utility API (27.6)
 
@@ -195,10 +197,8 @@ The second batch (52 more, also in the prelude, no permission):
 
 - Ordinary plugins (outgoing text, switching features off, storage, toasts, settings) install
   from anywhere.
-- Injecting plugins install only when signed by Full Gram (Ed25519; the catalog's
-  `signatures.json`, shown as **✓ official**).
-- An unsigned injecting plugin is refused unless *Developer → Injecting plugins from unofficial
-  sources* is on; then a disclaimer says the responsibility is entirely the user's.
+- Manual installs are treated as unofficial: an injecting plugin needs *Developer → Injecting
+  plugins from unofficial sources* and a disclaimer that the responsibility is entirely the user's.
 - The inject API is also checked while the plugin runs: an untrusted plugin calling it gets an
   error in the console.
 

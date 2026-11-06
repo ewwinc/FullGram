@@ -33,38 +33,13 @@ diff --git a/submodules/SettingsUI/Sources/FullGramCategoriesController.swift b/
 index b1426ea6..4c7c3532 100644
 --- a/submodules/SettingsUI/Sources/FullGramCategoriesController.swift
 +++ b/submodules/SettingsUI/Sources/FullGramCategoriesController.swift
-@@ -62,8 +62,13 @@ struct FullGramCategoryItem {
-     let subtitleEn: String
-     let open: (AccountContext, @escaping (ViewController) -> Void) -> Void
-     var imageName: String? = nil
-+    /// Draws Full Gram's ghost instead of `symbol`; `true` adds the Ghost Mode+ badge.
-+    var ghostPlus: Bool? = nil
- 
-     var icon: UIImage? {
-+        if let ghostPlus {
-+            return FullGramSettingsIcons.ghost(color: UIColor(rgb: color), plus: ghostPlus)
-+        }
-         if let imageName {
-             return FullGramSettingsIcons.glyph(imageName, color: UIColor(rgb: color), side: imageName.hasPrefix("FullGram/") ? 20.0 : nil)
-         }
-@@ -84,8 +89,8 @@ func fullgramCategoryItems(_ category: FullGramCategory) -> [FullGramCategoryItem] {
-     switch category {
-     case .privacy:
-         return [
--            FullGramCategoryItem(id: 1, symbol: "eye.slash.fill", color: 0x8E5CF7, titleRu: "Режим призрака", titleEn: "Ghost Mode", subtitleRu: "Прочтения, онлайн, набор, загрузка", subtitleEn: "Read receipts, online, typing, uploads", open: page { fullgramGhostModeController(context: $0) }),
--            FullGramCategoryItem(id: 2, symbol: "eye.trianglebadge.exclamationmark.fill", color: 0x5856D6, titleRu: "Режим призрака+", titleEn: "Ghost Mode+", subtitleRu: "Тонкая настройка", subtitleEn: "Fine-tuning", open: page { fullgramGhostModePlusController(context: $0) }),
-+            FullGramCategoryItem(id: 1, symbol: "eye.slash.fill", color: 0x8E5CF7, titleRu: "Режим призрака", titleEn: "Ghost Mode", subtitleRu: "Прочтения, онлайн, набор, загрузка", subtitleEn: "Read receipts, online, typing, uploads", open: page { fullgramGhostModeController(context: $0) }, ghostPlus: false),
-+            FullGramCategoryItem(id: 2, symbol: "eye.trianglebadge.exclamationmark.fill", color: 0x5856D6, titleRu: "Режим призрака+", titleEn: "Ghost Mode+", subtitleRu: "Тонкая настройка", subtitleEn: "Fine-tuning", open: page { fullgramGhostModePlusController(context: $0) }, ghostPlus: true),
-             FullGramCategoryItem(id: 3, symbol: "person.crop.circle.badge.checkmark", color: 0x8E5CF7, titleRu: "Призрак по чатам", titleEn: "Ghost Mode by chat", subtitleRu: "Включить или выключить в отдельных чатах", subtitleEn: "On or off in single chats", open: page { fullgramGhostExceptionsController(context: $0) }),
-             FullGramCategoryItem(id: 4, symbol: "figure.walk.motion", color: 0x34C759, titleRu: "Активность и следы", titleEn: "Activity & traces", subtitleRu: "Статусы, всегда онлайн, прочитать локально, истории, номер", subtitleEn: "Statuses, always online, read locally, stories, number", open: page { fullgramPrivacyPlusController(context: $0) }),
-             FullGramCategoryItem(id: 5, symbol: "hand.raised.fill", color: 0x34C759, titleRu: "Приватность и мелочи", titleEn: "Privacy & extras", subtitleRu: "Метаданные фото, чистые ссылки, анти-скам, звонки", subtitleEn: "Photo metadata, clean links, anti-scam, calls", open: page { fullgramExtrasController(context: $0) })
-@@ -147,7 +152,9 @@ func fullgramCategoryItems(_ category: FullGramCategory) -> [FullGramCategoryItem] {
+@@ -147,7 +147,9 @@ func fullgramCategoryItems(_ category: FullGramCategory) -> [FullGramCategoryItem] {
  
  func fullgramCategoryController(context: AccountContext, category: FullGramCategory) -> ViewController {
      var push: ((ViewController) -> Void)?
 -    let items = fullgramCategoryItems(category)
 +    // Ghost Mode, activity, history, view-once, plugins and Local Premium wait for FullGramFeatureGate.
-+    let restricted: Set<Int32> = [1, 2, 3, 4, 11, 12, 13, 61, 63]
++    let restricted: Set<Int32> = [1, 3, 4, 11, 12, 13, 61, 63]
 +    let items = fullgramCategoryItems(category).filter { FullGramFeatureGate.isUnlocked || !restricted.contains($0.id) }
      let arguments = FullGramSectionedArguments(open: { id in
          guard let item = items.first(where: { $0.id == id }) else { return }
@@ -148,8 +123,8 @@ index 1b9e749a..34aef4ba 100644
  func fullgramCategoryRows(category: Int, ru: Bool) -> (title: String, rows: [(Int32, String)]) {
      switch category {
      case 0:
--        return ("Full Gram", [(0, "Ghost Mode"), (50, "Ghost Mode+"), (1, FullGramStrings.messageHistory.text(ru)), (53, FullGramStrings.mediaArchive.text(ru))])
-+        let rows: [(Int32, String)] = [(0, "Ghost Mode"), (50, "Ghost Mode+"), (1, FullGramStrings.messageHistory.text(ru)), (53, FullGramStrings.mediaArchive.text(ru))]
+-        return ("Full Gram", [(0, "Ghost Mode"), (1, FullGramStrings.messageHistory.text(ru)), (53, FullGramStrings.mediaArchive.text(ru))])
++        let rows: [(Int32, String)] = [(0, "Ghost Mode"), (1, FullGramStrings.messageHistory.text(ru)), (53, FullGramStrings.mediaArchive.text(ru))]
 +        return ("Full Gram", FullGramFeatureGate.isUnlocked ? rows : [])
      case 2:
          return (FullGramStrings.general.text(ru), [(51, FullGramStrings.translationProviders.text(ru)), (2, FullGramStrings.sendingOptions.text(ru)), (5, FullGramStrings.interface.text(ru)), (6, FullGramStrings.messageMenu.text(ru))])
@@ -163,7 +138,7 @@ index d252594a..283ff405 100644
          page("developer", "Для разработчиков", "Developer", "разработчик отладка debug") { fullgramDeveloperSettingsController(context: context) }
      }
 +    if !FullGramFeatureGate.isUnlocked {
-+        let restricted: Set<String> = ["ghost.read", "ghost.online", "ghost.typing", "ghost.upload", "page.ghost", "page.chatGhost", "page.ghostPlus", "page.history", "page.archive", "page.media", "page.localPremium", "page.pluginConsole"]
++        let restricted: Set<String> = ["ghost.read", "ghost.online", "ghost.typing", "ghost.upload", "page.ghost", "page.chatGhost", "page.history", "page.archive", "page.media", "page.localPremium", "page.pluginConsole"]
 +        result.removeAll { restricted.contains($0.id) }
 +    }
      return result
@@ -184,7 +159,7 @@ index 3b2fea6e..af0248f4 100644
 -        entries.append(.toggle(6, FullGramToolsRow.hotReload.rawValue, symbol("bolt.horizontal.fill", 0xFF9500), ru ? "Hot reload" : "Hot reload", FullGramHotReload.shared.status.isEmpty ? (ru ? "Перезагрузка плагина при сохранении на компьютере" : "Reload the plugin when it is saved on the computer") : FullGramHotReload.shared.status, FullGramHotReload.shared.isConnected))
 -        entries.append(.toggle(6, FullGramToolsRow.webInspector.rawValue, symbol("safari.fill", 0x007AFF), "Safari Web Inspector", ru ? "Брейкпоинты и профайлер JS-плагинов (Mac → Safari → Разработка)" : "Breakpoints and profiler for JS plugins (Mac → Safari → Develop)", UserDefaults.standard.bool(forKey: "fullgram.dev.webInspector")))
 -        entries.append(.link(6, FullGramToolsRow.crashLogs.rawValue, symbol("ladybug.fill", 0xFF3B30), ru ? "Крэш-логи (MetricKit)" : "Crash logs (MetricKit)", ru ? "поделиться" : "share"))
--        entries.append(.info(6, FullGramToolsRow.devInfo.rawValue, ru ? "Облачная сборка доступна Telegram ID из developers/ID репозитория плагинов: исходник уходит в ветку beta от вашего имени, GitHub собирает его, и плагин ставится только на это устройство. Остальным — сборка на компьютере (SDK и `fullgram` CLI в репозитории Full Gram)." : "Cloud builds are open to the Telegram IDs in the plugin repository's developers/ID: the source goes to the beta branch in your name, GitHub builds it, and the plugin is installed on this device only. Everyone else builds on a computer (SDKs and the `fullgram` CLI in the Full Gram repository)."))
+-        entries.append(.info(6, FullGramToolsRow.devInfo.rawValue, ru ? "Облачная сборка доступна Telegram ID из developers/ID репозитория плагинов: исходник уходит в ветку beta от вашего имени, GitHub собирает его, и плагин ставится только на это устройство. Остальным — сборка на компьютере (SDK и `fullgram` CLI в репозитории FullGram-IOS)." : "Cloud builds are open to the Telegram IDs in the plugin repository's developers/ID: the source goes to the beta branch in your name, GitHub builds it, and the plugin is installed on this device only. Everyone else builds on a computer (SDKs and the `fullgram` CLI in the FullGram-IOS repository)."))
 +        if FullGramFeatureGate.isUnlocked {
 +            entries.append(.header(6, FullGramToolsRow.devHeader.rawValue, ru ? "РАЗРАБОТЧИКАМ ПЛАГИНОВ" : "PLUGIN DEVELOPERS"))
 +            entries.append(.link(6, FullGramToolsRow.githubToken.rawValue, symbol("key.horizontal.fill", 0x24292F), ru ? "Токен GitHub" : "GitHub token", FullGramCloudBuild.hasToken ? (ru ? "задан" : "set") : (ru ? "не задан" : "not set")))
@@ -193,7 +168,7 @@ index 3b2fea6e..af0248f4 100644
 +            entries.append(.toggle(6, FullGramToolsRow.hotReload.rawValue, symbol("bolt.horizontal.fill", 0xFF9500), ru ? "Hot reload" : "Hot reload", FullGramHotReload.shared.status.isEmpty ? (ru ? "Перезагрузка плагина при сохранении на компьютере" : "Reload the plugin when it is saved on the computer") : FullGramHotReload.shared.status, FullGramHotReload.shared.isConnected))
 +            entries.append(.toggle(6, FullGramToolsRow.webInspector.rawValue, symbol("safari.fill", 0x007AFF), "Safari Web Inspector", ru ? "Брейкпоинты и профайлер JS-плагинов (Mac → Safari → Разработка)" : "Breakpoints and profiler for JS plugins (Mac → Safari → Develop)", UserDefaults.standard.bool(forKey: "fullgram.dev.webInspector")))
 +            entries.append(.link(6, FullGramToolsRow.crashLogs.rawValue, symbol("ladybug.fill", 0xFF3B30), ru ? "Крэш-логи (MetricKit)" : "Crash logs (MetricKit)", ru ? "поделиться" : "share"))
-+            entries.append(.info(6, FullGramToolsRow.devInfo.rawValue, ru ? "Облачная сборка доступна Telegram ID из developers/ID репозитория плагинов: исходник уходит в ветку beta от вашего имени, GitHub собирает его, и плагин ставится только на это устройство. Остальным — сборка на компьютере (SDK и `fullgram` CLI в репозитории Full Gram)." : "Cloud builds are open to the Telegram IDs in the plugin repository's developers/ID: the source goes to the beta branch in your name, GitHub builds it, and the plugin is installed on this device only. Everyone else builds on a computer (SDKs and the `fullgram` CLI in the Full Gram repository)."))
++            entries.append(.info(6, FullGramToolsRow.devInfo.rawValue, ru ? "Облачная сборка доступна Telegram ID из developers/ID репозитория плагинов: исходник уходит в ветку beta от вашего имени, GitHub собирает его, и плагин ставится только на это устройство. Остальным — сборка на компьютере (SDK и `fullgram` CLI в репозитории FullGram-IOS)." : "Cloud builds are open to the Telegram IDs in the plugin repository's developers/ID: the source goes to the beta branch in your name, GitHub builds it, and the plugin is installed on this device only. Everyone else builds on a computer (SDKs and the `fullgram` CLI in the FullGram-IOS repository)."))
 +        }
          entries.append(.header(7, FullGramToolsRow.textHeader.rawValue, ru ? "ТЕКСТ И ПЛАГИНЫ" : "TEXT AND PLUGINS"))
          entries.append(.link(7, FullGramToolsRow.shortcuts.rawValue, symbol("text.insert", 0x34C759), ru ? "Шаблоны и сокращения" : "Shortcuts and templates", "\(FullGramTextShortcuts.shortcuts.count)"))

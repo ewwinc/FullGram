@@ -95,6 +95,24 @@ declare namespace Full Gram {
 
   interface Message { id: string; peerId: string; text: string; outgoing: boolean; date: number; authorId?: string }
 
+  interface ChatWordCount { word: string; count: number }
+
+  /** Counts, media kinds and word frequencies over a chat's locally stored messages. */
+  interface ChatStats {
+    count: number;
+    voices: number;
+    roundVideos: number;
+    /** Unix seconds, or null when the chat has no stored messages. */
+    firstDate: number | null;
+    lastDate: number | null;
+    frequentWords: ChatWordCount[];
+    rareWords: ChatWordCount[];
+    /** Words were counted over this many newest messages. */
+    wordSampleSize: number;
+    /** The app stopped at its message cap before reaching the oldest stored message. */
+    truncated: boolean;
+  }
+
   interface Full Gram {
     readonly pluginId: string;
     log(...values: unknown[]): void;
@@ -114,8 +132,7 @@ declare namespace Full Gram {
     /** Keychain-backed values, separate from storage (permission `secrets`). */
     secrets: { get(key: string): string | null; set(key: string, value: string | null): void };
     ui: Ui;
-    registry: { developers: { isVerified(peerId: string): boolean; info(peerId: string): { verified: boolean; kind?: string; text?: string } } };
-    /** write, hasText and clear need `clipboard`; read needs `clipboard.read` (iOS shows its paste notice). */
+      /** write, hasText and clear need `clipboard`; read needs `clipboard.read` (iOS shows its paste notice). */
     clipboard: { write(text: string): void; read(): Promise<string | null>; hasText(): Promise<boolean>; clear(): boolean };
     /** Permission `device`. battery, isCharging, screen and darkMode come from a snapshot refreshed after every read. */
     device: {
@@ -137,6 +154,8 @@ declare namespace Full Gram {
       edit(options: { peerId: string; messageId: string; text: string }): Promise<boolean>;
       react(options: { peerId: string; messageId: string; emoji: string }): Promise<boolean>;
       get(options: { peerId: string; limit?: number }): Promise<Message[]>;
+      /** Aggregated statistics over the chat's locally stored messages (permission `messages.read`). */
+      stats(options: { peerId: string }): Promise<ChatStats>;
       /** Local bookmarks (this device): list needs `messages.read`, add/remove need `messages`. */
       bookmarks: {
         list(): { peerId: string; messageId: number; text: string; chat: string; tag: string; savedAt: number }[];
